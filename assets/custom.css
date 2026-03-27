@@ -1,0 +1,136 @@
+@reference './app.css';
+
+/* Claude-inspired color scheme */
+
+/* Light mode */
+:root {
+  --bg: #faf6f1 !important;
+}
+
+/* Header accent bar */
+header {
+  border-bottom: 2px solid #d4a27a;
+}
+
+/* Site title */
+header a[href$="/WebAICoding/"] {
+  color: #c4724e !important;
+}
+
+/* Links - Claude terracotta */
+.prose a {
+  color: #c4724e !important;
+  text-decoration-color: #d4a27a !important;
+}
+
+.prose a:hover {
+  color: #a3573a !important;
+}
+
+/* Headings with warm tone */
+.prose h2 {
+  color: #3d2e24 !important;
+  border-bottom: 1px solid #e8d5c4;
+  padding-bottom: 0.3em;
+}
+
+.prose h3 {
+  color: #5a3e2e !important;
+}
+
+/* Code blocks - warm tinted */
+.prose pre {
+  background: #2d2017 !important;
+  border: 1px solid #4a3628;
+  border-radius: 8px;
+}
+
+.prose code:not(pre code) {
+  background: #f0e4d8 !important;
+  color: #8b4c2a !important;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Article list items on top page */
+main > section {
+  border-left: 3px solid #d4a27a;
+  padding-left: 1em;
+  transition: border-color 0.2s ease;
+}
+
+main > section:hover {
+  border-left-color: #c4724e;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid #e8d5c4;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  border-left-color: #d4a27a !important;
+  background: #faf0e6;
+  padding: 0.5em 1em;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Dark mode - warm dark */
+.dark {
+  --bg: #1a1410 !important;
+}
+
+.dark header {
+  border-bottom-color: #6b4c35;
+}
+
+.dark header a[href$="/WebAICoding/"] {
+  color: #d4a27a !important;
+}
+
+.dark .prose a {
+  color: #d4a27a !important;
+  text-decoration-color: #6b4c35 !important;
+}
+
+.dark .prose a:hover {
+  color: #e8c4a8 !important;
+}
+
+.dark .prose h2 {
+  color: #e8d5c4 !important;
+  border-bottom-color: #3d2e24;
+}
+
+.dark .prose h3 {
+  color: #d4a27a !important;
+}
+
+.dark .prose pre {
+  background: #0d0a07 !important;
+  border-color: #2d2017;
+}
+
+.dark .prose code:not(pre code) {
+  background: #2d2017 !important;
+  color: #d4a27a !important;
+}
+
+.dark main > section {
+  border-left-color: #6b4c35;
+}
+
+.dark main > section:hover {
+  border-left-color: #d4a27a;
+}
+
+.dark footer {
+  border-top-color: #2d2017;
+}
+
+.dark .prose blockquote {
+  border-left-color: #6b4c35 !important;
+  background: #1f1810;
+}
