@@ -16,6 +16,10 @@ body {
   font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif;
 }
 
+.nav-wrapper {
+  font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif;
+}
+
 /* Light mode */
 :root {
   --bg: #f3ece4 !important;
