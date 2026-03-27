@@ -1,6 +1,20 @@
 @reference './app.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600&display=swap');
 
 /* Claude-inspired color scheme — bold orange */
+
+/* Font */
+:root {
+  --font-sans: 'Inter', 'Noto Sans JP', ui-sans-serif, -apple-system, sans-serif !important;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans JP', ui-sans-serif, -apple-system, sans-serif;
+}
+
+.prose {
+  font-family: 'Inter', 'Noto Sans JP', ui-sans-serif, -apple-system, sans-serif;
+}
 
 /* Light mode */
 :root {
