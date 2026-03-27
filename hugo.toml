@@ -6,7 +6,7 @@ theme = 'paper'
 
 [params]
   description = 'Claude MAXユーザーの実体験ベース技術ブログ'
-  twitter = ''
+  twitter = 'https://x.com/qlyun35332'
 
 [markup]
   [markup.highlight]
