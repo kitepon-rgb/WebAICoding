@@ -1,0 +1,19 @@
+baseURL = 'https://kitepon-rgb.github.io/WebAICoding/'
+languageCode = 'ja'
+defaultContentLanguage = 'ja'
+title = 'Claude Code 始めました'
+theme = 'paper'
+
+[params]
+  description = 'Claude MAXユーザーの実体験ベース技術ブログ'
+  twitter = ''
+
+[markup]
+  [markup.highlight]
+    style = 'github'
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[pagination]
+  pagerSize = 10
