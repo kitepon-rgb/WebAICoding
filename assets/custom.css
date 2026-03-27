@@ -16,7 +16,9 @@ body {
   font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif;
 }
 
-.nav-wrapper {
+.nav-wrapper,
+.nav-wrapper nav,
+.nav-wrapper nav a {
   font-family: 'Source Serif 4', 'Noto Serif JP', Georgia, serif;
 }
 
