@@ -17,7 +17,7 @@ hugo                    # 本番ビルド（public/に出力）
 
 - **SSG**: Hugo
 - **ホスティング**: GitHub Pages（git pushで公開）
-- **記事**: Markdown（content/posts/以下）
+- **記事**: Markdown（content/post/以下、Page Bundle形式）
 - **集客**: X（Twitter）+ Zenn転載
 
 ## Content Guidelines
