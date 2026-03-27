@@ -7,26 +7,26 @@
   --bg: #faf6f1 !important;
 }
 
-/* Header - solid Claude orange */
-header {
+/* Header - solid Claude orange (site header only, not article header) */
+body > header {
   background: #da7b4a !important;
   border-bottom: none;
 }
 
-header a[href$="/WebAICoding/"] {
+body > header a[href$="/WebAICoding/"] {
   color: #fff !important;
 }
 
-header .btn-dark {
+body > header .btn-dark {
   filter: brightness(10);
 }
 
-header nav a {
+body > header nav a {
   filter: invert(1);
 }
 
 /* Nav links */
-header a[href$="/about/"] {
+body > header a[href$="/about/"] {
   color: #fff !important;
 }
 
@@ -122,15 +122,18 @@ footer {
   --bg: #1a1410 !important;
 }
 
-.dark header {
+.dark body > header,
+body.dark > header {
   background: #8b4c2a !important;
 }
 
-.dark header a[href$="/WebAICoding/"] {
+.dark body > header a[href$="/WebAICoding/"],
+body.dark > header a[href$="/WebAICoding/"] {
   color: #fff !important;
 }
 
-.dark header a[href$="/about/"] {
+.dark body > header a[href$="/about/"],
+body.dark > header a[href$="/about/"] {
   color: #fff !important;
 }
 
