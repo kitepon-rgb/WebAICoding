@@ -7,6 +7,8 @@ theme = 'paper'
 [params]
   description = 'Claude MAXユーザーの実体験ベース技術ブログ'
   twitter = 'qlyun35332'
+  avatar = 'avatar.svg'
+  favicon = 'favicon.svg'
 
 [markup]
   [markup.highlight]

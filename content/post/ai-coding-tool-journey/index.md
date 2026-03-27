@@ -4,6 +4,8 @@ date: 2026-03-27
 draft: false
 description: "AIコーディングツールを彷徨った末に、VS Code + Claude Code + MAXプランに辿り着いた話"
 tags: ["Claude Code", "VS Code", "Copilot", "Cursor", "MAX"]
+cover:
+  image: "cover.svg"
 ---
 
 ## はじめに

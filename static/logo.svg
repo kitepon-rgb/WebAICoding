@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48">
+  <rect x="0" y="4" width="40" height="40" rx="8" fill="#da7b4a"/>
+  <text x="20" y="20" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">&gt;_</text>
+  <text x="20" y="34" font-family="Georgia, serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">CC</text>
+</svg>

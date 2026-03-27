@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+  <rect width="1200" height="400" fill="#f3ece4"/>
+
+  <!-- Journey path -->
+  <path d="M 100 300 Q 250 300 300 200 Q 350 100 450 200 Q 550 300 650 200 Q 750 100 850 150 Q 950 200 1000 120"
+        fill="none" stroke="#d4a27a" stroke-width="3" stroke-dasharray="8 4" opacity="0.5"/>
+
+  <!-- Milestones -->
+  <!-- Claude Pro -->
+  <rect x="80" y="260" width="140" height="50" rx="8" fill="white" stroke="#d4a27a" stroke-width="1.5" opacity="0.8"/>
+  <text x="150" y="290" font-family="Georgia, serif" font-size="16" fill="#7a6555" text-anchor="middle">Claude Pro</text>
+
+  <!-- Copilot -->
+  <rect x="270" y="150" width="140" height="50" rx="8" fill="white" stroke="#d4a27a" stroke-width="1.5" opacity="0.8"/>
+  <text x="340" y="180" font-family="Georgia, serif" font-size="16" fill="#7a6555" text-anchor="middle">Copilot</text>
+
+  <!-- Cursor -->
+  <rect x="530" y="240" width="140" height="50" rx="8" fill="white" stroke="#d4a27a" stroke-width="1.5" opacity="0.8"/>
+  <text x="600" y="270" font-family="Georgia, serif" font-size="16" fill="#7a6555" text-anchor="middle">Cursor</text>
+
+  <!-- Claude Code - highlighted -->
+  <rect x="840" y="80" width="200" height="60" rx="12" fill="#da7b4a" stroke="none"/>
+  <text x="940" y="100" font-family="Georgia, serif" font-size="14" fill="white" text-anchor="middle">VS Code +</text>
+  <text x="940" y="122" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">Claude Code</text>
+
+  <!-- Arrow to destination -->
+  <text x="1060" y="115" font-family="Georgia, serif" font-size="28" fill="#da7b4a">&#x2714;</text>
+
+  <!-- Bottom label -->
+  <text x="600" y="370" font-family="Georgia, serif" font-size="20" fill="#3d2e24" text-anchor="middle" opacity="0.6">俺が辿り着くまでの話</text>
+</svg>

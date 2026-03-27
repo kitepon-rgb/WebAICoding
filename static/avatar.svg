@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="100" fill="#da7b4a"/>
+
+  <!-- Terminal icon -->
+  <rect x="45" y="55" width="110" height="90" rx="10" fill="#2d2017"/>
+  <rect x="45" y="55" width="110" height="22" rx="10" fill="#3d2e24"/>
+  <circle cx="62" cy="66" r="4" fill="#c4603a"/>
+  <circle cx="76" cy="66" r="4" fill="#da7b4a"/>
+  <circle cx="90" cy="66" r="4" fill="#d4a27a"/>
+
+  <!-- Terminal text -->
+  <text x="60" y="105" font-family="monospace" font-size="16" fill="#da7b4a">&gt;_</text>
+  <text x="60" y="128" font-family="monospace" font-size="12" fill="#d4a27a">クオ</text>
+</svg>

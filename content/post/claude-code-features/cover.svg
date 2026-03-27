@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+  <rect width="1200" height="400" fill="#2d2017"/>
+
+  <!-- Terminal window frame -->
+  <rect x="100" y="40" width="1000" height="320" rx="12" fill="#1a1410" stroke="#4a3628" stroke-width="2"/>
+  <circle cx="132" cy="68" r="8" fill="#c4603a"/>
+  <circle cx="160" cy="68" r="8" fill="#da7b4a"/>
+  <circle cx="188" cy="68" r="8" fill="#d4a27a"/>
+
+  <!-- Terminal content -->
+  <text x="132" y="120" font-family="monospace" font-size="20" fill="#d4a27a">$ claude</text>
+  <text x="132" y="155" font-family="monospace" font-size="20" fill="#7a6555">╭──────────────────────────────────╮</text>
+  <text x="132" y="190" font-family="monospace" font-size="20" fill="#e8d5c4">  /init   /rc   /compact   /fork</text>
+  <text x="132" y="225" font-family="monospace" font-size="20" fill="#e8d5c4">  /plan   /effort   /model</text>
+  <text x="132" y="260" font-family="monospace" font-size="20" fill="#7a6555">╰──────────────────────────────────╯</text>
+  <text x="132" y="305" font-family="monospace" font-size="20" fill="#da7b4a">半分も使えてなかった…？</text>
+  <rect x="132" y="315" width="14" height="24" fill="#da7b4a" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0;0.7" dur="1.2s" repeatCount="indefinite"/>
+  </rect>
+</svg>
