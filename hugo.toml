@@ -7,7 +7,7 @@ theme = 'paper'
 [params]
   description = 'Claude MAXユーザーの実体験ベース技術ブログ'
   twitter = 'qlyun35332'
-  avatar = 'avatar.svg'
+  avatar = 'https://kitepon-rgb.github.io/WebAICoding/avatar.svg'
   favicon = 'favicon.svg'
 
 [markup]
