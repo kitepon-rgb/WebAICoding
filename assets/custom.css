@@ -1,36 +1,49 @@
 @reference './app.css';
 
-/* Claude-inspired color scheme */
+/* Claude-inspired color scheme — bold orange */
 
 /* Light mode */
 :root {
   --bg: #faf6f1 !important;
 }
 
-/* Header accent bar */
+/* Header - solid Claude orange */
 header {
-  border-bottom: 2px solid #d4a27a;
+  background: #da7b4a !important;
+  border-bottom: none;
 }
 
-/* Site title */
 header a[href$="/WebAICoding/"] {
-  color: #c4724e !important;
+  color: #fff !important;
 }
 
-/* Links - Claude terracotta */
+header .btn-dark {
+  filter: brightness(10);
+}
+
+header nav a {
+  filter: invert(1);
+}
+
+/* Nav links */
+header a[href$="/about/"] {
+  color: #fff !important;
+}
+
+/* Links - Claude orange */
 .prose a {
-  color: #c4724e !important;
-  text-decoration-color: #d4a27a !important;
+  color: #c4603a !important;
+  text-decoration-color: #da7b4a !important;
 }
 
 .prose a:hover {
-  color: #a3573a !important;
+  color: #a3472a !important;
 }
 
 /* Headings with warm tone */
 .prose h2 {
   color: #3d2e24 !important;
-  border-bottom: 1px solid #e8d5c4;
+  border-bottom: 2px solid #da7b4a;
   padding-bottom: 0.3em;
 }
 
@@ -38,7 +51,7 @@ header a[href$="/WebAICoding/"] {
   color: #5a3e2e !important;
 }
 
-/* Code blocks - warm tinted */
+/* Code blocks */
 .prose pre {
   background: #2d2017 !important;
   border: 1px solid #4a3628;
@@ -46,62 +59,93 @@ header a[href$="/WebAICoding/"] {
 }
 
 .prose code:not(pre code) {
-  background: #f0e4d8 !important;
-  color: #8b4c2a !important;
+  background: #fce8db !important;
+  color: #a3472a !important;
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-size: 0.9em;
 }
 
-/* Article list items on top page */
+/* Article list items on top page - bold orange accent */
 main > section {
-  border-left: 3px solid #d4a27a;
+  border-left: 4px solid #da7b4a;
   padding-left: 1em;
-  transition: border-color 0.2s ease;
+  background: #fff8f3;
+  padding: 1em;
+  border-radius: 0 8px 8px 0;
+  transition: all 0.2s ease;
 }
 
 main > section:hover {
-  border-left-color: #c4724e;
+  border-left-color: #c4603a;
+  background: #fff0e6;
+}
+
+main > section h2 {
+  border-bottom: none !important;
+}
+
+/* Tags */
+.prose a[href*="/tags/"] {
+  background: #da7b4a !important;
+  color: #fff !important;
+  padding: 0.1em 0.5em;
+  border-radius: 4px;
+  text-decoration: none !important;
+  font-size: 0.85em;
+}
+
+.prose a[href*="/tags/"]:hover {
+  background: #c4603a !important;
 }
 
 /* Footer */
 footer {
-  border-top: 1px solid #e8d5c4;
+  border-top: 2px solid #da7b4a;
 }
 
 /* Blockquotes */
 .prose blockquote {
-  border-left-color: #d4a27a !important;
-  background: #faf0e6;
+  border-left: 4px solid #da7b4a !important;
+  background: #fff3eb;
   padding: 0.5em 1em;
   border-radius: 0 6px 6px 0;
 }
 
-/* Dark mode - warm dark */
+/* HR dividers */
+.prose hr {
+  border-color: #e8cbb8 !important;
+}
+
+/* ========== Dark mode ========== */
 .dark {
   --bg: #1a1410 !important;
 }
 
 .dark header {
-  border-bottom-color: #6b4c35;
+  background: #8b4c2a !important;
 }
 
 .dark header a[href$="/WebAICoding/"] {
-  color: #d4a27a !important;
+  color: #fff !important;
+}
+
+.dark header a[href$="/about/"] {
+  color: #fff !important;
 }
 
 .dark .prose a {
-  color: #d4a27a !important;
+  color: #e8a070 !important;
   text-decoration-color: #6b4c35 !important;
 }
 
 .dark .prose a:hover {
-  color: #e8c4a8 !important;
+  color: #f0c4a0 !important;
 }
 
 .dark .prose h2 {
   color: #e8d5c4 !important;
-  border-bottom-color: #3d2e24;
+  border-bottom-color: #6b4c35;
 }
 
 .dark .prose h3 {
@@ -115,22 +159,36 @@ footer {
 
 .dark .prose code:not(pre code) {
   background: #2d2017 !important;
-  color: #d4a27a !important;
+  color: #e8a070 !important;
 }
 
 .dark main > section {
-  border-left-color: #6b4c35;
+  border-left-color: #8b4c2a;
+  background: #211a12;
 }
 
 .dark main > section:hover {
-  border-left-color: #d4a27a;
+  border-left-color: #da7b4a;
+  background: #2a1f14;
 }
 
 .dark footer {
-  border-top-color: #2d2017;
+  border-top-color: #6b4c35;
 }
 
 .dark .prose blockquote {
-  border-left-color: #6b4c35 !important;
+  border-left-color: #8b4c2a !important;
   background: #1f1810;
+}
+
+.dark .prose a[href*="/tags/"] {
+  background: #8b4c2a !important;
+}
+
+.dark .prose a[href*="/tags/"]:hover {
+  background: #a3573a !important;
+}
+
+.dark .prose hr {
+  border-color: #2d2017 !important;
 }
