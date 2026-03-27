@@ -15,5 +15,10 @@ theme = 'paper'
     [markup.goldmark.renderer]
       unsafe = true
 
+[[menus.main]]
+  name = 'About'
+  url = '/about/'
+  weight = 10
+
 [pagination]
   pagerSize = 10
