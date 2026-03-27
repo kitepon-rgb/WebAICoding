@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+  <rect width="1200" height="400" fill="#f3ece4"/>
+
+  <!-- Pro box (dimmed) -->
+  <rect x="120" y="100" width="300" height="200" rx="16" fill="white" stroke="#d4a27a" stroke-width="2" opacity="0.6"/>
+  <text x="270" y="160" font-family="Georgia, serif" font-size="28" fill="#7a6555" text-anchor="middle" opacity="0.6">Pro</text>
+  <text x="270" y="200" font-family="Georgia, serif" font-size="20" fill="#7a6555" text-anchor="middle" opacity="0.6">$20/mo</text>
+  <text x="270" y="240" font-family="monospace" font-size="14" fill="#c4603a" text-anchor="middle" opacity="0.6">上限で止まる...</text>
+
+  <!-- Arrow -->
+  <text x="510" y="210" font-family="Georgia, serif" font-size="48" fill="#d4a27a" text-anchor="middle">→</text>
+
+  <!-- MAX box (highlighted) -->
+  <rect x="600" y="80" width="360" height="240" rx="16" fill="#da7b4a"/>
+  <text x="780" y="145" font-family="Georgia, serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">MAX</text>
+  <text x="780" y="185" font-family="Georgia, serif" font-size="20" fill="#fff" text-anchor="middle" opacity="0.9">$100/mo (5x)</text>
+  <line x1="680" y1="205" x2="880" y2="205" stroke="white" stroke-width="1" opacity="0.3"/>
+  <text x="780" y="235" font-family="monospace" font-size="15" fill="#fff" text-anchor="middle" opacity="0.9">Opus 回し放題</text>
+  <text x="780" y="260" font-family="monospace" font-size="15" fill="#fff" text-anchor="middle" opacity="0.9">Effort MAX</text>
+  <text x="780" y="285" font-family="monospace" font-size="15" fill="#fff" text-anchor="middle" opacity="0.9">止まらない</text>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="370" font-family="Georgia, serif" font-size="18" fill="#3d2e24" text-anchor="middle" opacity="0.5">何が変わるか</text>
+</svg>
