@@ -40,9 +40,7 @@ tags: ["Claude Code", "Copilot", "OLTranslator"]
 
 ## どうやって作ったか
 
-VS Code + GitHub Copilotで開発して、完成まで**約2週間**。
-
-「2週間で？」と思うかもしれない。秘密はない。AIに投げまくっただけだ。
+VS Code + GitHub Copilotで開発して、完成まで約2週間。AIに投げまくっただけだ。
 
 OCR部分、翻訳API連携、オーバーレイ表示、設定画面、システムトレイ、インストーラー。全部AIに実装を任せて、自分は設計と方針決めとレビューに集中した。
 
