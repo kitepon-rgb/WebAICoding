@@ -1,5 +1,5 @@
 ---
-title: "MAXプランで何が変わるか"
+title: "ClaudeのMAXプランで何が変わるか"
 date: 2026-03-27
 draft: false
 description: "たくさん使えるのは知ってる。MAXで実際に何が変わるのか、公式ソース付きで整理する"
