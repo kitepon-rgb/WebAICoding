@@ -1,6 +1,6 @@
 ---
 title: "俺がClaude Codeの半分も使えてなかった話"
-date: 2026-03-27
+date: 2026-03-25
 draft: false
 description: "/init、/rc、CLAUDE.md、Plan、Effort……Claude Codeの機能を半分も知らなかった話"
 tags: ["Claude Code", "VS Code", "MAX"]

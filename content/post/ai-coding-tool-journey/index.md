@@ -1,6 +1,6 @@
 ---
 title: "Copilot → Cursor → Claude Code for VSC。俺が辿り着くまでの話"
-date: 2026-03-27
+date: 2026-03-26
 draft: false
 description: "AIコーディングツールを彷徨った末に、VS Code + Claude Code + MAXプランに辿り着いた話"
 tags: ["Claude Code", "VS Code", "Copilot", "Cursor", "MAX"]
