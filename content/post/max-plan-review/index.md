@@ -5,7 +5,7 @@ draft: false
 description: "たくさん使えるのは知ってる。MAXで実際に何が変わるのか、公式ソース付きで整理する"
 tags: ["Claude Code", "MAX", "Pro"]
 cover:
-  image: "cover.svg"
+  image: "cover.png"
 ---
 
 ## はじめに
