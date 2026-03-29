@@ -1,6 +1,6 @@
 ---
 title: "LiveTR — 動画の英語音声をリアルタイムで日本語にするアプリ"
-date: 2026-03-27
+date: 2026-03-29
 draft: false
 description: "PCで再生中の動画の英語音声をリアルタイムに認識・翻訳し、日本語字幕と読み上げを行うWindows用アプリです"
 tags: ["LiveTR", "Claude Code"]
