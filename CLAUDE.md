@@ -13,13 +13,27 @@ hugo server -D          # ローカルプレビュー（下書き含む）
 hugo                    # 本番ビルド（public/に出力）
 ```
 
+## Deployment
+
+mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`）が自動でビルド＆デプロイ。手動デプロイ不要。
+
 ## Architecture
 
-- **SSG**: Hugo
+- **SSG**: Hugo（テーマ: [hugo-paper](https://github.com/nanxiaobei/hugo-paper)、submodule）
 - **ホスティング**: GitHub Pages（git pushで公開）
-- **記事**: Markdown（content/post/以下、Page Bundle形式）
-- **集客**: X（Twitter）+ Zenn転載
+- **記事**: Markdown（`content/post/<slug>/index.md`、Page Bundle形式）
+- **カスタムCSS**: `assets/custom.css`（Claudeオレンジのカラースキーム、ライト/ダーク両対応）
+- **レイアウト上書き**: `layouts/partials/footer.html`（GoatCounterスクリプト埋め込み）
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com）
+- **集客**: X（Twitter）+ Zenn転載
+
+## 記事の追加方法
+
+1. `content/post/<slug>/index.md` を作成（Page Bundle形式）
+2. frontmatter: `title`, `date`, `draft`, `description`, `tags`
+3. `hugo server -D` でプレビュー確認
+4. mainにpush → 自動デプロイ
+5. **Zennリポジトリにも同じ記事を反映**（後述）
 
 ## Zenn転載（重要）
 
@@ -41,8 +55,11 @@ hugo                    # 本番ビルド（public/に出力）
 
 ## Articles
 
-| # | タイトル | 状態 |
-|---|---------|------|
-| 1 | 俺がClaude Codeの半分も使えてなかった話 | 公開済み |
-| 2 | Copilot → Cursor → Claude Code for VSC。俺が辿り着くまでの話 | 公開済み |
-| 3 | ClaudeのMAXプランで何が変わるか | 公開済み |
+| # | タイトル | slug | 状態 |
+|---|---------|------|------|
+| 1 | 俺がClaude Codeの半分も使えてなかった話 | claude-code-features | 公開済み |
+| 2 | Copilot → Cursor → Claude Code for VSC。俺が辿り着くまでの話 | ai-coding-tool-journey | 公開済み |
+| 3 | ClaudeのMAXプランで何が変わるか | max-plan-review | 公開済み |
+| 4 | OLTranslator — 画面をそのまま日本語にする翻訳アプリ | oltranslator-app | 公開済み |
+| 5 | LiveTR — 音声をリアルタイムで翻訳するアプリ | livetr-app | 公開済み |
+| 6 | Claude + 論文 = 実装。研究をコードに変える話 | claude-research-implementation | 公開済み |

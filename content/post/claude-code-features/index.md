@@ -153,6 +153,8 @@ Claude Codeは、普通に使っているだけだと機能の半分も触れて
 
 自分と同じように「MAXに課金してガンガン使ってるけど、実はよく知らない機能がたくさんある」という人に向けて、これからも実体験ベースで書いていく。
 
+実際にClaude Codeでアプリを作った話は、[OLTranslator](/post/oltranslator-app/)と[LiveTR](/post/livetr-app/)の記事で書いている。Claude Codeが「コードを書く」以上の価値を出した話は「[Claudeと論文から組み立てた話](/post/claude-research-implementation/)」で。
+
 ---
 
 *このブログ「Claude Code 始めました」は、Claude MAX ユーザーが実際の開発で使いながら学んだことを記録していくサイトです。*
