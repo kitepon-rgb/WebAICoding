@@ -55,7 +55,7 @@ OLTranslatorが画面のテキストを翻訳するアプリだったので、�
 
 話者の性別判定にもこだわりました。読み上げの声を話者に合わせたかったので、論文や特許を参考にしながらClaude Codeと一緒にロジックを組みました。AivisSpeechには複数の話者モデルがあるので、男性の声なら男性っぽく、女性の声なら女性っぽく読み上げます。
 
-ただ、この性別判定がかなり厄介だった。ピッチだけで判定すると、F1実況みたいに興奮してピッチが上がる場面で男性が女性判定になる。この問題をどう解決したかは「[自力じゃ無理なロジック、Claudeと論文から組み立てた話](/post/claude-research-implementation/)」で詳しく書いた。
+ただ、この性別判定がかなり厄介だった。ピッチだけで判定すると、F1実況みたいに興奮してピッチが上がる場面で男性が女性判定になる。この問題をどう解決したかは「[自力じゃ無理なロジック、Claudeと論文から組み立てた話]({{< relref "/post/claude-research-implementation" >}})」で詳しく書いた。
 
 ---
 
@@ -67,8 +67,8 @@ OLTranslatorが画面のテキストを翻訳するアプリだったので、�
 
 ## 関連記事
 
-- [OLTranslator](/post/oltranslator-app/) — 画面テキスト版の翻訳アプリ。OLTranslatorが「文字」、LiveTRが「音声」。同じ翻訳でもアプローチが全然違う
-- [自力じゃ無理なロジック、Claudeと論文から組み立てた話](/post/claude-research-implementation/) — 性別判定ロジックの技術的な深掘り
+- [OLTranslator]({{< relref "/post/oltranslator-app" >}}) — 画面テキスト版の翻訳アプリ。OLTranslatorが「文字」、LiveTRが「音声」。同じ翻訳でもアプローチが全然違う
+- [自力じゃ無理なロジック、Claudeと論文から組み立てた話]({{< relref "/post/claude-research-implementation" >}}) — 性別判定ロジックの技術的な深掘り
 
 ---
 

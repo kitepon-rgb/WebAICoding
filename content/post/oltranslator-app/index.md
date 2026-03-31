@@ -66,7 +66,7 @@ tags: ["OLTranslator"]
 
 ## 関連記事
 
-この後、音声版として[LiveTR](/post/livetr-app/)を作った。こっちはClaude Codeで4日。開発環境の違いによる体感の差は「[Copilot → Cursor → Claude Code for VSC。俺が辿り着くまでの話](/post/ai-coding-tool-journey/)」で書いている。
+この後、音声版として[LiveTR]({{< relref "/post/livetr-app" >}})を作った。こっちはClaude Codeで4日。開発環境の違いによる体感の差は「[Copilot → Cursor → Claude Code for VSC。俺が辿り着くまでの話]({{< relref "/post/ai-coding-tool-journey" >}})」で書いている。
 
 ---
 
