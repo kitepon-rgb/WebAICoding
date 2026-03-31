@@ -57,9 +57,9 @@ OLTranslatorが画面のテキストを翻訳するアプリだったので、�
 
 ---
 
-## 公開予定
+## ダウンロード
 
-現在準備中です。BOOTHでの公開を予定しています。
+[LiveTR — リアルタイム音声翻訳アプリ（BOOTH）](https://qo-shop.booth.pm/items/8134987)
 
 ---
 
