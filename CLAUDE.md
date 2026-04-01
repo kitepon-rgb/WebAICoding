@@ -42,6 +42,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - Zennリポジトリ: `C:\Users\kite_\Documents\Program\Zenn`（GitHub: kitepon-rgb/zenn-content）
 - Zenn記事: `articles/` 以下にZenn形式のmarkdown
 - Hugo側を変更 → Zenn側も変更 → 両方push
+- Hugo側の内部リンクは `relref` ショートコード、Zenn側はブログの絶対URL（`https://kitepon-rgb.github.io/WebAICoding/post/...`）を使うこと
 
 ## 記事の公開前チェック（必須）
 
@@ -75,3 +76,4 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 5 | LiveTR — 音声をリアルタイムで翻訳するアプリ | livetr-app | 公開済み |
 | 6 | Claude + 論文 = 実装。研究をコードに変える話 | claude-research-implementation | 公開済み |
 | 7 | サーバーに実装する時にClaudeにSSH使わせたら驚くほど楽だった話 | claude-code-deploy | 公開済み |
+| 8 | 5年育てた自分専用Botを、SaaSにして売り出した話 | discord-bot-to-saas | 下書き |
