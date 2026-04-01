@@ -76,4 +76,4 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 5 | LiveTR — 音声をリアルタイムで翻訳するアプリ | livetr-app | 公開済み |
 | 6 | Claude + 論文 = 実装。研究をコードに変える話 | claude-research-implementation | 公開済み |
 | 7 | サーバーに実装する時にClaudeにSSH使わせたら驚くほど楽だった話 | claude-code-deploy | 公開済み |
-| 8 | 5年育てた自分専用Botを、SaaSにして売り出した話 | discord-bot-to-saas | 下書き |
+| 8 | 5年育てた自分専用Botを、SaaSにして売り出した話 | discord-bot-to-saas | 公開済み |

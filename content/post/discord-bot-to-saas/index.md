@@ -1,7 +1,7 @@
 ---
 title: "5年育てた自分専用Botを、SaaSにして売り出した話"
 date: 2026-04-01
-draft: true
+draft: false
 description: "ハードコード満載の個人用Discord Botをサービスにするまでの記録"
 tags: ["Claude Code", "Discord Bot", "SaaS", "Stripe"]
 ---
