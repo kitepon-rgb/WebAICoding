@@ -43,6 +43,17 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - Zenn記事: `articles/` 以下にZenn形式のmarkdown
 - Hugo側を変更 → Zenn側も変更 → 両方push
 
+## 記事の公開前チェック（必須）
+
+記事を書いたら、**公開（`draft: false`）前に必ず監査エージェントを通すこと。**
+
+チェック項目：
+- 不要な逆接（「でも」「ただ」「しかし」）が本当に逆接になっているか
+- 同じ主張・説明の重複がないか
+- 一文が長すぎないか、時系列が前後していないか
+- タイトルの日本語（助詞の衝突等）が自然か
+- 内部リンクが `relref` ショートコードを使っているか（baseURLにサブパスがあるため `/post/...` の直書きは404になる）
+
 ## Content Guidelines
 
 - 記事の口調はカジュアル（冒頭や要所は「俺」、説明パートは「自分」も可）
@@ -63,3 +74,4 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 4 | OLTranslator — 画面をそのまま日本語にする翻訳アプリ | oltranslator-app | 公開済み |
 | 5 | LiveTR — 音声をリアルタイムで翻訳するアプリ | livetr-app | 公開済み |
 | 6 | Claude + 論文 = 実装。研究をコードに変える話 | claude-research-implementation | 公開済み |
+| 7 | サーバーに実装する時にClaudeにSSH使わせたら驚くほど楽だった話 | claude-code-deploy | 公開済み |
