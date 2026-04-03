@@ -77,3 +77,4 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 6 | Claude + 論文 = 実装。研究をコードに変える話 | claude-research-implementation | 公開済み |
 | 7 | サーバーに実装する時にClaudeにSSH使わせたら驚くほど楽だった話 | claude-code-deploy | 公開済み |
 | 8 | 5年育てた自分専用Botを、SaaSにして売り出した話 | discord-bot-to-saas | 公開済み |
+| 9 | サーバー管理をAIに丸ごと任せてみた話 | ai-server-management | 下書き |
