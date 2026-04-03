@@ -1,7 +1,7 @@
 ---
 title: "サーバー管理をAIに丸ごと任せてみた話"
 date: 2026-04-03
-draft: true
+draft: false
 description: "監視・診断・修復・デプロイまで全自動。自宅サーバーの運用をAIに委ねた記録"
 tags: ["Claude Code", "サーバー管理", "自動化", "Podman"]
 ---
