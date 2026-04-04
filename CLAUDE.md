@@ -22,15 +22,17 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **SSG**: Hugo（テーマ: [hugo-paper](https://github.com/nanxiaobei/hugo-paper)、submodule）
 - **ホスティング**: GitHub Pages（git pushで公開）
 - **記事**: Markdown（`content/post/<slug>/index.md`、Page Bundle形式）
-- **カスタムCSS**: `assets/custom.css`（Claudeオレンジのカラースキーム、ライト/ダーク両対応）
-- **レイアウト上書き**: `layouts/partials/footer.html`（GoatCounterスクリプト埋め込み）
+- **カスタムCSS**: `assets/custom.css`（Claudeオレンジのカラースキーム、ライトモードのみ）
+- **レイアウト上書き**: `layouts/_default/list.html`（トップページヘッダー画像）、`layouts/_default/single.html`（カバー画像表示）、`layouts/partials/footer.html`（GoatCounterスクリプト埋め込み）
+- **カバー画像**: 各記事に `cover.png`（Playwrightで `generate-covers.html` から生成）
+- **画像生成**: `C:\Users\kite_\Documents\Program\_playwright` にPlaywright環境あり
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com）
 - **集客**: X（Twitter）+ Zenn転載
 
 ## 記事の追加方法
 
 1. `content/post/<slug>/index.md` を作成（Page Bundle形式）
-2. frontmatter: `title`, `date`, `draft`, `description`, `tags`
+2. frontmatter: `title`, `date`, `draft`, `description`, `tags`, `cover.image: "cover.png"`
 3. `hugo server -D` でプレビュー確認
 4. mainにpush → 自動デプロイ
 5. **Zennリポジトリにも同じ記事を反映**（後述）
