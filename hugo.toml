@@ -9,6 +9,7 @@ theme = 'paper'
   twitter = 'qlyun35332'
   avatar = 'https://kitepon-rgb.github.io/WebAICoding/avatar.svg'
   favicon = 'favicon.svg'
+  disableDarkMode = true
 
 [markup]
   [markup.highlight]

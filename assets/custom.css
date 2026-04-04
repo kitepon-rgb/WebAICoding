@@ -34,26 +34,28 @@ body > .prose {
   box-shadow: 0 0 40px rgba(0,0,0,0.05);
 }
 
-/* Header - hidden (replaced by blog-header image on top page) */
+/* Header - solid Claude orange */
 body > header {
-  display: none !important;
+  background: #da7b4a !important;
+  border-bottom: none;
 }
 
 body > header a[href$="/WebAICoding/"] {
   color: #fff !important;
 }
 
+/* Hide dark mode toggle */
 body > header .btn-dark {
-  filter: brightness(10);
+  display: none !important;
 }
 
 body > header nav a {
-  filter: invert(1);
+  color: #fff !important;
 }
 
-/* Nav links */
-body > header a[href$="/about/"] {
-  color: #fff !important;
+/* Social icons in header - white */
+body > header nav:last-of-type {
+  filter: invert(1) !important;
 }
 
 /* Links - Claude orange */
