@@ -27,10 +27,16 @@ body {
   --bg: #f3ece4 !important;
 }
 
-/* Header - solid Claude orange (site header only, not article header) */
+/* Center content area with lighter background */
+body > main,
+body > .prose {
+  background: #fff8f3;
+  box-shadow: 0 0 40px rgba(0,0,0,0.05);
+}
+
+/* Header - hidden (replaced by blog-header image on top page) */
 body > header {
-  background: #da7b4a !important;
-  border-bottom: none;
+  display: none !important;
 }
 
 body > header a[href$="/WebAICoding/"] {
@@ -90,7 +96,7 @@ body > header a[href$="/about/"] {
 main > section {
   border-left: 4px solid #da7b4a;
   padding-left: 1em;
-  background: #fff8f3;
+  background: transparent;
   padding: 1em;
   border-radius: 0 8px 8px 0;
   transition: all 0.2s ease;

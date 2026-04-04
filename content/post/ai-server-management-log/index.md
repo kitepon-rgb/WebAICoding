@@ -4,6 +4,8 @@ date: 2026-04-04
 draft: false
 description: "サーバー管理をAIに任せた記事の続編。3日間の運用で実際に何が起きたか"
 tags: ["Claude Code", "サーバー管理", "自動化", "運用"]
+cover:
+  image: "cover.png"
 ---
 
 ## はじめに
