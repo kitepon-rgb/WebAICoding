@@ -78,3 +78,4 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 7 | サーバーに実装する時にClaudeにSSH使わせたら驚くほど楽だった話 | claude-code-deploy | 公開済み |
 | 8 | 5年育てた自分専用Botを、SaaSにして売り出した話 | discord-bot-to-saas | 公開済み |
 | 9 | サーバー管理をAIに丸ごと任せてみた話 | ai-server-management | 公開済み |
+| 10 | AIにサーバーを任せて3日間で起きたこと | ai-server-management-log | 公開済み |
