@@ -27,7 +27,8 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **カバー画像**: 各記事に `cover.png`（Playwrightで `generate-covers.html` から生成）
 - **画像生成**: `C:\Users\kite_\Documents\Program\_playwright` にPlaywright環境あり
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com）
-- **集客**: X（Twitter）+ Zenn転載
+- **集客**: X（Twitter、Premium+）+ Zenn転載
+- **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）
 
 ## 記事の追加方法
 

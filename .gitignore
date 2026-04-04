@@ -5,3 +5,5 @@ resources/_gen/
 Thumbs.db
 .claude/
 project_handoff.md
+.env*
+x-api-ideas.md
