@@ -3,6 +3,8 @@ title: "自力じゃ無理なロジック、Claudeと論文から組み立てた
 date: 2026-03-30
 draft: false
 description: "周波数だけじゃ男女判定できなかった。Claudeに学術論文を調べてもらって、実装まで持っていった話"
+cover:
+  image: "cover.png"
 tags: ["Claude Code", "LiveTR"]
 ---
 

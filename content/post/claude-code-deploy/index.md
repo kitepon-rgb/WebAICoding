@@ -3,6 +3,8 @@ title: "サーバーに実装する時にClaudeにSSH使わせたら驚くほど
 date: 2026-04-01
 draft: false
 description: "コピペで相談してた頃の苦労と、ClaudeにSSHでサーバーを直接触らせたら全部変わった話"
+cover:
+  image: "cover.png"
 tags: ["Claude Code", "SSH", "デプロイ"]
 ---
 

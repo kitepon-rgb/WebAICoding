@@ -3,6 +3,8 @@ title: "OLTranslator — 画面をそのまま日本語にする翻訳アプリ"
 date: 2026-03-28
 draft: false
 description: "画面上の外国語テキストをOCRで読み取り、日本語訳をその場にオーバーレイ表示するWindows用アプリです"
+cover:
+  image: "cover.png"
 tags: ["OLTranslator"]
 ---
 
