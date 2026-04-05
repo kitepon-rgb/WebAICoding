@@ -9,8 +9,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Development
 
 ```bash
-hugo server -D          # ローカルプレビュー（下書き含む）
-hugo                    # 本番ビルド（public/に出力）
+git submodule update --init  # 初回クローン後、テーマ取得に必要
+hugo server -D               # ローカルプレビュー（下書き含む）
+hugo                         # 本番ビルド（public/に出力）
 ```
 
 ## Deployment
@@ -24,8 +25,10 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **記事**: Markdown（`content/post/<slug>/index.md`、Page Bundle形式）
 - **カスタムCSS**: `assets/custom.css`（Claudeオレンジのカラースキーム、ライトモードのみ）
 - **レイアウト上書き**: `layouts/_default/list.html`（トップページヘッダー画像）、`layouts/_default/single.html`（カバー画像表示）、`layouts/partials/footer.html`（GoatCounterスクリプト埋め込み）
-- **カバー画像**: 各記事に `cover.png`（Playwrightで `generate-covers.html` から生成）
-- **画像生成**: `C:\Users\kite_\Documents\Program\_playwright` にPlaywright環境あり
+- **カバー画像**: 各記事に `cover.png`（1250x500px）。生成スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`
+  - 使い方: `node generate-cover.js "タイトル1行目" "タイトル2行目" "出力パス" ["コードテキスト"]`
+  - デザイン: Claudeオレンジのグラデーション（左上暗→右下明）、ターミナル風枠（ボーダー `#dfcbc1`）、Noto Serif JP 600、背景にコードライン
+- **baseURL**: `https://kitepon-rgb.github.io/WebAICoding/` — サブパス `/WebAICoding/` があるため、内部リンクは必ず `relref` を使うこと（直書きは404になる）
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com）
 - **集客**: X（Twitter、Premium+）+ Zenn転載
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）
@@ -82,3 +85,4 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 8 | 5年育てた自分専用Botを、SaaSにして売り出した話 | discord-bot-to-saas | 公開済み |
 | 9 | サーバー管理をAIに丸ごと任せてみた話 | ai-server-management | 公開済み |
 | 10 | AIにサーバーを任せて3日間で起きたこと | ai-server-management-log | 公開済み |
+| 11 | 手足を勝手に増やすAIアシスタントを作った話 | discord-ai-assistant | 公開済み |
