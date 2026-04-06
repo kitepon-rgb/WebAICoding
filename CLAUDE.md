@@ -31,7 +31,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **baseURL**: `https://kitepon-rgb.github.io/WebAICoding/` — サブパス `/WebAICoding/` があるため、内部リンクは必ず `relref` を使うこと（直書きは404になる）
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com）
 - **集客**: X（Twitter、Premium+）+ Zenn転載
-- **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）
+- **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
 
 ## 記事の追加方法
 
@@ -86,3 +86,4 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 9 | サーバー管理をAIに丸ごと任せてみた話 | ai-server-management | 公開済み |
 | 10 | AIにサーバーを任せて3日間で起きたこと | ai-server-management-log | 公開済み |
 | 11 | 手足を勝手に増やすAIアシスタントを作った話 | discord-ai-assistant | 公開済み |
+| 12 | AIアシスタントに手足を増やそうと思ったら人格も増やしていた件 | ai-assistant-personality | 公開済み |
