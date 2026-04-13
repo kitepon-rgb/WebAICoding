@@ -87,6 +87,8 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 10 | AIにサーバーを任せて3日間で起きたこと | ai-server-management-log | 公開済み |
 | 11 | 手足を勝手に増やすAIアシスタントを作った話 | discord-ai-assistant | 公開済み |
 | 12 | AIアシスタントに手足を増やそうと思ったら人格も増やしていた件 | ai-assistant-personality | 公開済み |
+| 13 | AI秘書のトークン節約を必死に調べた記録 | ai-secretary-token-diet | 公開済み |
+| 14 | 長期記憶を構造化記憶にしてみた話 | ai-secretary-memory-system | 公開済み |
 
 <!-- autoskills:start -->
 
