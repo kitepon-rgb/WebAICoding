@@ -86,7 +86,9 @@ Karpathy式はそこを全部AIがやる。サイクルの「Lint」が矛盾も
 - **M7 仕上げ** — コストガードレールとドキュメント整備
 - **Pass 1〜13 の audit/refactor 祭り** — housekeeping cron、daily-cycle-report、graceful shutdown、2段階 budget degrade、ingest latency SLA…
 
-自作の構造化記憶が「記憶を登録して検索する」までだったのに対して、Karpathy式から持ってきたのは主に **Compile、Lint、Reflection のサイクル** だった。つまり「記憶を整理して、矛盾を直して、概念を作る」という部分。ここが俺に足りてなかった機能。
+自作側にあった **登録・検索・再構築** の3つは、Karpathy式と概念がかぶる。ここについては、たぶん専門家の方が素人より丁寧に作ってるんだろうな、というくらいで詳しいところまでは俺も知らない。重なってる部分は自作のものを残した。
+
+むしろ持ってきたのは、その3つ**以外の全部**だった。raw と wiki の層分離、概念ページという「育てる単位」の定義、引用付きで答える multi-hop 検索、サイクルを Ingest / Compile / Query / Lint という名前で型にはめる方法論、セッション開始時に文脈を組み立てる 5層 bootstrap assembler。自作にはなかったものばかりだった。
 
 ## 何が変わったか
 
