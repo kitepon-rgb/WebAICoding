@@ -89,6 +89,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 12 | AIアシスタントに手足を増やそうと思ったら人格も増やしていた件 | ai-assistant-personality | 公開済み |
 | 13 | AI秘書のトークン節約を必死に調べた記録 | ai-secretary-token-diet | 公開済み |
 | 14 | 長期記憶を構造化記憶にしてみた話 | ai-secretary-memory-system | 公開済み |
+| 15 | コンテキストの87%が使い捨てだったので自分で対策した話 | throughline-context-diet | 公開済み |
 
 <!-- autoskills:start -->
 
