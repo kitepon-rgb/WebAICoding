@@ -33,22 +33,47 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **集客**: X（Twitter、Premium+）+ Zenn転載
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
 
-## 記事の追加方法
+## 記事の公開フロー（全プラットフォーム）
 
-1. `content/post/<slug>/index.md` を作成（Page Bundle形式）
-2. frontmatter: `title`, `date`, `draft`, `description`, `tags`, `cover.image: "cover.png"`
-3. `hugo server -D` でプレビュー確認
-4. mainにpush → 自動デプロイ
-5. **Zennリポジトリにも同じ記事を反映**（後述）
+記事を公開する時は以下を**すべて**実行する。「コミット プッシュ」と言われたら全ステップ。
 
-## Zenn転載（重要）
+### 1. ブログ記事作成
+- `content/post/<slug>/index.md` を作成（Page Bundle形式）
+- frontmatter: `title`, `date`, `draft`, `description`, `tags`, `cover.image: "cover.png"`
+- **dateに未来日付を使わない**（GitHub Actionsに `--buildFuture` がないため404になる）
+- 内部リンクは必ず `relref` を使う（`[テキスト]({{< relref "slug" >}})`）
 
-記事を追加・変更した場合、**Zennリポジトリにも同じ変更を反映すること。**
+### 2. カバー画像生成
+- スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`
+- `node generate-cover.js "1行目" "2行目" "出力パス" ["コードテキスト"]`
+- 1行が長すぎると折り返すので、タイトルを短く分割する
 
+### 3. Zenn転載
 - Zennリポジトリ: `C:\Users\kite_\Documents\Program\Zenn`（GitHub: kitepon-rgb/zenn-content）
-- Zenn記事: `articles/` 以下にZenn形式のmarkdown
-- Hugo側を変更 → Zenn側も変更 → 両方push
-- Hugo側の内部リンクは `relref` ショートコード、Zenn側はブログの絶対URL（`https://kitepon-rgb.github.io/WebAICoding/post/...`）を使うこと
+- `articles/<slug>.md` にZenn形式で作成
+- frontmatter: `title`, `emoji`, `type: "tech"`, `topics`, `published: true`
+- 冒頭に `:::message この記事は [Claude Code 始めました](https://kitepon-rgb.github.io/WebAICoding/) からの転載です。:::`
+- Hugo `relref` → ブログ絶対URL（`https://kitepon-rgb.github.io/WebAICoding/post/...`）に変換
+- フッターの定型文は削除
+
+### 4. コミット & プッシュ
+- Web（ブログ）とZenn、**両方**コミット & プッシュ
+- CLAUDE.md の Articles テーブルも更新する
+
+### 5. X Article作成
+- チャットに直接出力する（mdファイルではない）
+- フォーマットルールは `memory/feedback_x_article_format.md` 参照
+- 要点: 全行間に `&nbsp;` 空行、見出しに絵文字、リンクはmarkdown形式、記事間リンクはX上のURLを使う
+- 末尾に `📚 [記事一覧はこちら](トップページURL)` を入れる
+
+### 6. X トップページ更新
+- ソースファイル: `x-top-page.md`（このリポジトリ内）
+- 形式: カテゴリ見出し（H3）+ 絵文字付きタイトルリンクの一覧。**1行説明はつけない**
+- 新記事を適切なカテゴリに追加（なければカテゴリも新設）
+- 更新後、コピペ用にチャットに出力する
+
+### 7. URL記録
+- X Article公開後、URLを聞いて `memory/reference_x_articles.md` に追記する
 
 ## 記事の公開前チェック（必須）
 
@@ -90,6 +115,8 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 13 | AI秘書のトークン節約を必死に調べた記録 | ai-secretary-token-diet | 公開済み |
 | 14 | 長期記憶を構造化記憶にしてみた話 | ai-secretary-memory-system | 公開済み |
 | 15 | コンテキストの87%が使い捨てだったので自分で対策した話 | throughline-context-diet | 公開済み |
+| 16 | Claude Codeの"続きから"を実装するのに、自動検知を諦めた話 | throughline-declare-over-detect | 公開済み |
+| 17 | Throughline を npm に公開した — Claude Codeのコンテキストを90%削るhook | throughline-release | 公開済み |
 
 <!-- autoskills:start -->
 
