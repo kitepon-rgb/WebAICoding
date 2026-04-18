@@ -4,6 +4,7 @@ resources/_gen/
 .DS_Store
 Thumbs.db
 .claude/
+.vscode/
 project_handoff.md
 .env*
 x-api-ideas.md
