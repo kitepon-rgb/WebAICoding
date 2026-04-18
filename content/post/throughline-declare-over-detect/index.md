@@ -1,6 +1,6 @@
 ---
 title: "Claude Codeの\"続きから\"を実装するのに、自動検知を諦めた話"
-date: 2026-04-18
+date: 2026-04-18T09:00:00+09:00
 draft: false
 description: "/clearを自動検知して記憶を引き継ぐ仕組みを作ったら、VSCode拡張で壊れた。検知を諦めて\"宣言\"に切り替えたら全部解決した。"
 tags: ["Claude Code", "OSS", "hooks"]

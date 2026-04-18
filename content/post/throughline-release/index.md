@@ -1,6 +1,6 @@
 ---
 title: "Throughline を npm に公開した — Claude CodeのツールI/OをSQLiteに退避するhook"
-date: 2026-04-18
+date: 2026-04-18T12:00:00+09:00
 draft: false
 description: "Claude Codeのコンテキストの大半はツールI/Oの残骸。それだけSQLiteに退避して会話本文だけ残すhookをnpmに出した。"
 tags: ["Claude Code", "OSS"]
