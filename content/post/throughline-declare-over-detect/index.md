@@ -8,7 +8,7 @@ cover:
   image: "cover.png"
 ---
 
-[前の記事]({{< relref "throughline-context-diet" >}})でThroughlineを公開した。コンテキストの87%を占めてるツールI/Oを退避して、90%圧縮するやつ。
+[前の記事]({{< relref "throughline-context-diet" >}})でThroughlineを公開した。コンテキストの大半を占めてるツールI/Oを退避して、会話本文だけ残すやつ。
 
 あの時点では"動いてた"。自分の環境では。
 
