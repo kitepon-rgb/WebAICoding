@@ -30,7 +30,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
   - デザイン: Claudeオレンジのグラデーション（左上暗→右下明）、ターミナル風枠（ボーダー `#dfcbc1`）、Noto Serif JP 600、背景にコードライン
 - **baseURL**: `https://kitepon-rgb.github.io/WebAICoding/` — サブパス `/WebAICoding/` があるため、内部リンクは必ず `relref` を使うこと（直書きは404になる）
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com）
-- **集客**: X（Twitter、Premium+）+ Zenn転載
+- **集客**: X（Twitter、Premium+）+ Zenn転載 — **Premium+特典で通常ポストも最大約25,000字の長尺OK**（X Articlesと別枠）。280字制約を前提にしない
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
 
 ## 記事の公開フロー（全プラットフォーム）
@@ -48,7 +48,11 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - `node generate-cover.js "1行目" "2行目" "出力パス" ["コードテキスト"]`
 - 1行が長すぎると折り返すので、タイトルを短く分割する
 
-### 3. Zenn転載
+### 3. 公開前監査（必須）
+- `draft: false` で公開する前に監査エージェントを通す（詳細は下の「記事の公開前チェック」節）
+- 指摘されたら即修正してから次へ
+
+### 4. Zenn転載
 - Zennリポジトリ: `C:\Users\kite_\Documents\Program\Zenn`（GitHub: kitepon-rgb/zenn-content）
 - `articles/<slug>.md` にZenn形式で作成
 - frontmatter: `title`, `emoji`, `type: "tech"`, `topics`, `published: true`
@@ -56,24 +60,35 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - Hugo `relref` → ブログ絶対URL（`https://kitepon-rgb.github.io/WebAICoding/post/...`）に変換
 - フッターの定型文は削除
 
-### 4. コミット & プッシュ
-- Web（ブログ）とZenn、**両方**コミット & プッシュ
-- CLAUDE.md の Articles テーブルも更新する
+### 5. CLAUDE.md Articles テーブル更新
+- `## Articles` テーブルに `| # | タイトル | slug | 公開済み |` の行を追加
 
-### 5. X Article作成
+### 6. コミット & プッシュ
+- Web（ブログ）とZenn、**両方**コミット & プッシュ
+- 選択add（`git add CLAUDE.md content/post/<slug>/`）— `git add .` は使わない（gitignore外の作業ファイルが混入する）
+
+### 7. X Article作成
 - チャットに直接出力する（mdファイルではない）
 - フォーマットルールは `memory/feedback_x_article_format.md` 参照
 - 要点: 全行間に `&nbsp;` 空行、見出しに絵文字、リンクはmarkdown形式、記事間リンクはX上のURLを使う
 - 末尾に `📚 [記事一覧はこちら](トップページURL)` を入れる
 
-### 6. X トップページ更新
-- ソースファイル: `x-top-page.md`（このリポジトリ内）
-- 形式: カテゴリ見出し（H3）+ 絵文字付きタイトルリンクの一覧。**1行説明はつけない**
+### 8. X トップページ更新
+- ソースファイル: `x-top-page.md`（このリポジトリ内、gitignore済み）
+- 形式: カテゴリ見出し + 絵文字付きタイトルリンクの一覧。**1行説明はつけない**
 - 新記事を適切なカテゴリに追加（なければカテゴリも新設）
-- 更新後、コピペ用にチャットに出力する
+- リンクは「公開後に追記」と仮置き → URLが揃ったら反映
+- 更新後、**コピペ可能な形でチャットに出力**（`←H2にする` 等の運用注釈は除いたクリーン版）
 
-### 7. URL記録
-- X Article公開後、URLを聞いて `memory/reference_x_articles.md` に追記する
+### 9. URL記録
+- X Article公開後、ユーザーにURLを聞いて `memory/reference_x_articles.md` に追記
+- 同時に `x-top-page.md` の「公開後に追記」を実URLに置き換え
+
+### 10. 英語PR (Quote-RT)
+- JA記事のX URLを引用RTする形で、英語ポストを投稿
+- 3案（短尺/中尺/長尺）を**日本語ドラフト**で提示してユーザーに選んでもらう
+- 選択後に英語に翻訳して出力（Premium+の長尺活用OK、280字制約は前提にしない）
+- 用途: 英語圏Claude Code層への到達拡張
 
 ## 記事の公開前チェック（必須）
 
@@ -118,6 +133,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 16 | Claude Codeの"続きから"を実装するのに、自動検知を諦めた話 | throughline-declare-over-detect | 公開済み |
 | 17 | Throughline を npm に公開した — Claude CodeのツールI/OをSQLiteに退避するhook | throughline-release | 公開済み |
 | 18 | Caveat を npm に公開した — 同じ罠を二度踏まないための長期記憶レイヤ | caveat-release | 公開済み |
+| 19 | Claudeのツール呼び忘れを別Claudeに監査させたら、デーモンが74個立った話 | spotter-release | 公開済み |
 
 <!-- autoskills:start -->
 
