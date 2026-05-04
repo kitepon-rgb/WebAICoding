@@ -20,7 +20,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 
 ## Architecture
 
-- **SSG**: Hugo（テーマ: [hugo-paper](https://github.com/nanxiaobei/hugo-paper)、submodule）
+- **SSG**: Hugo（テーマ: [hugo-paper](https://github.com/nanxiaobei/hugo-paper)、`themes/paper` にgit submoduleとして配置。初回クローン後の `git submodule update --init` が必要なのはこのため）
 - **ホスティング**: GitHub Pages（git pushで公開）
 - **記事**: Markdown（`content/post/<slug>/index.md`、Page Bundle形式）
 - **カスタムCSS**: `assets/custom.css`（Claudeオレンジのカラースキーム、ライトモードのみ）
@@ -136,6 +136,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 19 | Claudeのツール呼び忘れを別Claudeに監査させたら、デーモンが74個立った話 | spotter-release | 公開済み |
 | 20 | Claudeに「気をつけて」を書くのを諦めて、外側から3つ補強した話 | claude-augment-trilogy | 公開済み |
 | 21 | Claudeに計画書を監査させたら、シーソーが止まらなかった話 | claude-audit-seesaw | 公開済み |
+| 22 | 俺がWSL2を知らずにClaude Codeを2ヶ月使ってた話 | wsl2-late-discovery | 公開済み |
 
 <!-- autoskills:start -->
 
