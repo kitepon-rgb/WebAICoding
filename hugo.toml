@@ -3,6 +3,7 @@ languageCode = 'ja'
 defaultContentLanguage = 'ja'
 title = 'Claude Code 始めました'
 theme = 'paper'
+timeZone = 'Asia/Tokyo'
 
 [params]
   description = 'Claude MAXユーザーの実体験ベース技術ブログ'

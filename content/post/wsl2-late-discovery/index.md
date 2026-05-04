@@ -1,6 +1,6 @@
 ---
 title: "俺がWSL2を知らずにClaude Codeを2ヶ月使ってた話"
-date: 2026-05-05
+date: 2026-05-04
 draft: false
 description: "Claude MAXで毎日コーディングしてたのに、Windowsネイティブのままだった話。WSL2 という単語に出会うまでの2ヶ月。"
 tags: ["Claude Code", "WSL2", "Windows", "MAX"]
