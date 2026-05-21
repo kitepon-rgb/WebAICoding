@@ -90,6 +90,10 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - 選択後に英語に翻訳して出力（Premium+の長尺活用OK、280字制約は前提にしない）
 - 用途: 英語圏Claude Code層への到達拡張
 
+### dev.to への英語転載（自動・公開フローに手動ステップなし）
+- Zennが記事を自動英訳すると（日本語公開から数日後）、`kitepon-rgb/zenn-content` リポジトリのGitHub Actions（毎日cron）が英語版を検出し dev.to へ自動転載する
+- 手動作業は不要。仕組み: `zenn-content/.github/scripts/crosspost-devto.mjs`、転載済み記録は `crossposted-devto.json`
+
 ## 記事の公開前チェック（必須）
 
 記事を書いたら、**公開（`draft: false`）前に必ず監査エージェントを通すこと。**
