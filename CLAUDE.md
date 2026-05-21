@@ -91,8 +91,10 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - 用途: 英語圏Claude Code層への到達拡張
 
 ### dev.to への英語転載（自動・公開フローに手動ステップなし）
-- Zennが記事を自動英訳すると（日本語公開から数日後）、`kitepon-rgb/zenn-content` リポジトリのGitHub Actions（毎日cron）が英語版を検出し dev.to へ自動転載する
-- 手動作業は不要。仕組み: `zenn-content/.github/scripts/crosspost-devto.mjs`、転載済み記録は `crossposted-devto.json`
+- Zennが記事を自動英訳すると（日本語公開から数日後）、`kitepon-rgb/zenn-content` リポジトリのGitHub Actions（毎日09:00 JST cron）が英語版を dev.to へ転載する
+- 時系列順に1日1本ずつ投稿。本文の内部リンクは dev.to のリンクへ貼りかえ（前方参照は後追いで自動修正）
+- 新記事はZennフィード経由で自動的に転載キューへ加わる。手動作業は不要
+- 仕組みの詳細は `zenn-content` リポジトリの README を参照
 
 ## 記事の公開前チェック（必須）
 
