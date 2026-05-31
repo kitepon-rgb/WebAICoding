@@ -68,7 +68,12 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - 選択add（`git add CLAUDE.md content/post/<slug>/`）— `git add .` は使わない（gitignore外の作業ファイルが混入する）
 
 ### 7. X Article作成
-- チャットに直接出力する（mdファイルではない）
+- **`xarticle` MCP 経由で直接下書きを作る**（チャットへのコピペ出力は不要になった）
+  - `x_article_post`（`publish: false`）で「タイトル＋本文＋表紙画像」入りの下書きを一発で用意
+  - セッション情報はサーバ側に登録済み（`x_article_set_credentials` は再実行不要）
+  - 下書きができたらユーザーに知らせる → ユーザーがプレビュー → **GO が出たら `x_article_publish` で公開**（公開＝同時に通常ポストも一本立つ。後戻りしにくいので勝手に公開しない）
+  - マークダウンは自動変換される（見出し/太字/斜体/インラインコード/リンク/箇条書き・ネスト/順序付き/引用/コードブロック）
+  - 非公開化は `x_article_unpublish`、削除は `x_article_delete`（削除は不可逆）
 - フォーマットルールは `memory/feedback_x_article_format.md` 参照
 - 要点: 全行間に `&nbsp;` 空行、見出しに絵文字、リンクはmarkdown形式、記事間リンクはX上のURLを使う
 - 末尾に `📚 [記事一覧はこちら](トップページURL)` を入れる
