@@ -70,6 +70,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 ### 7. X Article作成
 - **`xarticle` MCP 経由で直接下書きを作る**（チャットへのコピペ出力は不要になった）
   - `x_article_post`（`publish: false`）で「タイトル＋本文＋表紙画像」入りの下書きを一発で用意
+  - **表紙画像は必ず「URL指定」で渡す**：ブログの公開カバーURL（例 `https://kitepon-rgb.github.io/WebAICoding/post/<slug>/cover.png`）を `coverImageUrl`（`x_article_post`）/ `imageUrl`（`x_article_set_cover`）に渡す → サーバが取得して添付。base64手打ちは巨大すぎて破損するので使わない
   - セッション情報はサーバ側に登録済み（`x_article_set_credentials` は再実行不要）
   - 下書きができたらユーザーに知らせる → ユーザーがプレビュー → **GO が出たら `x_article_publish` で公開**（公開＝同時に通常ポストも一本立つ。後戻りしにくいので勝手に公開しない）
   - マークダウンは自動変換される（見出し/太字/斜体/インラインコード/リンク/箇条書き・ネスト/順序付き/引用/コードブロック）
