@@ -1,3 +1,7 @@
+<p align="center">
+  <img src=".github/og.png" alt="WebAICoding — hands-on Japanese tech blog on AI coding" width="100%">
+</p>
+
 # WebAICoding
 
 [![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml)
