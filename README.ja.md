@@ -1,0 +1,107 @@
+# WebAICoding
+
+[![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml)
+[![license](https://img.shields.io/github/license/kitepon-rgb/WebAICoding?color=blue)](LICENSE)
+[![Hugo](https://img.shields.io/badge/built%20with-Hugo-ff4088?logo=hugo&logoColor=white)](https://gohugo.io/)
+[![GitHub Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-222?logo=github)](https://kitepon-rgb.github.io/WebAICoding/)
+
+[English](README.md) · **日本語**
+
+> **Claude MAX ユーザーが、AI コーディングを実際に使いながら学んだことを記録する技術ブログ。**
+> プログラマーではない人間が、趣味の AI コーディングで実際にハマったこと・うまくいったこと・失敗したことを、Copilot → Cursor → Claude Code と渡り歩きながらそのまま書き残している。このリポジトリはそのソース — GitHub Pages へ自動デプロイされる Hugo 静的サイト。
+
+**ライブサイト → https://kitepon-rgb.github.io/WebAICoding/**
+
+## これは何
+
+プログラマーでは **ない** 人間が、趣味で AI コーディングをしながら書いているブログのソースです。開発スタイルは「アーキテクト型」— 設計と方針は自分で決めて、実装は AI に任せてレビューする。コードを直接手で書くタイプではありません。記事は日本語で、実運用ベースの内容です。
+
+- GitHub Copilot → Cursor → **VS Code + Claude Code + MAX プラン** に落ち着くまでの実体験
+- メモリシステム、トークン節約、サーバー管理、自作アプリのリリースなど、実運用ベースの記事
+- 実際に毎日使ってみないと出てこない、ハマりどころ・うまくいったこと・失敗の正直な記録
+
+記事は `content/post/` 以下に Markdown で置いてあり、`main` ブランチへの push で GitHub Actions が Hugo でビルドして GitHub Pages へ自動デプロイします。
+
+## 技術構成
+
+| 項目 | 内容 |
+| --- | --- |
+| 静的サイトジェネレーター | [Hugo](https://gohugo.io/)（extended） |
+| テーマ | [hugo-paper](https://github.com/nanxiaobei/hugo-paper)（git submodule） |
+| ホスティング | GitHub Pages |
+| デプロイ | GitHub Actions（`.github/workflows/deploy.yml`） |
+| 言語 | 日本語 |
+
+## デプロイの流れ
+
+```mermaid
+flowchart LR
+    A["記事を書く<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>(deploy.yml)"]
+    B --> C["Setup Hugo<br/>extended"]
+    C --> D["hugo --minify<br/>→ public/"]
+    D --> E["upload-pages-artifact"]
+    E --> F["deploy-pages"]
+    F --> G(["GitHub Pages<br/>kitepon-rgb.github.io/WebAICoding"])
+```
+
+`draft: false` の記事だけが本番に公開されます。
+
+## ローカルで動かす
+
+Hugo extended が必要です（[インストール手順](https://gohugo.io/installation/)）。
+
+```bash
+# テーマを submodule ごとクローン
+git clone --recurse-submodules https://github.com/kitepon-rgb/WebAICoding.git
+cd WebAICoding
+
+# 開発サーバーを起動（http://localhost:1313/WebAICoding/）
+hugo server
+
+# 本番ビルド（出力は public/）
+hugo --minify
+```
+
+クローン済みでテーマだけ取得したい場合:
+
+```bash
+git submodule update --init --recursive
+```
+
+## 記事を書く
+
+```bash
+# 新しい記事の雛形を作成
+hugo new content/post/your-slug/index.md
+```
+
+frontmatter の例（既存記事に合わせる）:
+
+```yaml
+---
+title: "記事タイトル"
+date: 2026-06-03
+draft: false
+description: "一覧やSNSカードに出る要約"
+tags: ["Claude Code", "AI Coding"]
+cover:
+  image: "cover.png"
+---
+```
+
+`draft: false` の記事だけが本番に公開されます。`main` に push すると自動でデプロイされます。
+
+## ディレクトリ構成
+
+```
+content/        記事（Markdown）と About ページ
+layouts/        テーマ上書き用のレイアウト
+assets/         カスタム CSS
+static/         ファビコン・OG 画像などの静的ファイル
+themes/paper/   テーマ本体（submodule）
+hugo.toml       サイト設定
+```
+
+## ライセンス
+
+[MIT License](LICENSE) — © 2026 kitepon-rgb

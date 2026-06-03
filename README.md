@@ -1,89 +1,107 @@
-# Claude Code 始めました
+# WebAICoding
 
-> Claude MAX ユーザーが、AI コーディングを実際に使いながら学んだことを記録する技術ブログ。Hugo + GitHub Pages で公開。
->
-> *A hands-on Japanese tech blog about everyday AI coding with Claude Code, built with Hugo and hosted on GitHub Pages.*
+[![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml)
+[![license](https://img.shields.io/github/license/kitepon-rgb/WebAICoding?color=blue)](LICENSE)
+[![Hugo](https://img.shields.io/badge/built%20with-Hugo-ff4088?logo=hugo&logoColor=white)](https://gohugo.io/)
+[![GitHub Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-222?logo=github)](https://kitepon-rgb.github.io/WebAICoding/)
 
-**ライブサイト → https://kitepon-rgb.github.io/WebAICoding/**
+**English** · [日本語](README.ja.md)
 
----
+> **A hands-on Japanese tech blog about everyday AI coding with Claude Code.**
+> A non-programmer hobbyist writes down what actually worked, what broke, and what they learned while building software with AI — Copilot to Cursor to Claude Code. This repo is the source: a Hugo static site that auto-deploys to GitHub Pages.
 
-## これは何
+**Live site → https://kitepon-rgb.github.io/WebAICoding/**
 
-プログラマーではない人間が、趣味の AI コーディングで実際にハマったこと・うまくいったこと・失敗したことを、そのまま書き残しているブログのソースです。
+## What it is
 
-- 設計と方針は自分で決めて、実装は AI に任せてレビューする「アーキテクト型」の開発スタイル
-- Copilot → Cursor → Claude Code と渡り歩いて、今は **VS Code + Claude Code + MAX プラン** に落ち着くまでの実体験
-- メモリシステム、トークン節約、サーバー管理、自作アプリのリリースなど、実運用ベースの記事
+The blog is written by someone who is **not** a programmer and codes purely as a hobby. The development style is "architect mode": the author decides the design and direction, then lets the AI implement and reviews the result rather than writing code by hand. Posts are written in Japanese and cover real, in-production experience:
 
-記事は `content/post/` 以下に Markdown で置いてあり、`main` ブランチへの push で GitHub Actions が自動ビルド・デプロイします。
+- The journey from GitHub Copilot to Cursor to settling on **VS Code + Claude Code + the MAX plan**
+- Practical write-ups: memory systems, token diets, home-server management, and shipping self-made apps
+- Honest accounts of the traps, wins, and failures — the kind of detail you only get from actually using the tools daily
 
-## 技術構成
+Articles live as Markdown under `content/post/`. Every push to `main` triggers GitHub Actions, which builds the site with Hugo and deploys it to GitHub Pages.
 
-| 項目 | 内容 |
+## Tech stack
+
+| Component | Choice |
 | --- | --- |
-| 静的サイトジェネレーター | [Hugo](https://gohugo.io/)（extended） |
-| テーマ | [hugo-paper](https://github.com/nanxiaobei/hugo-paper)（git submodule） |
-| ホスティング | GitHub Pages |
-| デプロイ | GitHub Actions（`.github/workflows/deploy.yml`） |
-| 言語 | 日本語 |
+| Static site generator | [Hugo](https://gohugo.io/) (extended) |
+| Theme | [hugo-paper](https://github.com/nanxiaobei/hugo-paper) (git submodule) |
+| Hosting | GitHub Pages |
+| Deploy | GitHub Actions (`.github/workflows/deploy.yml`) |
+| Content language | Japanese |
 
-## ローカルで動かす
+## How it deploys
 
-Hugo extended が必要です（[インストール手順](https://gohugo.io/installation/)）。
+```mermaid
+flowchart LR
+    A["Write Markdown<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>(deploy.yml)"]
+    B --> C["Setup Hugo<br/>extended"]
+    C --> D["hugo --minify<br/>→ public/"]
+    D --> E["upload-pages-artifact"]
+    E --> F["deploy-pages"]
+    F --> G(["GitHub Pages<br/>kitepon-rgb.github.io/WebAICoding"])
+```
+
+Only articles with `draft: false` are published.
+
+## Run locally
+
+You need **Hugo extended** ([installation guide](https://gohugo.io/installation/)).
 
 ```bash
-# テーマを submodule ごとクローン
+# Clone with the theme submodule
 git clone --recurse-submodules https://github.com/kitepon-rgb/WebAICoding.git
 cd WebAICoding
 
-# 開発サーバーを起動（http://localhost:1313/WebAICoding/）
+# Start the dev server (http://localhost:1313/WebAICoding/)
 hugo server
 
-# 本番ビルド（出力は public/）
+# Production build (output goes to public/)
 hugo --minify
 ```
 
-クローン済みでテーマだけ取得したい場合:
+If you already cloned without `--recurse-submodules`, fetch the theme:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-## 記事を書く
+## Writing a post
 
 ```bash
-# 新しい記事の雛形を作成
+# Scaffold a new article
 hugo new content/post/your-slug/index.md
 ```
 
-frontmatter の例（既存記事に合わせる）:
+Front matter (match the existing posts):
 
 ```yaml
 ---
-title: "記事タイトル"
+title: "Post title"
 date: 2026-06-03
 draft: false
-description: "一覧やSNSカードに出る要約"
+description: "Summary shown in the list and social cards"
 tags: ["Claude Code", "AI Coding"]
 cover:
   image: "cover.png"
 ---
 ```
 
-`draft: false` の記事だけが本番に公開されます。`main` に push すると自動でデプロイされます。
+Set `draft: false` to publish. Pushing to `main` deploys automatically.
 
-## ディレクトリ構成
+## Layout
 
 ```
-content/        記事（Markdown）と About ページ
-layouts/        テーマ上書き用のレイアウト
-assets/         カスタム CSS
-static/         ファビコン・OG 画像などの静的ファイル
-themes/paper/   テーマ本体（submodule）
-hugo.toml       サイト設定
+content/        Articles (Markdown) and the About page
+layouts/        Layout overrides for the theme
+assets/         Custom CSS
+static/         Static files — favicon, OG image, etc.
+themes/paper/   The theme itself (submodule)
+hugo.toml       Site configuration
 ```
 
-## ライセンス
+## License
 
 [MIT License](LICENSE) — © 2026 kitepon-rgb
