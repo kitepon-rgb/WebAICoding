@@ -40,13 +40,19 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 ### 1. ブログ記事作成
 - `content/post/<slug>/index.md` を作成（Page Bundle形式）
 - frontmatter: `title`, `date`, `draft`, `description`, `tags`, `cover.image: "cover.png"`
-- **dateに未来日付を使わない**（GitHub Actionsに `--buildFuture` がないため404になる）
+- **dateに未来日付を使わない**（GitHub Actionsに `--buildFuture` がないため、未来記事はビルドから除外され404になる）
+  - シリーズ慣例の `T12:00:00+09:00`（正午）を**そのまま流用しない**。午前に公開すると正午は未来扱い→404。**必ず現在時刻より前**にする（その時の時刻 or `T09:00:00+09:00` 等の過去時刻）
+  - 症状: **デプロイActionsは success なのにページが404** → まず未来日付を疑う（`curl -sI <記事URL>` で確認）
 - 内部リンクは必ず `relref` を使う（`[テキスト]({{< relref "slug" >}})`）
 
 ### 2. カバー画像生成
-- スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`
-- `node generate-cover.js "1行目" "2行目" "出力パス" ["コードテキスト"]`
-- 1行が長すぎると折り返すので、タイトルを短く分割する
+- スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`（playwright は **Windows 側**にあるので Windows node で回す。WSL node では不可）
+- WSL からの実働手順:
+  1. `powershell.exe -NoProfile -Command "cd 'C:\Users\kite_\Documents\Program\_playwright'; node generate-cover.js '1行目' '2行目' '<出力名>.png'"`（日本語引数はそのまま通る。コードテキスト引数は多行クオートが壊れやすいので既定でよい）
+  2. 記事へコピー: `cp /mnt/c/Users/kite_/Documents/Program/_playwright/<出力名>.png content/post/<slug>/cover.png`
+  3. `file …/cover.png` で 1250x500 を確認、`Read` で日本語の化けが無いか目視
+- ⚠️ スクリプトの**既定出力パスは旧 `../Web/` リポジトリ**を指す → 出力先は必ず明示する（上記のように `_playwright` 直下へ出して cp）
+- 1行が長すぎると折り返すので、タイトルを短く2行に分割する
 
 ### 3. 公開前監査（必須）
 - `draft: false` で公開する前に監査エージェントを通す（詳細は下の「記事の公開前チェック」節）
@@ -66,8 +72,10 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 ### 6. コミット & プッシュ
 - Web（ブログ）とZenn、**両方**コミット & プッシュ
 - 選択add（`git add CLAUDE.md content/post/<slug>/`）— `git add .` は使わない（gitignore外の作業ファイルが混入する）
+- ⚠️ Zennリポジトリは push が弾かれることがある（dev.to自動転載のActionsが先行コミットするため）→ `git pull --rebase origin main` してから push し直す
 
 ### 7. X Article作成
+- **前提: ブログのデプロイ完了を待つ**。X Article の表紙はブログのカバーURLをサーバが取得するので、**カバーURLが 200 になってから**作る（`curl -s -o /dev/null -w '%{http_code}' <記事URL>cover.png` でポーリング。404のままなら未来日付を疑う＝§1）
 - **`xarticle` MCP 経由で直接下書きを作る**（チャットへのコピペ出力は不要になった）
   - `x_article_post`（`publish: false`）で「タイトル＋本文＋表紙画像」入りの下書きを一発で用意
   - **表紙画像は必ず「URL指定」で渡す**：ブログの公開カバーURL（例 `https://kitepon-rgb.github.io/WebAICoding/post/<slug>/cover.png`）を `coverImageUrl`（`x_article_post`）/ `imageUrl`（`x_article_set_cover`）に渡す → サーバが取得して添付。base64手打ちは巨大すぎて破損するので使わない
@@ -96,6 +104,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - JA記事のX URLを引用RTする形で、英語ポストを投稿
 - 3案（短尺/中尺/長尺）を**日本語ドラフト**で提示してユーザーに選んでもらう
 - 選択後に英語に翻訳して出力（Premium+の長尺活用OK、280字制約は前提にしない）
+- ⚠️ **投稿はClaudeにはできない**（xarticle MCP は記事専用で引用RT不可、`.env.x-api` は xarticle トークンのみで X API の OAuth キーが無い）→ **ユーザーが手動投稿**。もし `.env.x-api` に OAuth キー4点（API Key/Secret + Access Token/Secret・`tweet.write`付き）を足せば、`twitter-api-v2`（`_playwright/node_modules`）で `v2.tweet(text, { quote_tweet_id })` を叩いてClaudeが投稿可能になる
 - 用途: 英語圏Claude Code層への到達拡張
 
 ### dev.to への英語転載（自動・公開フローに手動ステップなし）
