@@ -165,6 +165,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 25 | 「そのツール、ありません」とAIが言う本当の理由は、DDNSだった | dns-blindspot | 公開済み |
 | 26 | 作るのも広めるのも速くなった。届ける方は、まだまだ | build-fast-reach-slow | 公開済み |
 | 27 | aiterm-mcp を npm に公開した — AIに「1本の永続ターミナル」を握らせてトークンを削るMCPサーバ | aiterm-release | 公開済み |
+| 28 | Claudeに対話型コマンドを握らせたら、Codex CLIごと子分にできた話 | claude-drives-codex | 公開済み |
 
 <!-- autoskills:start -->
 
