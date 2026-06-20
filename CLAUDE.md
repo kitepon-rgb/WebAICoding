@@ -177,6 +177,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 | 29 | 英語は読めるのに聞き取れない。AIなら教材は無限だと気づいて、リスニングアプリを出した話 | kikoeru-listening | 公開済み |
 | 30 | AIが働くのを眺めるのが好きすぎて、ターミナルをRPGにした話 | rpgdev-overlay | 公開済み |
 | 31 | 完全な文だけを訳に回す——その設計を、カウンタ一本が裏切っていた | livetr-complete-sentence | 公開済み |
+| 32 | 同じキャラが描けないAIに、アニメの「設定資料」を作らせた話 | sprite-forge-release | 公開済み |
 
 <!-- autoskills:start -->
 
