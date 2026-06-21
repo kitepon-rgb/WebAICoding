@@ -177,10 +177,10 @@ footer.site a{color:#bda88f;text-decoration:none}footer.site a:hover{color:var(-
   .pill{flex:0 0 auto}
   .bar nav a:not(:last-child){display:none}
   .grid{grid-template-columns:1fr;gap:.9rem}
-  .card{flex-direction:row;border-top:none;border-left:3px solid var(--accent,var(--coral));align-items:stretch;min-height:88px}
+  .card{flex-direction:row;border:1px solid var(--line);border-radius:14px;align-items:stretch;height:116px}/* コーラルの左装飾を撤去＝均一枠。カバー外縁との色不一致と左下の窪みを解消 */
   .card .chrome{display:none}
-  .card .thumb{flex:0 0 118px;aspect-ratio:auto;height:auto}
-  .c-body{padding:.7rem .9rem}
+  .card .thumb{flex:0 0 116px;width:116px;align-self:stretch}/* カード内側いっぱいに伸ばす＝上下中央・余白なし（border分のズレを解消） */
+  .c-body{padding:.55rem .9rem;flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;overflow:hidden}
   .c-body .cat{margin-bottom:.3rem}
   .c-body h4{font-size:1rem;line-height:1.45;margin-bottom:.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .post .prose{font-size:1.02rem}

@@ -35,6 +35,30 @@ node generate-cover.js "同じキャラが描けないAIに、" "「設定資料
 - 1行が長すぎると折り返すので、タイトルは短く2行に分割する。
 - 生成後は `file ../../content/post/<slug>/cover.png` で `1250 x 500` を確認する。
 
+## スマホ用カバー `cover-sm.png`（1:1 / 1080×1080）— 記事一覧カード用【確定仕様・再設計禁止】
+
+PCの記事一覧カードは 2.5:1 の `cover.png` をそのまま使うが、スマホ（行レイアウト）では左右が
+トリミングされる。そこで **スマホ専用の正方形カバー `cover-sm.png`** を別に持ち、
+`layouts/_default/list.html` の `<picture>` で `media="(max-width:600px)"` のときだけ配信する。
+この設計は多数の反復で確定済み。**次回以降も同じに作ること（違うカードにすると過去の調整が無駄になる）。**
+
+```bash
+# 1記事だけ（見出しは正式タイトルではなく「短いフック」。本文h4に正式タイトルが出る）
+node generate-cover.js --mobile "短い見出し" "" "../../content/post/<slug>/cover-sm.png"
+
+# 全記事まとめて（slug→短見出しは mobile-covers.json）
+node gen-mobile-covers.js
+```
+
+新記事を足したら **`mobile-covers.json` に `"slug": "短見出し"` を1行追加** → `node gen-mobile-covers.js`。
+
+**デザイン（`--mobile`）**: PC版と同じグラデ・枠・コード背景。タイトルは**左寄せ・最大3行・自動縮小**で大きく。
+その下に**センタリングの区切り線（264×4px・`#d6bcae`）**＋**センタリングの「Claude Code 始めました」（54px）**。
+
+**カードCSS**（`assets/css/main.css` の `@media(max-width:600px)`、この値で確定）:
+`.card` は `border:1px solid var(--line)`（**コーラルの左装飾は付けない**）・`border-radius:14px`・`align-items:stretch`・`height:116px`。
+`.card .thumb` は `flex:0 0 116px;width:116px;align-self:stretch`（**`height` を固定しない**＝border分のズレで上下中央から外れる）。
+
 ## デザイン仕様（再現の要）
 
 - 背景: Claudeオレンジのグラデーション（左上 `#c4603a` → 右下 `#e89f6f`）
