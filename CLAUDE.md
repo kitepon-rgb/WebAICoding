@@ -15,6 +15,8 @@ hugo             # 本番ビルド（public/に出力）
 
 自前テーマは `layouts/` + `assets/` に同梱。**外部テーマ submodule は不要**（旧 hugo-paper 廃止）。
 
+> 💻 **この Mac には hugo extended を導入済み**（`brew install hugo`）＝ローカルで `hugo`（ビルド）/`hugo server`（プレビュー）/未来日付404の検証が可能。記事を直したら push 前にローカルビルドで確認できる。
+
 ## Deployment
 
 mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`）が自動でビルド＆デプロイ。手動デプロイ不要。
@@ -27,10 +29,16 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **CSS**: `assets/css/main.css`（素のCSS・フレームワーク不使用・ライトモードのみ）。`baseof.html` が `resources.Get "css/main.css" | fingerprint` で**ハッシュ付きURL `/css/main.<hash>.css`** で配信＝**変更のたびURLが変わりブラウザ/Cloudflareのキャッシュを自動破棄**（CSSを直したら確実に反映される。同一URL据え置きでスマホが旧CSSを掴む罠を回避）
 - **レイアウト（自前テーマ）**: `layouts/_default/baseof.html`（head・上部バー・フッター・GoatCounter を内包）／`list.html`（ホーム＝ヒーロー＋カテゴリpill＋ダーク注目帯＋**記事カバーのターミナル窓カード**グリッド。タグ/section 一覧も兼用）／`single.html`（記事＝明朝見出し＋ドロップキャップ＋ターミナル風コードブロック＋前後ナビ）。フォント: 見出し=Noto Serif JP / 本文=Zen Kaku Gothic New / コード=JetBrains Mono
 - **デザインシステム**: claude.ai/design の「claude-code-blog」プロジェクトに同期（`DesignSync` ツール）。デザインを大きく変える時はそこで詰めて `layouts/` + `assets/css/main.css` に反映する
-- **カバー画像**: 各記事に `cover.png`（1250x500px）。生成スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`
+- **カバー画像**: 各記事に `cover.png`（1250x500px = 2.5:1）。生成スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`（**Windows 側。この Mac には未移行＝GitHub 同期で持ってくる予定**。playwright も Windows 側）
   - 使い方: `node generate-cover.js "タイトル1行目" "タイトル2行目" "出力パス" ["コードテキスト"]`
-  - デザイン: Claudeオレンジのグラデーション（左上暗→右下明）、ターミナル風枠（ボーダー `#dfcbc1`）、Noto Serif JP 600、背景にコードライン
-  - ⚠️ 新テーマではカバーを**ホームのカード・注目帯・記事冒頭**で表示＝以前より重要。未設定だと `slug.md` のターミナル風プレースホルダになる（＝実質必須）
+  - デザイン: Claudeオレンジのグラデ（**実色 左上 `#c4603a` → 右下 `#e79e6e`**）、ターミナル風枠（ボーダー `#dfcbc1`）、Noto Serif JP 600、背景にコードライン
+  - ⚠️ カバーは**ホームのカード・注目帯・記事冒頭**で表示＝実質必須。未設定だと `slug.md` のターミナル風プレースホルダになる
+  - 🚧 **スマホのカバー切れ対応（WIP・未完）**: ホーム記事一覧カードはスマホ（行レイアウト）で 2.5:1 カバーの左右を `object-fit:cover` で一律トリミングしてしまう（PCは問題なし）。横長を縮める発想では中途半端 → **iPhone 用の正方形カバー `cover-sm.png`（1:1）を別生成し `<picture>`（`media="(max-width:600px)"`）で配信**＋ `main.css` の `@media(max-width:600px)` で `.card .thumb` を 1:1 にする方針。**本物の generate-cover.js（Windows）に 1:1 モードを足してコピーするのを GitHub 同期後に着手**（`~/Developer/blog-figmaker/gen-cover.mjs` は暫定の再現版＝本物到着で置換予定）
+- **本文画像（2026-06 に全32記事へ導入）**: 各記事の本文に図・スクショ・イラスト・表を配置（**記事=主／画像=従**。実物ソース厳選、**Claudeモデルの手描き厳禁**、**フル画質で出す＝圧縮/縮小/WebP化はしない**）。詳細方針は `memory/feedback_blog_image_policy.md`、インフラは `memory/project_blog_image_infra.md`
+  - **自動キャプション**: `layouts/_default/_markup/render-image.html`（render hook）が本文の `![alt](file.png)` を `<figure>`＋`<figcaption>`（alt=キャプション）でラップ。スタイル `.prose figure.fig-img`
+  - **OGPリンクカード**: `layouts/shortcodes/linkcard.html` = `{{< linkcard url= title= desc= site= image= >}}`（App Store / GitHub / BOOTH / X 等のプレビューカード）。スタイル `.prose a.linkcard`
+  - **画像の作り方（手段）**: ①ブランド図版=`~/Developer/blog-figmaker/`（Mac, playwright で HTML→PNG。`render.mjs` 単体 / `render-batch.mjs` 一括、`brand.css` は main.css の `:root` と一致）②イラスト=`mcp__claude_ai_X-HERMES-MCP__generate_image`（grok-imagine。文字/UI/図表は描けない＝雰囲気カット専用、no-text 厳守）③スクショ=chrome-devtools MCP（`filePath` はワークスペース root 内のみ）④自作アプリ=元 repo の `.github/*.png` 等を流用。実機由来の画面（OLED等）は捏造せず実機コードを実走（例: `ServerManager/pi5/oled/render.py`、macOSはフォントパス差し替え）
+  - ⚠️ **本文画像は CSS と違い fingerprint されない**＝既存画像を同一URLで差し替えても Cloudflare が 4h（`max-age=14400`）キャッシュして反映されない。**差し替え時はファイル名を変える**（例 `fig1.png`→`oled.png` ＋ md 参照変更）。新規追加画像は新URLなので問題なし
 - **baseURL**: `https://blog.kitepon.dev/`（カスタムドメイン。Cloudflare DNS only の CNAME `blog`→`kitepon-rgb.github.io`／GitHub Pages が Let's Encrypt 発行）。旧 `https://kitepon-rgb.github.io/WebAICoding/` は GitHub が 301 で新ドメインへ自動リダイレクトするので過去リンクは生きている。内部リンクは引き続き `relref` を使う（ドメイン変更に強い・直書き回避）
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com、`layouts/_default/baseof.html` に埋め込み）
 - **集客**: X（Twitter、Premium+）+ Zenn転載 — **Premium+特典で通常ポストも最大約25,000字の長尺OK**（X Articlesと別枠）。280字制約を前提にしない
@@ -53,6 +61,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - 内部リンクは必ず `relref` を使う（`[テキスト]({{< relref "slug" >}})`）
 
 ### 2. カバー画像生成
+- ⚠️ **この Mac には generate-cover.js が未移行**（Windows 側）。GitHub 同期で持ってくるまでは新規カバーを正規生成できない。暫定で `~/Developer/blog-figmaker/gen-cover.mjs`（再現版）が使えるが、本物到着後は置換する。本文の図版/イラストは figmaker・grok で生成可（上記「本文画像」参照）
 - スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`（playwright は **Windows 側**にあるので Windows node で回す。WSL node では不可）
 - WSL からの実働手順:
   1. `powershell.exe -NoProfile -Command "cd 'C:\Users\kite_\Documents\Program\_playwright'; node generate-cover.js '1行目' '2行目' '<出力名>.png'"`（日本語引数はそのまま通る。コードテキスト引数は多行クオートが壊れやすいので既定でよい）

@@ -92,12 +92,16 @@ Set `draft: false` to publish. Pushing to `main` deploys automatically.
 ## Layout
 
 ```
-content/        Articles (Markdown) and the About page
+content/        Articles (Markdown page bundles) and the About page
 layouts/        Custom theme — baseof / list / single
+                _default/_markup/render-image.html  (wraps body images in <figure> + caption)
+                shortcodes/linkcard.html            (OGP-style link preview cards)
 assets/css/     Stylesheet (fingerprinted at build → cache-busting)
 static/         Static files — favicons, OG image, etc.
 hugo.toml       Site configuration
 ```
+
+Articles are illustrated with in-text figures, diagrams, app screenshots, tables, and link cards. Body images are sourced from real material (app screenshots, brand-styled HTML→PNG diagrams, generated illustrations) — never hand-drawn by the model — and served at full resolution.
 
 ## License
 

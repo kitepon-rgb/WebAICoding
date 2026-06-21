@@ -92,12 +92,16 @@ cover:
 ## ディレクトリ構成
 
 ```
-content/        記事（Markdown）と About ページ
+content/        記事（Markdown ページバンドル）と About ページ
 layouts/        自前テーマ — baseof / list / single
+                _default/_markup/render-image.html  （本文画像を <figure> ＋キャプションで包む）
+                shortcodes/linkcard.html            （OGP 風リンクプレビューカード）
 assets/css/     スタイルシート（ビルド時に fingerprint ＝キャッシュ破棄）
 static/         ファビコン・OG 画像などの静的ファイル
 hugo.toml       サイト設定
 ```
+
+各記事は本文に図・スクショ・図解・表・リンクカードを配置しています。本文画像はすべて実物ソース（アプリのスクショ、ブランド調の HTML→PNG 図版、生成イラスト）由来で、モデルが手描きしたものは使わず、フル画質で配信しています。
 
 ## ライセンス
 
