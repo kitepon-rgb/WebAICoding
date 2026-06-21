@@ -29,11 +29,11 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **CSS**: `assets/css/main.css`（素のCSS・フレームワーク不使用・ライトモードのみ）。`baseof.html` が `resources.Get "css/main.css" | fingerprint` で**ハッシュ付きURL `/css/main.<hash>.css`** で配信＝**変更のたびURLが変わりブラウザ/Cloudflareのキャッシュを自動破棄**（CSSを直したら確実に反映される。同一URL据え置きでスマホが旧CSSを掴む罠を回避）
 - **レイアウト（自前テーマ）**: `layouts/_default/baseof.html`（head・上部バー・フッター・GoatCounter を内包）／`list.html`（ホーム＝ヒーロー＋カテゴリpill＋ダーク注目帯＋**記事カバーのターミナル窓カード**グリッド。タグ/section 一覧も兼用）／`single.html`（記事＝明朝見出し＋ドロップキャップ＋ターミナル風コードブロック＋前後ナビ）。フォント: 見出し=Noto Serif JP / 本文=Zen Kaku Gothic New / コード=JetBrains Mono
 - **デザインシステム**: claude.ai/design の「claude-code-blog」プロジェクトに同期（`DesignSync` ツール）。デザインを大きく変える時はそこで詰めて `layouts/` + `assets/css/main.css` に反映する
-- **カバー画像**: 各記事に `cover.png`（1250x500px = 2.5:1）。生成スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`（**Windows 側。この Mac には未移行＝GitHub 同期で持ってくる予定**。playwright も Windows 側）
+- **カバー画像**: 各記事に `cover.png`（1250x500px = 2.5:1）。生成スクリプトは**プロジェクト内 `tools/cover/generate-cover.js`**（playwright で HTML→PNG。**OS非依存＝Windows/Mac/Linux どれでクローンしても同一出力**。クローン後 `cd tools/cover && npm ci && npx playwright install chromium` で準備。詳細は `tools/cover/README.md`）
   - 使い方: `node generate-cover.js "タイトル1行目" "タイトル2行目" "出力パス" ["コードテキスト"]`
-  - デザイン: Claudeオレンジのグラデ（**実色 左上 `#c4603a` → 右下 `#e79e6e`**）、ターミナル風枠（ボーダー `#dfcbc1`）、Noto Serif JP 600、背景にコードライン
+  - デザイン: Claudeオレンジのグラデ（**実色 左上 `#c4603a` → 右下 `#e89f6f`**）、ターミナル風枠（ボーダー `#dfcbc1`）、見出し Noto Serif JP 600、背景コード Courier Prime（旧 `Courier New`＝Windows専用を OS非依存の Web フォントに置換）、背景にコードライン
   - ⚠️ カバーは**ホームのカード・注目帯・記事冒頭**で表示＝実質必須。未設定だと `slug.md` のターミナル風プレースホルダになる
-  - 🚧 **スマホのカバー切れ対応（WIP・未完）**: ホーム記事一覧カードはスマホ（行レイアウト）で 2.5:1 カバーの左右を `object-fit:cover` で一律トリミングしてしまう（PCは問題なし）。横長を縮める発想では中途半端 → **iPhone 用の正方形カバー `cover-sm.png`（1:1）を別生成し `<picture>`（`media="(max-width:600px)"`）で配信**＋ `main.css` の `@media(max-width:600px)` で `.card .thumb` を 1:1 にする方針。**本物の generate-cover.js（Windows）に 1:1 モードを足してコピーするのを GitHub 同期後に着手**（`~/Developer/blog-figmaker/gen-cover.mjs` は暫定の再現版＝本物到着で置換予定）
+  - 🚧 **スマホのカバー切れ対応（WIP・未完）**: ホーム記事一覧カードはスマホ（行レイアウト）で 2.5:1 カバーの左右を `object-fit:cover` で一律トリミングしてしまう（PCは問題なし）。横長を縮める発想では中途半端 → **iPhone 用の正方形カバー `cover-sm.png`（1:1）を別生成し `<picture>`（`media="(max-width:600px)"`）で配信**＋ `main.css` の `@media(max-width:600px)` で `.card .thumb` を 1:1 にする方針。**1:1 モードは `tools/cover/generate-cover.js` に追加する想定**（未着手）
 - **本文画像（2026-06 に全32記事へ導入）**: 各記事の本文に図・スクショ・イラスト・表を配置（**記事=主／画像=従**。実物ソース厳選、**Claudeモデルの手描き厳禁**、**フル画質で出す＝圧縮/縮小/WebP化はしない**）。詳細方針は `memory/feedback_blog_image_policy.md`、インフラは `memory/project_blog_image_infra.md`
   - **自動キャプション**: `layouts/_default/_markup/render-image.html`（render hook）が本文の `![alt](file.png)` を `<figure>`＋`<figcaption>`（alt=キャプション）でラップ。スタイル `.prose figure.fig-img`
   - **OGPリンクカード**: `layouts/shortcodes/linkcard.html` = `{{< linkcard url= title= desc= site= image= >}}`（App Store / GitHub / BOOTH / X 等のプレビューカード）。スタイル `.prose a.linkcard`
@@ -61,13 +61,11 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - 内部リンクは必ず `relref` を使う（`[テキスト]({{< relref "slug" >}})`）
 
 ### 2. カバー画像生成
-- ⚠️ **この Mac には generate-cover.js が未移行**（Windows 側）。GitHub 同期で持ってくるまでは新規カバーを正規生成できない。暫定で `~/Developer/blog-figmaker/gen-cover.mjs`（再現版）が使えるが、本物到着後は置換する。本文の図版/イラストは figmaker・grok で生成可（上記「本文画像」参照）
-- スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`（playwright は **Windows 側**にあるので Windows node で回す。WSL node では不可）
-- WSL からの実働手順:
-  1. `powershell.exe -NoProfile -Command "cd 'C:\Users\kite_\Documents\Program\_playwright'; node generate-cover.js '1行目' '2行目' '<出力名>.png'"`（日本語引数はそのまま通る。コードテキスト引数は多行クオートが壊れやすいので既定でよい）
-  2. 記事へコピー: `cp /mnt/c/Users/kite_/Documents/Program/_playwright/<出力名>.png content/post/<slug>/cover.png`
-  3. `file …/cover.png` で 1250x500 を確認、`Read` で日本語の化けが無いか目視
-- ⚠️ スクリプトの**既定出力パスは旧 `../Web/` リポジトリ**を指す → 出力先は必ず明示する（上記のように `_playwright` 直下へ出して cp）
+- スクリプト: **プロジェクト内 `tools/cover/generate-cover.js`**（playwright・OS非依存。詳細は `tools/cover/README.md`）
+- 初回のみセットアップ: `cd tools/cover && npm ci && npx playwright install chromium`（Linux で共有ライブラリ不足なら `npx playwright install-deps chromium`）
+- 実働手順:
+  1. `cd tools/cover && node generate-cover.js '1行目' '2行目' '../../content/post/<slug>/cover.png'`（記事へ直接出力。コードテキスト第4引数は省略でよい＝既定のターミナルログが入る）
+  2. `file content/post/<slug>/cover.png` で 1250x500 を確認、`Read` で日本語の化けが無いか目視
 - 1行が長すぎると折り返すので、タイトルを短く2行に分割する
 
 ### 3. 公開前監査（必須）

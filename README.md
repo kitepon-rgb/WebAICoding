@@ -87,6 +87,16 @@ cover:
 ---
 ```
 
+Each post needs a `cover.png` (1250×500). Generate it with the in-repo tool — OS-independent, so any clone produces the same image:
+
+```bash
+cd tools/cover
+npm ci && npx playwright install chromium    # first time only
+node generate-cover.js "Title line 1" "Title line 2" "../../content/post/your-slug/cover.png"
+```
+
+See [tools/cover/README.md](tools/cover/README.md) for the design spec and details.
+
 Set `draft: false` to publish. Pushing to `main` deploys automatically.
 
 ## Layout
@@ -99,6 +109,7 @@ layouts/        Custom theme — baseof / list / single
 assets/css/     Stylesheet (fingerprinted at build → cache-busting)
 static/         Static files — favicons, OG image, etc.
 hugo.toml       Site configuration
+tools/cover/    Cover-image generator (Playwright → 1250×500 PNG)
 ```
 
 Articles are illustrated with in-text figures, diagrams, app screenshots, tables, and link cards. Body images are sourced from real material (app screenshots, brand-styled HTML→PNG diagrams, generated illustrations) — never hand-drawn by the model — and served at full resolution.

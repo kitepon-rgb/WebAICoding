@@ -1,0 +1,14 @@
+{
+  "name": "cover-image-generator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "記事カバー画像（1250x500）を生成する。Hugo本体とは独立したツール。",
+  "main": "generate-cover.js",
+  "type": "commonjs",
+  "scripts": {
+    "generate": "node generate-cover.js"
+  },
+  "dependencies": {
+    "playwright": "1.61.0"
+  }
+}

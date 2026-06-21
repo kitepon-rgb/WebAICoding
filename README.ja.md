@@ -87,6 +87,16 @@ cover:
 ---
 ```
 
+各記事には `cover.png`（1250×500）が必要です。リポジトリ内のツールで生成します（OS非依存＝どのマシンのクローンでも同じ画像になる）:
+
+```bash
+cd tools/cover
+npm ci && npx playwright install chromium    # 初回のみ
+node generate-cover.js "タイトル1行目" "タイトル2行目" "../../content/post/your-slug/cover.png"
+```
+
+デザイン仕様や詳細は [tools/cover/README.md](tools/cover/README.md) を参照。
+
 `draft: false` の記事だけが本番に公開されます。`main` に push すると自動でデプロイされます。
 
 ## ディレクトリ構成
@@ -99,6 +109,7 @@ layouts/        自前テーマ — baseof / list / single
 assets/css/     スタイルシート（ビルド時に fingerprint ＝キャッシュ破棄）
 static/         ファビコン・OG 画像などの静的ファイル
 hugo.toml       サイト設定
+tools/cover/    カバー画像ジェネレータ（Playwright → 1250×500 PNG）
 ```
 
 各記事は本文に図・スクショ・図解・表・リンクカードを配置しています。本文画像はすべて実物ソース（アプリのスクショ、ブランド調の HTML→PNG 図版、生成イラスト）由来で、モデルが手描きしたものは使わず、フル画質で配信しています。
