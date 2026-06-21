@@ -64,8 +64,8 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - スクリプト: **プロジェクト内 `tools/cover/generate-cover.js`**（playwright・OS非依存。詳細は `tools/cover/README.md`）
 - 初回のみセットアップ: `cd tools/cover && npm ci && npx playwright install chromium`（Linux で共有ライブラリ不足なら `npx playwright install-deps chromium`）
 - 実働手順:
-  1. `cd tools/cover && node generate-cover.js '1行目' '2行目' '../../content/post/<slug>/cover.png'`（記事へ直接出力。コードテキスト第4引数は省略でよい＝既定のターミナルログが入る）
-  2. `file content/post/<slug>/cover.png` で 1250x500 を確認、`Read` で日本語の化けが無いか目視
+  1. `cd tools/cover && node generate-cover.js "1行目" "2行目" "../../content/post/<slug>/cover.png"`（記事へ直接出力。コードテキスト第4引数は省略でよい＝既定のターミナルログが入る）
+  2. `file ../../content/post/<slug>/cover.png` で 1250x500 を確認（手順1で `cd tools/cover` 済みのため相対）、`Read` で日本語の化けが無いか目視
 - 1行が長すぎると折り返すので、タイトルを短く2行に分割する
 
 ### 3. 公開前監査（必須）
