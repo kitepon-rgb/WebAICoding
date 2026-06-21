@@ -1,0 +1,21 @@
+{{- /* OGP風リンクカード。データは手動指定（ビルド時フェッチに依存しない）。
+       使い方:
+       {{< linkcard url="https://..." title="タイトル" desc="説明" site="App Store" image="card-thumb.png" >}}
+       image は Page Bundle 相対ファイル名 or http(s) URL。省略可。 */ -}}
+{{- $url := .Get "url" -}}
+{{- $img := .Get "image" -}}
+{{- $imgURL := "" -}}
+{{- if $img -}}
+  {{- if hasPrefix $img "http" -}}{{- $imgURL = $img -}}
+  {{- else -}}{{- with .Page.Resources.GetMatch $img -}}{{- $imgURL = .RelPermalink -}}{{- end -}}{{- end -}}
+{{- end -}}
+{{- $site := .Get "site" -}}
+{{- if not $site -}}{{- with $url -}}{{- $site = (urls.Parse .).Host -}}{{- end -}}{{- end -}}
+<a class="linkcard" href="{{ $url | safeURL }}" target="_blank" rel="noopener noreferrer">
+  {{- with $imgURL -}}<span class="linkcard-thumb"><img src="{{ . | safeURL }}" alt="" loading="lazy" decoding="async"></span>{{- end -}}
+  <span class="linkcard-body">
+    <span class="linkcard-title">{{ .Get "title" }}</span>
+    {{- with .Get "desc" -}}<span class="linkcard-desc">{{ . }}</span>{{- end -}}
+    <span class="linkcard-site">{{ $site }}</span>
+  </span>
+</a>

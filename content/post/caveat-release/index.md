@@ -10,6 +10,8 @@ cover:
 
 [Caveat](https://github.com/kitepon-rgb/Caveat) っていうClaude Code用の長期記憶レイヤをnpmに公開した。
 
+![同じ落とし穴に二度落ちないための、記憶のレイヤ](eyecatch.png)
+
 ## 何をするか
 
 Claude Codeを使ってると、実装そのものより「他人の仕様」の解明に時間が溶ける。GPUドライバのバージョン制約、ネイティブモジュールのビルド失敗、IDEの癖、特定OSでだけ起きるパス問題。一度ハマって解決したのに、半年後に別プロジェクトで同じ罠を踏む。AIに聞いても「分からない」とは言わずに推測で動くから、また同じ時間を溶かす。
@@ -25,6 +27,8 @@ Caveatは hook で3カ所に仕込まれる。
 | プロンプト送信時 | プロンプトが送られた瞬間 | プロンプトを分解して、過去のメモと2語以上が共起するエントリだけ浮上 |
 | ツールエラー時 | Claudeのツール呼び出しが失敗した瞬間 | バックグラウンドで検索を走らせ、次のターンに既知罠として通知 |
 | セッション終了時 | セッションが閉じる時 | 会話ログから「もがきシグナル」を抽出。新規罠として記録すべきものがあればAIに促す |
+
+![Caveatの3つの発火点。前2つは過去の罠ノートを浮上させ、最後の1つは今日のもがきを新しい罠として記録する](fig1.png)
 
 「もがきシグナル」っていうのは、ツール失敗・同じファイルを何度も編集・Web検索の連発・Bashコマンドの再実行みたいな、**AI自身は自覚してないけど客観的には苦戦してた痕跡**。これを最後にスキャンして、「今日のセッション、ここで詰まってたよね？罠として記録する？」って促す。
 
@@ -48,6 +52,8 @@ Caveatは hook で3カ所に仕込まれる。
 │   └── ...
 └── .git/
 ```
+
+![罠の実体はただのmarkdown。visibility・confidence・tags のfrontmatterに Symptom / Cause / Resolution が続く](shot1.png)
 
 Obsidianのvaultとしてそのまま開ける。チームで共有したければ普通に `git push` すればいい。中央サーバはない。
 
@@ -106,6 +112,6 @@ caveat pull
 
 v0.11.1、203 tests passing。個人と小規模チームが想定ユースケース。
 
-[Caveat — GitHub](https://github.com/kitepon-rgb/Caveat)
+{{< linkcard url="https://github.com/kitepon-rgb/Caveat" title="kitepon-rgb/Caveat" desc="Stop rediscovering the same trap. — Claude Code 用の長期記憶レイヤ。markdown-in-git をソースに、3つのhook発火点で関連する罠を自動で浮上させる。" site="GitHub" image="og-github.png" >}}
 
 MIT。バグ報告・PRも歓迎。

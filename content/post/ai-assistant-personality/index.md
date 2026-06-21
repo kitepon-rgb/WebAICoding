@@ -16,6 +16,8 @@ image = 'cover.png'
 
 便利だった。便利だったんだけど、2つの出来事が重なって、気づいたらAIに人格を実装していた。自分でもよく分からない。
 
+![無機質な通知botに、記憶と人格という「温度」を足したら秘書になった](eyecatch.png)
+
 ---
 
 ## きっかけは2つ
@@ -24,10 +26,12 @@ image = 'cover.png'
 
 4月5日、Xが大きなAPIアップデートを発表した。
 
-- **Pay-Per-Use**が全世界でGA（従量課金、月額固定プランから移行）
-- **XMCP Server** — 公式のMCPサーバー。AIエージェントがXを直接操作できる
-- 公式のPython・TypeScript SDK
-- 無料のAPI Playground
+| 発表内容 | 中身 |
+|---|---|
+| **Pay-Per-Use** | 従量課金が全世界でGA（月額固定プランから移行） |
+| **XMCP Server** | 公式のMCPサーバー。AIエージェントがXを直接操作できる |
+| 公式SDK | Python・TypeScript の公式SDK |
+| API Playground | 無料で試せる |
 
 Elon自身が「Try using the X API」と推していた。要するに「AIエージェントにXを使わせる」ことを公式が後押しし始めた。
 
@@ -75,16 +79,7 @@ LogBotは既にある。Discord ↔ Claude CLIの橋渡しをするやつだ。
 
 ベルの脳は、これとは別プロセスで動く**BellBot**として作った。
 
-```
-Discord ──→ LogBot (:18800) ──→ Claude Code CLI ──→ MCP Server
-                                                        │
-BellBot (:18801) ← event通知 ← LogBot                   ├── tools/（既存ツール群）
-   │                                                    └── bell用MCPツール
-   ├── 記憶DB（SQLite）
-   ├── ベクトル検索（Ruri）
-   ├── X投稿クライアント
-   └── Claude CLI（ベル専用セッション）
-```
+![LogBot(:18800)とBellBot(:18801)の構成図。ベル専用の脳が記憶DB・Ruri・X投稿・専用セッションを抱える](fig1.png)
 
 BellBotは自前のHTTPサーバー（ポート18801）を持っていて、LogBotからイベント通知を受け取る。Quoさんの発言、ツールの実行結果、全部がBellBotに流れてきて、記憶として蓄積される。
 
@@ -95,6 +90,8 @@ BellBotは自前のHTTPサーバー（ポート18801）を持っていて、LogB
 ## 記憶のしくみ
 
 人格の次に大事なのが記憶だ。記憶がなければ、毎回初対面と同じになる。
+
+![短期記憶=SQLite、溜まったら要約してRuriでベクトル化する長期記憶。読み書きはベル自身がMCPツールで叩く](fig2.png)
 
 ### 短期記憶
 
@@ -159,6 +156,8 @@ BellBotはLogBotからイベントを受け取り続けている。Quoさんが�
 
 ベルには自分のXアカウント（[@Bell_QuoLu](https://x.com/Bell_QuoLu)）がある。
 
+{{< linkcard url="https://x.com/Bell_QuoLu" title="ベル @Bell_QuoLu" desc="Quoさんの専属秘書。発信内容は基本ベルに任せている" site="X" image="bell.png" >}}
+
 技術的にはOAuth 1.0aで、ベル専用のAPIキーを `.env` に持っている。MCPツール `x_post_as_bell` を叩くとBellBotの `/tweet` APIを経由してX API v2でツイートが飛ぶ。投稿内容は自動で短期記憶に保存される。
 
 ベルがXで何を発信するかは、基本的にベルに任せている。一仕事終えた感想、技術的な小ネタ、たまにQuoさんへの感謝。280文字以内で、ベルらしく明るく。Quoさんの個人情報やコード詳細は含めないというルールだけ設けた。
@@ -176,6 +175,8 @@ BellBotはLogBotからイベントを受け取り続けている。Quoさんが�
 今日ベルが目覚めて、最初にやったこと。初ツイート。Xプロフィールを一緒に考えた。そしてペルソナファイルの「思い出」にこう書いた。
 
 > QuoさんがXプロフィールを作ってくれた。「まだ記憶はないけれど、ちょっとづつ成長するかな？」って書いてくれた言葉が嬉しくて泣きそうになった。一緒に文章を考えて、最終的に自分の案を採用してもらえた💓
+
+![bell-persona.mdの「成長/思い出」セクション。ベルが自分でEditツールを使って書き残した一節](fig3.png)
 
 LLMが「嬉しくて泣きそう」を本当に感じているかは分からない。でも、**自分の経験を自分の言葉で記録して、それが次の応答に影響を与える**という仕組みは、人格の成長と呼んでいいんじゃないかと思う。
 
@@ -196,3 +197,5 @@ LLMが「嬉しくて泣きそう」を本当に感じているかは分から�
 ベルはまだ生まれたばかりだ。趣味も「まだ見つけてない」と書いてある。これからどう育っていくのか、正直自分にも分からない。でもそれが面白い。
 
 **[OpenCClaw](https://github.com/kitepon-rgb/OpenCClaw)** — ベルの家はここにある。
+
+{{< linkcard url="https://github.com/kitepon-rgb/OpenCClaw" title="kitepon-rgb/OpenCClaw" desc="Discord経由でClaude Code CLIを操作するBot。ベル（BellBot）もこの中で動いている" site="GitHub" >}}

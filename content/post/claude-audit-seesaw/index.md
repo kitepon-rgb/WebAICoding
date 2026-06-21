@@ -12,6 +12,8 @@ cover:
 
 俺はいつも、計画書を作って監査させて、さぁ実装だ、という流れでやってます。
 
+![計画書の上をモグラ叩きのハンマーが追いかける——観点が広いままだと、何を直しても別の穴が顔を出す](eyecatch.png)
+
 特に Opus 4.7 になってから、その監査がうまくいかない気がしてた。Opusの視野が広がったからだろうか？ 自分の計画とは的外れな指摘を持ってきたり、監査・修正の自動ループ回させると指摘が収束しないことも増えた。
 
 ## モグラたたき
@@ -34,6 +36,8 @@ cover:
 
 矛盾点の数は有限だから、ちゃんと収束するんだね。
 
+![普通に監査すると指摘が往復し続ける（左）が、評価軸を矛盾点だけに絞ると有限集合になり潰し切れる（右）](fig1.png)
+
 そして計画書の矛盾が無くなった状態で実装させると、どこも止まらないで最後まで突っ走る（笑）
 
 もちろん、たまに実装上のエラーがあってリトライしてたりはするけどね。
@@ -46,9 +50,19 @@ cover:
 
 似たのはあった。でも、なんか違う。端的にややこしい。
 
-- **Criteria Drift** ([Hamel Husain の解説](https://hamel.dev/blog/posts/llm-judge/)、Shankar et al.): LLMにレビューさせると評価軸がじわじわズレる、という現象。対策は「評価軸を磨き直しながら過去のスコアを再採点する」。…重い
-- **Oscillatory Convergence** ([Fractal Thought Engine](https://simiacryptus.github.io/Science/learning/2025/07/06/llm-feedback-dynamics.html)): LLMの反復フィードバックで、解法アプローチを行ったり来たりするセッションが一定数ある、という観測。観測はされてるけど、対策の話ではない
-- **Moving the Goalposts** ([Microsoft の記事](https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/evaluating-ai-agents-techniques-to-reduce-variance-and-boost-alignment-for-llm-j/4498571)): 評価中にrubricを動かすな、評価開始前にrubricを確定しろ、という話
+| 既存の呼び名 | どんな現象か | 自分のやり方との違い |
+|---|---|---|
+| **Criteria Drift**（Hamel Husain / Shankar et al.） | LLMにレビューさせると評価軸がじわじわズレる | 対策が「評価軸を磨き直して過去のスコアを再採点」…重い |
+| **Oscillatory Convergence**（Fractal Thought Engine） | 反復フィードバックで解法を行ったり来たりするセッションが一定数ある | 観測はされてるけど、対策の話ではない |
+| **Moving the Goalposts**（Microsoft） | 評価中にrubricを動かすな、開始前に確定しろ | 「確定させる」止まりで、軸を1点に絞る話ではない |
+
+参照した一次ソースはこの3つ。
+
+{{< linkcard url="https://hamel.dev/blog/posts/llm-judge/" title="Creating a LLM-as-a-Judge That Drives Business Results" desc="LLMにレビューさせると評価軸がズレる Criteria Drift の解説（Shankar et al.）" site="hamel.dev" >}}
+
+{{< linkcard url="https://simiacryptus.github.io/Science/learning/2025/07/06/llm-feedback-dynamics.html" title="LLM Feedback Dynamics" desc="反復フィードバックで解法アプローチが振動する Oscillatory Convergence の観測" site="Fractal Thought Engine" >}}
+
+{{< linkcard url="https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/evaluating-ai-agents-techniques-to-reduce-variance-and-boost-alignment-for-llm-j/4498571" title="Evaluating AI Agents: Techniques to Reduce Variance and Boost Alignment for LLM-Judges" desc="評価開始前に rubric を確定せよ（Moving the Goalposts を避ける）" site="Microsoft Tech Community" >}}
 
 近い話はあるんだ。でも自分がやったのは「rubricを確定させる」じゃなくて「**評価軸そのものを矛盾の1点に絞る**」。観点が広い限り指摘ネタは無限に湧くから、観点側を有限な集合に閉じ込めにいく。これが端的に書かれた既存研究は見つからなかった。
 

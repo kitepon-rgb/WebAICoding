@@ -13,6 +13,8 @@ cover:
 自宅サーバーで MCP サーバーを何本か立てて、Claude や ChatGPT から叩かせている。
 [サーバー本体]({{< relref "/post/bc250-to-ms-a2" >}})も[監視機]({{< relref "/post/pi5-server-monitor" >}})も AI に組ませて、わりと安定運用してるつもりでいた。
 
+![暗い部屋で温かく灯るターミナル。足元の層が一枚ずつ剥がれていくイメージ。](eyecatch.png)
+
 なのに、ある日 Claude が言う。
 
 > 「そのツール、見つかりません」
@@ -99,6 +101,10 @@ AI に毎日叩かせて、初めてそこに意識が向いた、というこ�
 **Cloudflare の DNS が名前を持って、Cloudflare が出口になってくれる**。
 
 自分のドメイン（`kitepon.dev`）を Cloudflare に NS 登録して、サブドメインごとに tunnel route を切るだけ。固定IPは要らない。ポート開放も要らない。DDNS の更新スクリプトも要らない。
+
+![旧経路は自宅サーバーの名前を DDNS で晒し、その解決が落ちた瞬間にツールが消えた。新経路は自宅から Cloudflare へ outbound の常設接続を張るだけ。](fig1.png)
+
+{{< linkcard url="https://www.cloudflare.com/products/tunnel/" title="Cloudflare Tunnel" desc="固定IPやポート開放なしで、自宅サーバーから Cloudflare エッジへ outbound の常設接続を張る。2020年から無料。" site="cloudflare.com" >}}
 
 ---
 

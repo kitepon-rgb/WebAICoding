@@ -10,6 +10,8 @@ cover:
 
 [aiterm-mcp](https://github.com/kitepon-rgb/aiterm-mcp) っていうMCPサーバをnpmに公開した。AIにターミナルを「1本の永続セッション」として握らせるためのもの。
 
+![aiterm-mcp ＝ 端末を1本だけ永続で握り、SSHは一度きり、出力は読む前に間引くstdio MCPサーバ。道具は pty_open / pty_send / pty_read など6個だけ](overlay.png)
+
 ## AIのターミナル作業は、見えないところでトークンが溶ける
 
 AIにサーバー作業をさせるとき、たいていは1コマンドずつ投げる。SSHなら `ssh host "コマンド"` をその都度。これ、1回ごとに「接続 → 認証 → 実行 → 切断」をフルで繰り返してる。
@@ -24,6 +26,8 @@ AIにサーバー作業をさせるとき、たいていは1コマンドずつ�
 
 aitermはここを畳む。端末を**1本だけ**永続で握って、その中でSSHは**一度だけ**張る。10コマンド打とうが、`ssh` を呼ぶのは最初の1回きり。**接続も認証もN回から1回に減る**。`cd` も環境も最初の1回。以降のコマンドは全部、同じ1本のセッションに素のまま乗る。やり直しの一式が、まるごと消える。
 
+![細切れモードはコマンドごとに接続・認証・MOTDをくり返すが、aitermはSSHもcdもsourceも最初の1回きりで済む](fig1.png)
+
 どれくらいか、自分のサーバーで測った。SSHでログインすると、それだけで定型文（システム情報やお知らせ＝MOTD）が **約385トークン**ぶんAIに渡る。1コマンドごとに繋ぎ直す細切れモードだと、これが**毎回**乗る。10コマンドの作業なら、本題に入る前の定型文だけで約3,800トークン。端末を1本握れば、払うのは最初の1回きり。残りはゼロだ。
 
 ## 読む前に、出力も間引く
@@ -31,6 +35,8 @@ aitermはここを畳む。端末を**1本だけ**永続で握って、その中
 トークン節約はもう1段ある。aitermはAIが出力を**読む前に**間引く。
 
 先に断っておくと、**この削減ロジックは自分の発明じゃない**。[**rtk（Rust Token Killer）**](https://github.com/rtk-ai/rtk) のロジックをそっくり移植させてもらった。rtk は Patrick Szymkowiak 氏が作った、コマンド出力をLLMに渡す前に圧縮するツールだ（Apache-2.0）。aitermはそれを、別バイナリを呼ばずに端末読み取りの中で完結するよう自前で再実装した（ファイルは複製せず、挙動を合わせてある。pytestの要約は rtk 0.42.0 と一致するよう回帰テストで固定した）。
+
+{{< linkcard url="https://github.com/rtk-ai/rtk" title="rtk — Rust Token Killer" desc="Patrick Szymkowiak 氏作。コマンド出力をLLMに渡す前に圧縮するツール（Apache-2.0）。aitermの間引きロジックの元。" site="GitHub" >}}
 
 やってることは、
 
@@ -47,6 +53,8 @@ aitermはここを畳む。端末を**1本だけ**永続で握って、その中
 | `docker ps -a`（コンテナ33個） | 約2,355 tok | 約2,218 tok |
 | ログ120行（`journalctl`） | 約4,375 tok | 約1,696 tok |
 | `git log`（25件） | 約473 tok | 約338 tok |
+
+![journalctlのログ120行は4,375→1,696 tok(−61%)、固有値だらけのdocker ps -aは2,355→2,218 tok(−6%)と削り幅が分かれる](fig2.png)
 
 削り具合は中身しだいだ。反復の多いログはごっそり落ちる（120行で−61%）。一方、固有値ばかりの横長な表（コンテナ一覧）は−6%しか縮まない。一律で何%減みたいな魔法じゃなくて、「無駄なところだけ削る」が正直なところ。それでも、再接続の定型文を毎回読まされずに済むぶんと合わせれば、トークンは確実に積もらなくなる。
 
@@ -104,14 +112,18 @@ Claude Codeを再起動して `/mcp` でつながってれば完了。Claudeで�
 
 ## 要件
 
-- Node.js 18+
-- tmux（`apt install tmux` / `brew install tmux`）
-- Linux / WSL2 / macOS / Windows ネイティブ対応（Windowsはtmuxが無いので、中でWSLのtmuxへ橋渡しする）
+| 項目 | 内容 |
+|---|---|
+| Node.js | 18+ |
+| tmux | `apt install tmux` / `brew install tmux` |
+| 対応OS | Linux / WSL2 / macOS / Windows ネイティブ（Windowsはtmuxが無いので、中でWSLのtmuxへ橋渡しする） |
 
 ## ステータス
 
 v0.4.0、MIT、provenance付きでnpm公開済み。
 
-[aiterm-mcp — GitHub](https://github.com/kitepon-rgb/aiterm-mcp)
+{{< linkcard url="https://github.com/kitepon-rgb/aiterm-mcp" title="aiterm-mcp" desc="AIに「1本の永続ターミナル」を握らせ、SSHは一度きり・出力は読む前に間引くstdio MCPサーバ。tmuxベースでツールは6個。" site="GitHub" image="overlay.png" >}}
+
+{{< linkcard url="https://www.npmjs.com/package/aiterm-mcp" title="aiterm-mcp - npm" desc="npx -y aiterm-mcp で起動。Claude / Codex などMCPクライアントなら何でも。v0.4.0、MIT、provenance付き。" site="npm" >}}
 
 バグ報告・PRも歓迎。

@@ -8,6 +8,8 @@ cover:
   image: "cover.png"
 ---
 
+![中断したセッションから次のセッションへ、記憶のバトンを手渡しするイメージ](eyecatch.png)
+
 [前の記事]({{< relref "throughline-context-diet" >}})でThroughlineを公開した。コンテキストの大半を占めてるツールI/Oを退避するやつ。
 
 あの時点では"動いてた"。自分の環境では。
@@ -21,6 +23,8 @@ cover:
 Claude Codeのhookには `SessionStart` ってイベントがあって、`source` っていうフィールドで startup（新規起動）と clear（/clear後）を区別できる、はずだった。
 
 ところがVSCode拡張だと、`/clear` しても `source` が `startup` に潰される。[GitHub issue #49937](https://github.com/anthropics/claude-code/issues/49937) に上がってる既知の問題。CLI単体なら動くけど、拡張だと識別できない。
+
+{{< linkcard url="https://github.com/anthropics/claude-code/issues/49937" title="SessionStart source is 'startup' instead of 'clear' on /clear in VSCode extension" desc="VSCode拡張で /clear した時、SessionStart hook の source が clear ではなく startup になる既知のissue。検知前提の設計が崩れる原因。" site="GitHub" >}}
 
 自分はVSCode拡張で使ってる。つまり「startupとclearを区別する」前提の設計が、根本から崩れてた。
 
@@ -45,6 +49,8 @@ Claude Codeのhookには `SessionStart` ってイベントがあって、`source
 次のセッション開始時、バトンが1時間以内に置かれてたら、そのセッションの記憶を引き継ぐ。なければ、何もしない。新規セッションとして始まる。
 
 並行ウィンドウもVSCode再起動も、「バトンが置かれてない限り誤爆しない」が原理的に保証される。
+
+![検知（自動）はsource潰れ・並行ウィンドウ・プロセス構造の違いで全部壊れる。宣言（/tl）はバトンがある時だけ継承＝誤爆ゼロ](fig1.png)
 
 明示的なのは一見面倒だけど、「勝手に引き継いで迷惑」の方が遥かに困る。誤爆ゼロの方が価値があった。
 
@@ -77,6 +83,8 @@ Z の挙動が気になる。もしかしたら...
 ...
 ```
 
+![in-flight memo・前のClaudeのthinking・直近20ターンの3段。前者を頭に出すから、読まずに続けられる](fig2.png)
+
 ## "読む"じゃなく"続ける"
 
 これで手応えが変わった。
@@ -99,7 +107,9 @@ Z の挙動が気になる。もしかしたら...
 
 Throughline は v0.3.2 でnpmに公開してる。Node.js 22.5+、依存ゼロ、MIT。
 
-[Throughline — GitHub](https://github.com/kitepon-rgb/Throughline)
+![Throughline — Claude CodeのツールI/OをSQLiteに退避するhook。Node.js 22.5+、依存ゼロ、MIT](throughline-og.png)
+
+{{< linkcard url="https://github.com/kitepon-rgb/Throughline" title="kitepon-rgb/Throughline" desc="Claude CodeのツールI/OをSQLiteに退避し、/tlで次セッションへ記憶のバトンを渡すhook。Node.js 22.5+、依存ゼロ、MIT。" site="GitHub" image="throughline-og.png" >}}
 
 ```bash
 npm install -g throughline

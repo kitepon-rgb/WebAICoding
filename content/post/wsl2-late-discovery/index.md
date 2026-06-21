@@ -22,6 +22,8 @@ Claude MAXを契約して、毎日のようにコーディングに使ってい�
 
 WSL……2？
 
+![Windowsの窓の中に、小さく温かく光るLinuxターミナルが入れ子で走り出すイメージ。2ヶ月間ロックされていた本来の速度が解ける。](eyecatch.png)
+
 ---
 
 ## 「Windows上で本物のLinuxを動かすやつです」
@@ -81,6 +83,8 @@ WSL……2？
 あの夜に諦めて投げ出したプラグインも、頑張って通したあのフックも、最初から Linux 側で動かしてたら一瞬だったのか。
 **返してくれ俺の週末を。**
 
+![左がWindowsネイティブで詰まっていた事例、右がWSL2に移して素直に動くようになった挙動。土台がLinuxかWindowsかだけの違い。](fig1.png)
+
 ---
 
 ## また Claude、お前………
@@ -115,6 +119,8 @@ wsl --install
 
 これでデフォルトの Ubuntu が落ちてきて、再起動して、ユーザー作って、終わり。
 あとは VS Code に **WSL 拡張** を入れて、左下の緑のボタンから「Connect to WSL」を選ぶと、VS Code が Linux 側にシームレスに繋がる。
+
+![引っ越しの全手順。管理者PowerShellでwsl --install、VS Codeの左下緑ボタンでConnect to WSL、あとはLinux側でClaude Codeがそのまま動く。](fig2.png)
 
 Claude Code の再インストールも、Linux 側のターミナルで素直に通った。
 むしろ公式ドキュメントの手順がそのまま使える。Windows 専用の注意書きを読まなくていい。これは強い。

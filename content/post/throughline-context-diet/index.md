@@ -10,6 +10,8 @@ cover:
 
 MAXプランの週間クォータが3日で溶けた。
 
+![会話履歴の大半を占めるツールI/Oの残骸が、コンテキストウィンドウに居座り続けるイメージ](eyecatch.png)
+
 ×20のクォータがあるはずなのに、水曜には残量が怪しくなってる。それ自体は「まあそんなもんか」で済ませてたんだけど、ふと気になった。コンテキストウィンドウの中身って、実際どうなってるんだろう。
 
 [前の記事]({{< relref "ai-secretary-token-diet" >}})ではAI秘書のトークン節約について書いた。CLAUDE.mdを削ったり、MCPツール定義を削ったり。でも今回はAI秘書じゃなくて、Claude Code自体の話。道具のほうが大食いだったとは。
@@ -79,6 +81,8 @@ Throughlineは会話を3つのレイヤーに分解してSQLiteに保存する�
 
 **L3（Detail）** — ツール入出力、システムメッセージ。SQLiteに退避してコンテキストには一切残さない。必要になったらAIが自分でSQLiteから引っ張ってくる。
 
+![会話本文(L2)はそのまま残し、ツールI/O(L3)はSQLiteに退避。古いターンは一行要約(L1)へ畳む。50ターンで約90%のコンテキスト削減](fig1.png)
+
 /clearを打っても大丈夫。SQLiteは消えないから、次のセッション開始時にトランザクション一発で前セッションの記憶を引き継ぐ。PIDを追いかけたり、時間窓で判定する必要はない。決定的に動く。
 
 数字で言うとこう。
@@ -126,6 +130,8 @@ ThroughlineはL2を20ターン分保持するから、**短いセッションで
 ▶ Throughline  2ed5039c  ████░░░░░░░░░░░░░░░░  205.1k / 21%  残 794.9k  claude-opus-4-6
 ```
 
+![並行する複数セッションのトークン使用量を、推定でなくmessage.usageの実測値でリアルタイム表示する](fig2.png)
+
 transcriptのJSONLからAPIの実測値（`message.usage`）を読み取るので、`文字数÷4`みたいな雑な推定じゃなくて正確な値が出る。1Mコンテキストの検出も自動。
 
 複数セッションを走らせてる時に、どれがどれだけ食ってるかリアルタイムでわかる。地味に便利。
@@ -138,7 +144,11 @@ CLAUDE.mdの最適化やプロンプト短縮は全体の9%に効く対策で、
 
 本来こういう問題はプラットフォーム側が解決すべきなのかもしれない。でも今すぐ困ってたから自分で作った。Node.js 22.5以上、依存ゼロ、MIT。MAX契約があれば動く。
 
-[Throughline — GitHub](https://github.com/kitepon-rgb/Throughline)
+![Throughline — Claude Codeのコンテキスト消費を約90%削る、依存ゼロ・MITのOSS](og-throughline.png)
+
+{{< linkcard url="https://github.com/kitepon-rgb/Throughline" title="kitepon-rgb/Throughline" desc="Claude Codeの会話を L1/L2/L3 の3層に分け、ツールI/OをSQLiteへ退避してコンテキスト消費を約90%削るhook。依存ゼロ・MIT。" site="GitHub" image="og-throughline.png" >}}
+
+{{< linkcard url="https://www.npmjs.com/package/throughline" title="throughline - npm" desc="npm i -g throughline。Node.js 22.5以上で動作。" site="npm" >}}
 
 同じ問題で困ってる人がいたら、気が向いたら覗いてみてください。
 

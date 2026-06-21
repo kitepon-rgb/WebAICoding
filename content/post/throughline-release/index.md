@@ -10,6 +10,8 @@ cover:
 
 [Throughline](https://github.com/kitepon-rgb/Throughline) っていうClaude Code用のhookプラグインをnpmに公開した。
 
+![Throughline — Claude Codeのコンテキスト消費を約9割削りつつ、判断に必要な記憶はほぼ全部残す](overlay.png)
+
 ## 何をするか
 
 Claude Codeのセッションで、コンテキストの大半は「ツールI/O」の残骸で埋まってる。ファイルを読んだ中身、grepの結果、Bashの出力。AIがその場で使って、判断して、次に進んだ時点で役目を終えてるデータ。でも最後までコンテキストに居座ってトークンを食い続ける。
@@ -21,6 +23,8 @@ Throughlineは会話を3層に分けて管理する。
 | L2 | 会話本文（ユーザー発言 + AI応答） | 直近20ターンはそのまま注入 |
 | L1 | L2を要点を欠落させない程度（1/5）に要約したもの | 20ターンより古いターンはL1を注入 |
 | L3 | ツールI/O・システムメッセージ・thinking | 注入せずSQLiteに退避、必要になったらClaude自身が取り出す |
+
+![L1/L2/L3の3層メモリ。L2はそのまま、L1は1/5要約、L3（ツールI/O）だけSQLiteへ退避してコンテキストから抜く](fig1.png)
 
 ツールI/Oはコンテキストから完全に抜くので、読み終わったgrep結果やBash出力がセッション最後まで居座らない。古い会話は1/5に圧縮されるが要点は残るので、数十ターン前の判断の文脈もちゃんと追える。
 
@@ -73,6 +77,6 @@ transcriptのJSONLからAPIの実測値（`message.usage`）を読むので、`�
 
 設計の経緯や試行錯誤は [こちらの記事]({{< relref "throughline-declare-over-detect" >}}) に書いた。
 
-[Throughline — GitHub](https://github.com/kitepon-rgb/Throughline)
+{{< linkcard url="https://github.com/kitepon-rgb/Throughline" title="kitepon-rgb/Throughline" desc="Claude CodeのツールI/OをSQLiteに退避し、会話本文だけ残すhook。L1/L2/L3の3層メモリ・トークンモニタ同梱。依存ゼロ・MIT。" site="GitHub" image="og-throughline.png" >}}
 
 MIT。バグ報告・PRも歓迎です。

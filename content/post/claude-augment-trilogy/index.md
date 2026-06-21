@@ -16,6 +16,8 @@ cover:
 
 それぞれ別々の問題を解いてるんだけど、根っこは同じ。**Claude本体に「気をつけて」って書いて直る問題は、もう全部直してた**。残ってたのは構造的に直らない問題だった。
 
+![Claude本体には触らず、外側からhookで補強する3ツールのイメージ](eyecatch.png)
+
 ## 「気をつけて」を書き続けた時期
 
 最初の頃、自分も CLAUDE.md やプロンプトに「気をつけて」をたくさん書いてた。
@@ -43,6 +45,8 @@ cover:
 - ツールを呼び忘れていることに気づけない (「分からない」と分からないから、取りに行けない)
 
 こういう問題は、Claudeに「気をつけて」と頼んでも直らない。**Claude自身が直せない問題**だから。
+
+![指示で直る問題（左）と、自覚できないから直らない3問題（右）。右の3つがそのまま3ツールに対応する](fig1.png)
 
 ## 諦めて、外側から補強し始めた
 
@@ -88,6 +92,8 @@ Claude Code には hook 機構がある。プロンプトを送る前、ツー�
 
 「Claudeに必要な変更」がゼロなのが大事。プロンプトもCLAUDE.mdも、当たり前に書きたいことだけ書けばいい。「気をつけて」を増やさない。
 
+![中央のメインClaudeから3方向にhookが伸びる放射図。引き算・蓄積・足し算をすべて外側から差し込む](fig2.png)
+
 ## まだ補強してない構造的問題
 
 3つ作って気が済んだわけじゃない。直したい構造的問題はまだある。
@@ -104,6 +110,8 @@ Claude に「気をつけて」と書いて直る問題は、もう全部直し�
 
 1ヶ月で3つ作ってみて、補強の型は見えた気がする。3つとも MIT で npm に出してるので、同じ構造的問題で困ってる人がいたら、気が向いたら覗いてみてください。
 
-- [Throughline — GitHub](https://github.com/kitepon-rgb/Throughline)
-- [Caveat — GitHub](https://github.com/kitepon-rgb/Caveat)
-- [Spotter — GitHub](https://github.com/kitepon-rgb/Spotter)
+{{< linkcard url="https://github.com/kitepon-rgb/Throughline" title="Throughline — コンテキストの肥大化を退避する" desc="ツール入出力をSQLiteに退避してコンテキストから抜くhook。Claudeが必要なら自分で取り出せる。" site="GitHub" image="og-throughline.png" >}}
+
+{{< linkcard url="https://github.com/kitepon-rgb/Caveat" title="Caveat — 同じ罠を二度踏まないための長期記憶レイヤ" desc="過去に書き留めた罠ノートを、似た場面でhook経由で自動浮上させる。" site="GitHub" image="og-caveat.png" >}}
+
+{{< linkcard url="https://github.com/kitepon-rgb/Spotter" title="Spotter — ツール呼び忘れを別のClaudeが監査する" desc="ツールカタログを把握した別のClaude(Haiku 4.5)を並走させ、呼び忘れたらhookで指摘。" site="GitHub" image="og-spotter.png" >}}

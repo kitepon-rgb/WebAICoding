@@ -1,0 +1,14 @@
+{{- /* 本文画像を <figure> でラップし、alt をキャプションとして表示する。
+       Page Bundle 相対パスは Resources で解決。http(s)/絶対パスはそのまま。 */ -}}
+{{- $u := .Destination -}}
+{{- $img := "" -}}
+{{- if or (hasPrefix $u "http") (hasPrefix $u "/") -}}
+  {{- $img = $u -}}
+{{- else -}}
+  {{- with .Page.Resources.GetMatch $u -}}{{- $img = .RelPermalink -}}{{- end -}}
+  {{- if not $img -}}{{- $img = $u -}}{{- end -}}
+{{- end -}}
+<figure class="fig-img">
+  <img src="{{ $img | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+  {{- with .PlainText -}}<figcaption>{{ . }}</figcaption>{{- end -}}
+</figure>

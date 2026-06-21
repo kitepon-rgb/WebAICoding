@@ -10,12 +10,16 @@ cover:
 
 ## はじめに
 
+![乱立するAIコーディングツールの中を、明かりを頼りに進んでいくイメージ](eyecatch.png)
+
 AIコーディングツールが乱立している。GitHub Copilot、Cursor、Claude Code、Cline、Continue……選択肢が多すぎて、何を使えばいいか分からない。
 
 自分はその中をけっこう彷徨った。
 最終的に**VS Code + Claude Code拡張 + MAXプラン**に落ち着いたが、ここに辿り着くまでに試行錯誤したしお金もかかった。
 
 同じように迷っている人に向けて、なぜこの構成に落ち着いたのか書いておく。
+
+![Claude Pro → Copilot → Cursor を経て、各ツールの離脱理由とともにClaude Code + MAXへ一本化するまでの遍歴](fig1.png)
 
 ---
 
@@ -89,6 +93,8 @@ Claude Codeの存在を改めて見直した時、思った。
 
 ここで冷静に計算した。CopilotとCursorに払っている月額を合わせたら、**もうMAXプランに手が届く金額だった。**
 
+![分散して払っていたCopilotとCursorの月額を合算すると、MAXプラン一本とほぼ同額になる対比図](fig2.png)
+
 ---
 
 ## MAX一本化 — やってみたら最高だった
@@ -123,7 +129,11 @@ VS Code上でClaude Codeを使うと、プロジェクトルートの`CLAUDE.md`
 
 1つ目は**OLTranslator**。画面上の外国語テキストをOCRで読み取って、日本語訳をオーバーレイ表示するWindowsアプリ。これはVS Code + Copilotで開発して、**完成まで2週間**かかった。
 
+{{< linkcard url="https://blog.kitepon.dev/post/oltranslator-app" title="OLTranslator — 画面をそのまま日本語にする翻訳アプリ" desc="画面上の外国語をOCRで読み取り、日本語訳をオーバーレイ表示するWindowsアプリ。VS Code + Copilotで2週間。" site="Claude Code 始めました" >}}
+
 2つ目は**LiveTR**。PCで再生中の動画の英語音声をリアルタイムに認識して、日本語字幕を表示して読み上げまでやるアプリ。こっちはClaude Codeだけで開発して、**4日で完成**した。
+
+{{< linkcard url="https://blog.kitepon.dev/post/livetr-app" title="LiveTR — 音声をリアルタイムで翻訳するアプリ" desc="再生中の動画の英語音声をリアルタイム認識し、日本語字幕と読み上げまでやるアプリ。Claude Codeだけで4日。" site="Claude Code 始めました" >}}
 
 正直に言うと、2月中旬からAIコーディングを始めて、LiveTRの頃にはだいぶ慣れていたのもある。だから単純に「Claudeだから速かった」とは言い切れない。ただ、Claude Codeでの開発は明らかにスムーズだった。設計を伝えて、任せて、レビューする。このサイクルがストレスなく回った。
 
@@ -135,10 +145,12 @@ AIコーディングツール選びで大事なのは、ベンチマークのス
 
 自分の場合：
 
-- **設計して指示を出すスタイル** → 対話型のClaude Codeが合う
-- **画像を頻繁に共有する** → VS Codeのパネルが便利
-- **既存のVS Code環境を崩したくない** → Cursorではなく拡張で完結
-- **CopilotとCursorに二重課金してた** → MAXに一本化した方がコスパがいい
+| 自分の事情 | だから選んだ |
+|---|---|
+| 設計して指示を出すスタイル | 対話型のClaude Codeが合う |
+| 画像を頻繁に共有する | VS Codeのパネルが便利 |
+| 既存のVS Code環境を崩したくない | Cursorではなく拡張で完結 |
+| CopilotとCursorに二重課金してた | MAXに一本化した方がコスパがいい |
 
 手を動かしてガリガリ書く人なら、Copilotが最適解かもしれない。Cursorの独自機能に価値を感じる人もいるだろう。
 

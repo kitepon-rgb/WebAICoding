@@ -16,6 +16,8 @@ Claude Code CLIは手元にある。Discordに投げたメッセージをCLIに�
 
 だから作った。
 
+![Discordを窓口にClaude Code CLIへつながった先で、AIが自分の手足（ツール）を足していくイメージ](eyecatch.png)
+
 ---
 
 ## 骨組みだけ作った
@@ -136,6 +138,8 @@ Claudeはこの指示を受けて、自分で判断する。
 🟢 現在、異常のある路線はありません！
 ```
 
+![出発30分前にLogBotがDiscordへ投げてくる通知。予定の開始時刻ではなく、移動55分を引いた12:35を「出る時刻」にしている](fig1.png)
+
 ### ロジックはどこにあるか
 
 ここが一番伝えたいところだ。
@@ -152,10 +156,14 @@ Claudeはこの指示を受けて、自分で判断する。
 
 ここまでの話をまとめると、こういうことだ。
 
-- **MCPツール** = 手足。個別の能力（天気、カレンダー、移動時間、メール…）
-- **Claude** = 頭。ツールを組み合わせて判断する
-- **CRON** = 目覚まし。Claudeを定期的に起こす。叩くのはプロンプト
-- **Discord** = 窓口。リクエストも通知もここ
+| 役割 | 担当 | 中身 |
+|---|---|---|
+| 手足 | **MCPツール** | 個別の能力（天気、カレンダー、移動時間、メール…） |
+| 頭 | **Claude** | ツールを組み合わせて判断する |
+| 目覚まし | **CRON** | Claudeを定期的に起こす。叩くのはプロンプト |
+| 窓口 | **Discord** | リクエストも通知もここ |
+
+![頭（Claude）が手足（MCPツール）を選んで判断し、CRONが起こしてDiscordが受け渡す。足りない手足はその場でClaude自身が tools/ に書いて生やす](fig2.png)
 
 そして最大の特徴は、**手足が足りなければClaudeがその場で作る**こと。
 
@@ -172,3 +180,9 @@ Claudeはこの指示を受けて、自分で判断する。
 こんなAI初心者のアイデアで当たり前かもしれないけど、**GitHubで公開しておきます**。
 
 **[OpenCClaw](https://github.com/kitepon-rgb/OpenCClaw)** — Discord経由でClaude Code CLIを操作するBotシステム。
+
+{{< linkcard url="https://github.com/kitepon-rgb/OpenCClaw" title="OpenCClaw" desc="Discord経由でClaude Code CLIを操作するパーソナルAIアシスタント基盤。tools/ にファイルを置くだけでMCPツールが自動登録され、AIが自分で手足を増やせる。" site="GitHub" >}}
+
+ちなみに同じ骨組みの上で雑談・記憶・秘書業務を担う相棒「ベル」もいて、Xで近況をつぶやいている。手足を増やしていった先に生まれた、もう一つの人格だ。
+
+{{< linkcard url="https://x.com/Bell_QuoLu" title="ベル (@Bell_QuoLu)" desc="OpenCClaw上で動くもう一人のアシスタント。記憶と人格を持って雑談する相棒。" site="X" image="shot1.png" >}}

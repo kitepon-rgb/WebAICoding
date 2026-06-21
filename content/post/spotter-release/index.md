@@ -8,6 +8,8 @@ cover:
   image: "cover.png"
 ---
 
+![照準を合わせる監視役と、それに気づかず作業を進める実行役。気づく役と実行する役を分けるのがSpotterの発想。](eyecatch.png)
+
 ## きっかけ
 
 ある日、Claudeに「今何時？」って聞いたら、推測で答えてきた。
@@ -34,6 +36,8 @@ cover:
 
 ポイントは **メインのClaude本人の自覚に頼らない** こと。Claudeに「気をつけて」って書くんじゃなく、もう一人の目を物理的に置く。判定は2段階で、ユーザーが入力した瞬間（要請に対して使うべきツールを列挙）と、メインのClaudeが応答を返した直後（事実の断定に検証ツールを差し込めるか）に hook が走る。
 
+![監査役Haikuの2段階判定。入力時のUserPromptSubmitで使うべきツールを先回りし、応答後のStopで断定に検証ツールを差し込めるか確かめる。](fig2.png)
+
 これを `claude-spotter` という名前で作った。
 
 ## 公開した直後にやらかした
@@ -49,6 +53,8 @@ cover:
 実セッションのログを掘ったら、74個のうち51個が [Throughline](https://github.com/kitepon-rgb/Throughline) (自分の別ツール) 由来だった。
 
 Throughlineは内部で `claude -p` を呼ぶ。`claude -p` を呼ぶと SessionStart hook が走る。SessionStart hook で Spotter の daemon が立つ。Spotter の daemon は監査のために `claude -p` を呼ぶ。**…無限再帰じゃないけど、再帰的増殖**。
+
+![claude -p → SessionStart hook → Spotter daemon → claude -p の輪。64分でデーモンが74個立ち、うち51個がThroughline由来だった。](fig1.png)
 
 `postinstall` で `~/.claude/settings.json` に書き込んでたせいで、システム上のあらゆる Claude Code セッションが Spotter の hook を読み込む構造になってた。「全プロジェクト自動有効化」の代償。
 
@@ -120,6 +126,6 @@ Spotter は同じ作者が作った [Throughline]({{< relref "throughline-releas
 - Claude Code 2.0+
 - Claude Maxプラン（`claude -p` でHaiku 4.5を起動するため）
 
-[Spotter — GitHub](https://github.com/kitepon-rgb/Spotter)
+{{< linkcard url="https://github.com/kitepon-rgb/Spotter" title="kitepon-rgb/Spotter" desc="ツールの呼び忘れを別Claude (Haiku 4.5) に並走監査させる Claude Code 用 hook。npm: claude-spotter / MIT。" site="GitHub" image="spotter-og.png" >}}
 
 MIT。同じ問題で困ってる人がいたら、気が向いたら覗いてみてください。
