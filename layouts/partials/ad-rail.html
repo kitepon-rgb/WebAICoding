@@ -18,7 +18,9 @@
   {{- $pool = sort (where (where hugo.Data.self_ads.items "enabled" true) "rail" $side) "weight" "asc" -}}
 {{- end -}}
 {{- if $pool -}}
-{{- $seed := int (default 0 $page.Date.Unix) -}}
+{{- /* seed は記事ごとに分散させる。記事日付(unix)は全記事が正午=86400秒差で mod が定数化し
+       ローテーションが死ぬ（86400 は 2/3/9 等で割り切れる）→ ページURLのハッシュを seed にする */ -}}
+{{- $seed := hash.FNV32a $page.RelPermalink -}}
 {{- $it := index $pool (mod $seed (len $pool)) -}}
 <aside class="ad-rail ad-rail--{{ $side }}" aria-label="{{ if $isGear }}おすすめ機材（広告）{{ else }}自作プロダクト{{ end }}">
   <div class="ad-rail__inner">
