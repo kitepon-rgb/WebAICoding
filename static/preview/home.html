@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 始めました — mockup v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6ede3; --paper-2:#fdf8f2; --ink:#2a201a; --ink-soft:#6f5b4a;
+  --coral:#d97757; --coral-deep:#b04e2c; --line:#e7d6c5;
+  --espresso:#211912; --espresso-2:#2c2118; --cream-on-dark:#f0e2d3;
+  --c-dev:#d97757; --c-product:#c0573b; --c-server:#c2913f; --c-claude:#9c6b4a; --c-release:#bb6a39;
+  --serif:'Noto Serif JP',Georgia,serif;
+  --sans:'Zen Kaku Gothic New',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --w:74rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);line-height:1.8;
+  background:radial-gradient(120% 70% at 88% -8%,rgba(217,119,87,.16),transparent 52%),radial-gradient(80% 50% at -5% 2%,rgba(233,216,198,.45),transparent 50%),var(--paper);
+  background-attachment:fixed;-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 1.6rem;position:relative;z-index:2}
+
+/* bar */
+.bar{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(246,237,227,.75);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;height:62px;gap:1rem}
+.brand{font-family:var(--mono);font-weight:700;font-size:.92rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:.55rem}
+.brand .dot{width:9px;height:9px;border-radius:2px;background:var(--coral);box-shadow:0 0 0 3px rgba(217,119,87,.2)}
+.bar nav{margin-left:auto;display:flex;gap:1.3rem;font-family:var(--mono);font-size:.8rem}
+.bar nav a{color:var(--ink-soft);text-decoration:none;transition:color .2s}
+.bar nav a:hover{color:var(--coral-deep)}
+
+/* hero */
+.hero{padding:5rem 0 3rem}
+.hero .kicker{font-family:var(--mono);font-size:.8rem;color:var(--coral-deep);letter-spacing:.05em;margin-bottom:1.1rem;display:flex;align-items:center;gap:.5rem}
+.hero .kicker .blink{display:inline-block;width:9px;height:1.05em;background:var(--coral);animation:blink 1.1s steps(2) infinite;transform:translateY(2px)}
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(2.5rem,5.8vw,4.4rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:1.2rem}
+.hero h1 em{font-style:normal;color:var(--coral-deep);position:relative}
+.hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.13em;background:linear-gradient(90deg,var(--coral),transparent)}
+.hero p.lead{font-size:1.12rem;max-width:40rem;color:var(--ink-soft)}
+.pills{margin-top:2rem;display:flex;gap:.6rem;flex-wrap:wrap}
+.pill{font-family:var(--mono);font-size:.76rem;text-decoration:none;color:var(--ink);background:var(--paper-2);border:1px solid var(--line);padding:.4rem .85rem;border-radius:999px;display:inline-flex;align-items:center;gap:.5rem;transition:all .2s}
+.pill .b{background:rgba(0,0,0,.06);border-radius:999px;padding:0 .45rem;font-size:.7rem;color:var(--ink-soft)}
+.pill:hover{border-color:var(--accent,var(--coral));color:var(--accent,var(--coral-deep));transform:translateY(-2px)}
+.pill::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent,var(--coral))}
+
+/* full-bleed dark featured */
+.featured-band{margin-top:3.2rem;background:
+  radial-gradient(80% 120% at 80% 0%,rgba(217,119,87,.18),transparent 60%),var(--espresso);
+  position:relative;z-index:2;border-top:1px solid #3a2c20;border-bottom:1px solid #3a2c20}
+.featured-band::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(240,226,211,.04) 27px,rgba(240,226,211,.04) 28px)}
+.featured{display:grid;grid-template-columns:1.05fr .95fr;gap:2.4rem;align-items:center;padding:2.6rem 0}
+.featured .label{font-family:var(--mono);font-size:.74rem;color:var(--coral);letter-spacing:.08em;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.featured .thumb{border-radius:12px;overflow:hidden;aspect-ratio:25/10;box-shadow:0 26px 60px -28px rgba(0,0,0,.7);border:1px solid #3a2c20}
+.featured .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.featured h3{font-family:var(--serif);font-weight:700;font-size:2rem;line-height:1.3;color:var(--cream-on-dark);margin-bottom:1rem}
+.featured p{color:#bda88f;font-size:.98rem;margin-bottom:1.4rem}
+.featured .read{font-family:var(--mono);font-size:.82rem;color:var(--coral);text-decoration:none;display:inline-flex;gap:.5rem;transition:gap .2s}
+.featured .read:hover{gap:.9rem}
+.featured .meta{font-family:var(--mono);font-size:.74rem;color:#8a7560;margin-top:1.2rem}
+
+/* section head */
+.sec-head{display:flex;align-items:baseline;gap:1rem;margin:3.4rem 0 1.6rem}
+.sec-head .n{font-family:var(--mono);font-size:.8rem;color:var(--coral)}
+.sec-head h2{font-family:var(--serif);font-weight:600;font-size:1.45rem}
+.sec-head .all{margin-left:auto;font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);text-decoration:none}
+.sec-head .all:hover{color:var(--coral-deep)}
+
+/* grid of terminal-window cards */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.card{display:flex;flex-direction:column;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;position:relative;
+  border-top:3px solid var(--accent,var(--coral));transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s,border-color .28s}
+.card:hover{transform:translateY(-6px);box-shadow:0 26px 46px -28px rgba(80,40,20,.5),0 0 0 1px var(--accent,var(--coral))}
+.chrome{display:flex;align-items:center;gap:.5rem;padding:.5rem .8rem;background:rgba(0,0,0,.025);border-bottom:1px solid var(--line)}
+.chrome .lights{display:flex;gap:.32rem}
+.chrome .lights i{width:8px;height:8px;border-radius:50%;display:block}
+.chrome .lights i:nth-child(1){background:#ff5f56}.chrome .lights i:nth-child(2){background:#febc2e}.chrome .lights i:nth-child(3){background:#28c840}
+.chrome .fname{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .thumb{aspect-ratio:25/10;overflow:hidden;position:relative}
+.card .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.card:hover .thumb img{transform:scale(1.06)}
+.c-body{padding:1rem 1.1rem 1.2rem;display:flex;flex-direction:column;flex:1}
+.c-body .cat{font-family:var(--mono);font-size:.7rem;color:var(--accent,var(--coral));margin-bottom:.5rem}
+.c-body h4{font-family:var(--serif);font-weight:600;font-size:1.16rem;line-height:1.5;margin-bottom:1rem}
+.c-body time{margin-top:auto;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft)}
+
+/* dark footer */
+footer{margin-top:4.5rem;background:var(--espresso);color:#bda88f;border-top:1px solid #3a2c20}
+footer .wrap{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:.76rem;padding:2.4rem 1.6rem 3rem}
+footer .prompt{color:var(--coral)}
+footer a{color:#bda88f;text-decoration:none}footer a:hover{color:var(--coral)}
+
+.rv{opacity:0;transform:translateY(18px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.d1{animation-delay:.05s}.d2{animation-delay:.12s}.d3{animation-delay:.19s}.d4{animation-delay:.26s}.d5{animation-delay:.33s}.d6{animation-delay:.4s}.d7{animation-delay:.47s}.d8{animation-delay:.54s}
+::selection{background:rgba(217,119,87,.28)}
+
+/* ===== mobile ===== */
+@media(max-width:880px){
+  .featured{grid-template-columns:1fr;gap:1.3rem;padding:2rem 0}
+  .featured h3{font-size:1.55rem}
+  .grid{grid-template-columns:1fr 1fr;gap:1.1rem}
+}
+@media(max-width:600px){
+  .wrap{padding:0 1.4rem}
+  .hero{padding:3.5rem 0 2.4rem}
+  .hero p.lead{font-size:1rem;line-height:1.9}
+  .pills{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.4rem}
+  .pill{flex:0 0 auto}
+  .bar nav a:not(:last-child){display:none}
+  /* grid → list rows */
+  .grid{grid-template-columns:1fr;gap:.9rem}
+  .card{flex-direction:row;border-top:none;border-left:3px solid var(--accent,var(--coral));align-items:stretch;min-height:84px}
+  .card .chrome{display:none}
+  .card .thumb{flex:0 0 116px;aspect-ratio:auto;height:auto}
+  .card .thumb img{height:100%}
+  .c-body{padding:.7rem .9rem}
+  .c-body .cat{margin-bottom:.3rem}
+  .c-body h4{font-size:1rem;line-height:1.45;margin-bottom:.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <a class="brand" href="#"><span class="dot"></span>claude-code.log</a>
+  <nav><a href="#">記事</a><a href="#">プロダクト</a><a href="#">About</a><a href="#">X →</a></nav>
+</div></div>
+
+<header class="hero wrap">
+  <div class="kicker rv d1">$ ~/claude-code-hajimemashita <span class="blink"></span></div>
+  <h1 class="rv d2">設計は自分、<br>実装は<em>Claude</em>。</h1>
+  <p class="lead rv d3">Claude MAXユーザーが、実際の開発で使いながら掴んだことを記録していくシリーズ。「使ってるけど実は知らなかった」層に向けた、現場の記録。</p>
+  <div class="pills rv d4">
+    <a class="pill" style="--accent:var(--c-dev)" href="#">個人開発 <span class="b">12</span></a>
+    <a class="pill" style="--accent:var(--c-product)" href="#">プロダクト <span class="b">6</span></a>
+    <a class="pill" style="--accent:var(--c-server)" href="#">サーバー運用 <span class="b">7</span></a>
+    <a class="pill" style="--accent:var(--c-claude)" href="#">Claude Code <span class="b">9</span></a>
+    <a class="pill" style="--accent:var(--c-release)" href="#">公開 <span class="b">5</span></a>
+  </div>
+</header>
+
+<section class="featured-band">
+  <div class="wrap featured rv d5">
+    <div class="thumb"><img src="https://blog.kitepon.dev/post/sprite-forge-release/cover.png" alt=""></div>
+    <div class="body">
+      <div class="label">● LATEST — 個人開発</div>
+      <h3>同じキャラが描けないAIに、アニメの「設定資料」を作らせた話</h3>
+      <p>一枚いいキャラが描けても、向きを変えると髪型も色もじわじわ崩れる。そこでアニメの現場と同じく、先に設定資料を作って基準にした。一貫性と解像度を両取りする二段構えの話。</p>
+      <a class="read" href="#">記事を読む →</a>
+      <div class="meta">2026.06.21 · #画像生成 #ComfyUI #個人開発</div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="sec-head"><span class="n">// archive</span><h2>記事一覧</h2><a class="all" href="#">すべて見る →</a></div>
+
+  <div class="grid">
+    <a class="card rv d3" style="--accent:var(--c-product)" href="#">
+      <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">31_livetr-complete-sentence.md</span></div>
+      <div class="thumb"><img src="https://blog.kitepon.dev/post/livetr-complete-sentence/cover.png" alt=""></div>
+      <div class="c-body"><div class="cat">// プロダクト</div><h4>完全な文だけを訳に回す——その設計を、カウンタ一本が裏切っていた</h4><time>2026.06.20</time></div>
+    </a>
+    <a class="card rv d4" style="--accent:var(--c-dev)" href="#">
+      <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">30_rpgdev-overlay.md</span></div>
+      <div class="thumb"><img src="https://blog.kitepon.dev/post/rpgdev-overlay/cover.png" alt=""></div>
+      <div class="c-body"><div class="cat">// 個人開発</div><h4>AIが働くのを眺めるのが好きすぎて、ターミナルをRPGにした話</h4><time>2026.06.16</time></div>
+    </a>
+    <a class="card rv d5" style="--accent:var(--c-product)" href="#">
+      <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">29_kikoeru-listening.md</span></div>
+      <div class="thumb"><img src="https://blog.kitepon.dev/post/kikoeru-listening/cover.png" alt=""></div>
+      <div class="c-body"><div class="cat">// プロダクト</div><h4>英語は読めるのに聞き取れない。教材は無限だと気づいて、リスニングアプリを出した話</h4><time>2026.06.15</time></div>
+    </a>
+    <a class="card rv d6" style="--accent:var(--c-claude)" href="#">
+      <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">28_claude-drives-codex.md</span></div>
+      <div class="thumb"><img src="https://blog.kitepon.dev/post/claude-drives-codex/cover.png" alt=""></div>
+      <div class="c-body"><div class="cat">// Claude Code</div><h4>Claudeに対話型コマンドを握らせたら、Codex CLIごと子分にできた話</h4><time>2026.06.07</time></div>
+    </a>
+    <a class="card rv d7" style="--accent:var(--c-release)" href="#">
+      <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">27_aiterm-release.md</span></div>
+      <div class="thumb"><img src="https://blog.kitepon.dev/post/aiterm-release/cover.png" alt=""></div>
+      <div class="c-body"><div class="cat">// 公開</div><h4>aiterm-mcp を npm に公開した — AIに1本の永続ターミナルを握らせる</h4><time>2026.06.04</time></div>
+    </a>
+    <a class="card rv d8" style="--accent:var(--c-server)" href="#">
+      <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">23_bc250-to-ms-a2.md</span></div>
+      <div class="thumb"><img src="https://blog.kitepon.dev/post/bc250-to-ms-a2/cover.png" alt=""></div>
+      <div class="c-body"><div class="cat">// サーバー運用</div><h4>自宅鯖のハード選びと引っ越しをClaudeに丸投げしたら1日で終わった話</h4><time>2026.05.30</time></div>
+    </a>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <span><span class="prompt">$</span> echo &copy; 2026 Claude Code 始めました</span>
+  <span style="margin-left:auto">blog.kitepon.dev</span>
+  <a href="#">X</a><a href="#">Zenn</a><a href="#">GitHub</a>
+</div></footer>
+
+</body>
+</html>
