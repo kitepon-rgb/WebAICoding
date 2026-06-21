@@ -45,6 +45,9 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
   - ⚠️ **本文画像は CSS と違い fingerprint されない**＝既存画像を同一URLで差し替えても Cloudflare が 4h（`max-age=14400`）キャッシュして反映されない。**差し替え時はファイル名を変える**（例 `fig1.png`→`oled.png` ＋ md 参照変更）。新規追加画像は新URLなので問題なし
 - **baseURL**: `https://blog.kitepon.dev/`（カスタムドメイン。Cloudflare DNS only の CNAME `blog`→`kitepon-rgb.github.io`／GitHub Pages が Let's Encrypt 発行）。旧 `https://kitepon-rgb.github.io/WebAICoding/` は GitHub が 301 で新ドメインへ自動リダイレクトするので過去リンクは生きている。内部リンクは引き続き `relref` を使う（ドメイン変更に強い・直書き回避）
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com、`layouts/_default/baseof.html` に埋め込み）
+- **OGP/SNS画像（X にリンクを貼った時のカード画像）**: `baseof.html` が設定。**記事は各自の `cover.png`**、**cover を持たないページ（トップ／タグ／section／About）は既定 `static/og-hero.png`** を使う（昔はトップに og:image が無く X で画像が出なかった→修正済み）。常に `twitter:card=summary_large_image`＋`twitter:image`。
+  - `og-hero.png` ＝**リニューアル後の実トップのヒーローを再現**した意匠（カバー風ではない。クリーム地＋紙グレイン／コーラルの kicker `$ ~/claude-code-hajimemashita`＋カーソル／明朝大見出し「設計は自分、実装は**Claude**。」＋「Claude」コーラル＋下線）。再生成は `node tools/cover/gen-og-hero.js`（1250×500）
+  - ⚠️ **OG画像を差し替える時はファイル名を変える**（同名据え置きだと CDN/X がキャッシュして反映されない＝本文画像と同じ罠。例 `og-hero.png`→`og-hero2.png` ＋ baseof.html 更新）。Xはカード自体もキャッシュするので、確認は `https://blog.kitepon.dev/?x` のようにクエリを足して取り直させる
 - **集客**: X（Twitter、Premium+）+ Zenn転載 — **Premium+特典で通常ポストも最大約25,000字の長尺OK**（X Articlesと別枠）。280字制約を前提にしない
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
 
