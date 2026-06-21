@@ -15,7 +15,8 @@
 <meta property="og:url" content="{{ .Permalink }}">
 {{- $og := "" -}}
 {{- if .Params.cover.image }}{{ with .Resources.GetMatch .Params.cover.image }}{{ $og = .Permalink }}{{ end }}{{ end -}}
-{{- with $og }}<meta property="og:image" content="{{ . }}"><meta name="twitter:card" content="summary_large_image">{{ else }}<meta name="twitter:card" content="summary">{{ end }}
+{{- if not $og }}{{ $og = "og.png" | absURL }}{{ end -}}{{/* cover が無いページ（トップ/タグ/section/About）は既定OG画像 static/og.png を使う */}}
+<meta property="og:image" content="{{ $og }}"><meta property="og:image:width" content="1250"><meta property="og:image:height" content="500"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{{ $og }}">
 {{- with site.Params.twitter }}<meta name="twitter:site" content="@{{ . }}">{{ end }}
 <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
 <link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="any">
