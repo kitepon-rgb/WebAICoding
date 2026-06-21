@@ -14,7 +14,7 @@
 > **Claude MAX ユーザーが、AI コーディングを実際に使いながら学んだことを記録する技術ブログ。**
 > プログラマーではない人間が、趣味の AI コーディングで実際にハマったこと・うまくいったこと・失敗したことを、Copilot → Cursor → Claude Code と渡り歩きながらそのまま書き残している。このリポジトリはそのソース — GitHub Pages へ自動デプロイされる Hugo 静的サイト。
 
-**ライブサイト → https://kitepon-rgb.github.io/WebAICoding/**
+**ライブサイト → https://blog.kitepon.dev/**
 
 ## これは何
 
@@ -31,7 +31,7 @@
 | 項目 | 内容 |
 | --- | --- |
 | 静的サイトジェネレーター | [Hugo](https://gohugo.io/)（extended） |
-| テーマ | [hugo-paper](https://github.com/nanxiaobei/hugo-paper)（git submodule） |
+| テーマ | 自前（`layouts/` + `assets/` に内蔵。外部テーマ不使用） |
 | ホスティング | GitHub Pages |
 | デプロイ | GitHub Actions（`.github/workflows/deploy.yml`） |
 | 言語 | 日本語 |
@@ -45,7 +45,7 @@ flowchart LR
     C --> D["hugo --minify<br/>→ public/"]
     D --> E["upload-pages-artifact"]
     E --> F["deploy-pages"]
-    F --> G(["GitHub Pages<br/>kitepon-rgb.github.io/WebAICoding"])
+    F --> G(["GitHub Pages<br/>blog.kitepon.dev"])
 ```
 
 `draft: false` の記事だけが本番に公開されます。
@@ -55,21 +55,15 @@ flowchart LR
 Hugo extended が必要です（[インストール手順](https://gohugo.io/installation/)）。
 
 ```bash
-# テーマを submodule ごとクローン
-git clone --recurse-submodules https://github.com/kitepon-rgb/WebAICoding.git
+# クローン（テーマ submodule は不要 — テーマはこのリポジトリ内）
+git clone https://github.com/kitepon-rgb/WebAICoding.git
 cd WebAICoding
 
-# 開発サーバーを起動（http://localhost:1313/WebAICoding/）
+# 開発サーバーを起動（http://localhost:1313/）
 hugo server
 
 # 本番ビルド（出力は public/）
 hugo --minify
-```
-
-クローン済みでテーマだけ取得したい場合:
-
-```bash
-git submodule update --init --recursive
 ```
 
 ## 記事を書く
@@ -99,10 +93,9 @@ cover:
 
 ```
 content/        記事（Markdown）と About ページ
-layouts/        テーマ上書き用のレイアウト
-assets/         カスタム CSS
+layouts/        自前テーマ — baseof / list / single
+assets/css/     スタイルシート（ビルド時に fingerprint ＝キャッシュ破棄）
 static/         ファビコン・OG 画像などの静的ファイル
-themes/paper/   テーマ本体（submodule）
 hugo.toml       サイト設定
 ```
 

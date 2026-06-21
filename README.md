@@ -14,7 +14,7 @@
 > **A hands-on Japanese tech blog about everyday AI coding with Claude Code.**
 > A non-programmer hobbyist writes down what actually worked, what broke, and what they learned while building software with AI — Copilot to Cursor to Claude Code. This repo is the source: a Hugo static site that auto-deploys to GitHub Pages.
 
-**Live site → https://kitepon-rgb.github.io/WebAICoding/**
+**Live site → https://blog.kitepon.dev/**
 
 ## What it is
 
@@ -31,7 +31,7 @@ Articles live as Markdown under `content/post/`. Every push to `main` triggers G
 | Component | Choice |
 | --- | --- |
 | Static site generator | [Hugo](https://gohugo.io/) (extended) |
-| Theme | [hugo-paper](https://github.com/nanxiaobei/hugo-paper) (git submodule) |
+| Theme | Custom, hand-built (lives in `layouts/` + `assets/`; no external theme) |
 | Hosting | GitHub Pages |
 | Deploy | GitHub Actions (`.github/workflows/deploy.yml`) |
 | Content language | Japanese |
@@ -45,7 +45,7 @@ flowchart LR
     C --> D["hugo --minify<br/>→ public/"]
     D --> E["upload-pages-artifact"]
     E --> F["deploy-pages"]
-    F --> G(["GitHub Pages<br/>kitepon-rgb.github.io/WebAICoding"])
+    F --> G(["GitHub Pages<br/>blog.kitepon.dev"])
 ```
 
 Only articles with `draft: false` are published.
@@ -55,21 +55,15 @@ Only articles with `draft: false` are published.
 You need **Hugo extended** ([installation guide](https://gohugo.io/installation/)).
 
 ```bash
-# Clone with the theme submodule
-git clone --recurse-submodules https://github.com/kitepon-rgb/WebAICoding.git
+# Clone (no theme submodule needed — the theme lives in this repo)
+git clone https://github.com/kitepon-rgb/WebAICoding.git
 cd WebAICoding
 
-# Start the dev server (http://localhost:1313/WebAICoding/)
+# Start the dev server (http://localhost:1313/)
 hugo server
 
 # Production build (output goes to public/)
 hugo --minify
-```
-
-If you already cloned without `--recurse-submodules`, fetch the theme:
-
-```bash
-git submodule update --init --recursive
 ```
 
 ## Writing a post
@@ -99,10 +93,9 @@ Set `draft: false` to publish. Pushing to `main` deploys automatically.
 
 ```
 content/        Articles (Markdown) and the About page
-layouts/        Layout overrides for the theme
-assets/         Custom CSS
-static/         Static files — favicon, OG image, etc.
-themes/paper/   The theme itself (submodule)
+layouts/        Custom theme — baseof / list / single
+assets/css/     Stylesheet (fingerprinted at build → cache-busting)
+static/         Static files — favicons, OG image, etc.
 hugo.toml       Site configuration
 ```
 

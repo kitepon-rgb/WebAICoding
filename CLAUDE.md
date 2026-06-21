@@ -9,10 +9,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build & Development
 
 ```bash
-git submodule update --init  # 初回クローン後、テーマ取得に必要
-hugo server -D               # ローカルプレビュー（下書き含む）
-hugo                         # 本番ビルド（public/に出力）
+hugo server -D   # ローカルプレビュー（下書き含む。Hugo extended 推奨）
+hugo             # 本番ビルド（public/に出力）
 ```
+
+自前テーマは `layouts/` + `assets/` に同梱。**外部テーマ submodule は不要**（旧 hugo-paper 廃止）。
 
 ## Deployment
 
@@ -20,16 +21,18 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 
 ## Architecture
 
-- **SSG**: Hugo（テーマ: [hugo-paper](https://github.com/nanxiaobei/hugo-paper)、`themes/paper` にgit submoduleとして配置。初回クローン後の `git submodule update --init` が必要なのはこのため）
+- **SSG**: Hugo + **自前テーマ**（外部テーマ不使用）。デザイン=「Warm Terminal Editorial」＝クリーム基調＋珊瑚色（Claudeオレンジ）＋ターミナル/コードのモチーフ。レイアウトは全て `layouts/` 配下（旧 [hugo-paper] / `themes/paper` submodule は廃止。`git submodule update --init` も不要）
 - **ホスティング**: GitHub Pages（git pushで公開）
 - **記事**: Markdown（`content/post/<slug>/index.md`、Page Bundle形式）
-- **カスタムCSS**: `assets/custom.css`（Claudeオレンジのカラースキーム、ライトモードのみ）
-- **レイアウト上書き**: `layouts/_default/list.html`（トップページヘッダー画像）、`layouts/_default/single.html`（カバー画像表示）、`layouts/partials/footer.html`（GoatCounterスクリプト埋め込み）
+- **CSS**: `assets/css/main.css`（素のCSS・フレームワーク不使用・ライトモードのみ）。`baseof.html` が `resources.Get "css/main.css" | fingerprint` で**ハッシュ付きURL `/css/main.<hash>.css`** で配信＝**変更のたびURLが変わりブラウザ/Cloudflareのキャッシュを自動破棄**（CSSを直したら確実に反映される。同一URL据え置きでスマホが旧CSSを掴む罠を回避）
+- **レイアウト（自前テーマ）**: `layouts/_default/baseof.html`（head・上部バー・フッター・GoatCounter を内包）／`list.html`（ホーム＝ヒーロー＋カテゴリpill＋ダーク注目帯＋**記事カバーのターミナル窓カード**グリッド。タグ/section 一覧も兼用）／`single.html`（記事＝明朝見出し＋ドロップキャップ＋ターミナル風コードブロック＋前後ナビ）。フォント: 見出し=Noto Serif JP / 本文=Zen Kaku Gothic New / コード=JetBrains Mono
+- **デザインシステム**: claude.ai/design の「claude-code-blog」プロジェクトに同期（`DesignSync` ツール）。デザインを大きく変える時はそこで詰めて `layouts/` + `assets/css/main.css` に反映する
 - **カバー画像**: 各記事に `cover.png`（1250x500px）。生成スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`
   - 使い方: `node generate-cover.js "タイトル1行目" "タイトル2行目" "出力パス" ["コードテキスト"]`
   - デザイン: Claudeオレンジのグラデーション（左上暗→右下明）、ターミナル風枠（ボーダー `#dfcbc1`）、Noto Serif JP 600、背景にコードライン
+  - ⚠️ 新テーマではカバーを**ホームのカード・注目帯・記事冒頭**で表示＝以前より重要。未設定だと `slug.md` のターミナル風プレースホルダになる（＝実質必須）
 - **baseURL**: `https://blog.kitepon.dev/`（カスタムドメイン。Cloudflare DNS only の CNAME `blog`→`kitepon-rgb.github.io`／GitHub Pages が Let's Encrypt 発行）。旧 `https://kitepon-rgb.github.io/WebAICoding/` は GitHub が 301 で新ドメインへ自動リダイレクトするので過去リンクは生きている。内部リンクは引き続き `relref` を使う（ドメイン変更に強い・直書き回避）
-- **統計**: GoatCounter（claudecode-blog.goatcounter.com）
+- **統計**: GoatCounter（claudecode-blog.goatcounter.com、`layouts/_default/baseof.html` に埋め込み）
 - **集客**: X（Twitter、Premium+）+ Zenn転載 — **Premium+特典で通常ポストも最大約25,000字の長尺OK**（X Articlesと別枠）。280字制約を前提にしない
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
 
@@ -40,6 +43,10 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 ### 1. ブログ記事作成
 - `content/post/<slug>/index.md` を作成（Page Bundle形式）
 - frontmatter: `title`, `date`, `draft`, `description`, `tags`, `cover.image: "cover.png"`
+- **自前テーマでの効き方（書く時に意識）**:
+  - `tags` の**先頭タグがホームのカードのカテゴリ表示**になる → 主カテゴリを先頭に置く
+  - `description` は**最新記事だとトップの「注目」カードに本文として表示**される → 短く魅力的に
+  - `cover.png` は**ホームのカード等でも表示**＝実質必須（未設定はプレースホルダ）
 - **dateに未来日付を使わない**（GitHub Actionsに `--buildFuture` がないため、未来記事はビルドから除外され404になる）
   - シリーズ慣例の `T12:00:00+09:00`（正午）を**そのまま流用しない**。午前に公開すると正午は未来扱い→404。**必ず現在時刻より前**にする（その時の時刻 or `T09:00:00+09:00` 等の過去時刻）
   - 症状: **デプロイActionsは success なのにページが404** → まず未来日付を疑う（`curl -sI <記事URL>` で確認）
