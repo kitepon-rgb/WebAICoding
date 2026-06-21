@@ -1,23 +1,21 @@
 baseURL = 'https://blog.kitepon.dev/'
 languageCode = 'ja'
 defaultContentLanguage = 'ja'
+hasCJKLanguage = true
 title = 'Claude Code 始めました'
-theme = 'paper'
 timeZone = 'Asia/Tokyo'
 
 [params]
-  description = 'Claude MAXユーザーの実体験ベース技術ブログ'
-  twitter = 'qlyun35332'
-  avatar = 'https://blog.kitepon.dev/avatar.svg'
-  favicon = 'favicon.svg'
-  disableDarkMode = true
+  description = 'Claude MAXユーザーが、実際の開発で使いながら掴んだことを記録していくシリーズ。「使ってるけど実は知らなかった」層に向けた、現場の記録。'
+  author = 'クオ'
+  twitter = 'QLyun35332'
+  mainSections = ['post']
 
 [markup]
   [markup.highlight]
-    style = 'monokai'
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true
 
 [[menus.main]]
   name = 'About'
@@ -25,4 +23,4 @@ timeZone = 'Asia/Tokyo'
   weight = 10
 
 [pagination]
-  pagerSize = 10
+  pagerSize = 100

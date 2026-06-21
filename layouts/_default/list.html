@@ -1,59 +1,59 @@
-{{- define "main" -}}
+{{ define "main" }}
+{{ if .IsHome }}
+  {{ $posts := (where site.RegularPages "Type" "post").ByDate.Reverse }}
+  <header class="hero wrap">
+    <div class="kicker rv d1">$ ~/claude-code-hajimemashita <span class="blink"></span></div>
+    <h1 class="rv d2">設計は自分、<br>実装は<em>Claude</em>。</h1>
+    <p class="lead rv d3">{{ site.Params.description }}</p>
+    {{ with site.Taxonomies.tags }}
+    <div class="pills rv d4">
+      {{ range $i, $t := first 6 .ByCount }}
+        {{ $c := index (slice "--c0" "--c1" "--c2" "--c3" "--c4") (mod $i 5) }}
+        <a class="pill a{{ mod $i 5 }}" href="{{ $t.Page.RelPermalink }}">{{ $t.Page.LinkTitle }} <span class="b">{{ $t.Count }}</span></a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </header>
 
-<!-- Tag Title -->
-{{- if and .Title (eq .Type "tags") -}}
-<h1 class="mb-14">#{{- .Title -}}</h1>
-{{- end -}}
+  {{ with index $posts 0 }}
+  <section class="featured-band"><div class="wrap featured rv d5">
+    <div class="thumb">{{ with .Resources.GetMatch .Params.cover.image }}<img src="{{ .RelPermalink }}" alt="">{{ end }}</div>
+    <div class="body">
+      <div class="label">● LATEST{{ with index .Params.tags 0 }} — {{ . }}{{ end }}</div>
+      <h3><a href="{{ .RelPermalink }}" style="color:inherit;text-decoration:none">{{ .Title }}</a></h3>
+      <p>{{ .Description | plainify | truncate 120 }}</p>
+      <a class="read" href="{{ .RelPermalink }}">記事を読む →</a>
+      <div class="fmeta">{{ .Date.Format "2006.01.02" }}{{ range first 3 .Params.tags }} #{{ . }}{{ end }}</div>
+    </div>
+  </div></section>
+  {{ end }}
 
-<!-- $pages -->
-{{- $pages := union .RegularPages .Sections -}}<!---->
-{{- if .IsHome -}}<!---->
-{{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections -}}<!---->
-{{- end -}}
-
-<!-- Articles -->
-{{- $paginator := .Paginate $pages -}} {{- range $index, $page :=
-$paginator.Pages -}}<!---->
-
-<!-- avatar -->
-{{- if and $.IsHome (eq $paginator.PageNumber 1) (eq $index 0) -}}<!---->
-
-<div style="margin-top:-40px; margin-bottom:60px;">
-  <img style="margin:0; width:100%; border-radius:8px;" src="/WebAICoding/blog-header.png" alt="Claude Code 始めました" />
-</div>
-
-{{- end -}}
-
-<section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
-  {{- if gt .Weight 0 -}}
-  <span class="mb-1 inline-block text-xs tracking-wider text-orange-500"
-    >Featured</span
-  >
-  {{- end -}}
-  <h2 class="my-0!">{{- .Title -}}</h2>
-  <time class="text-xs antialiased opacity-60"
-    >{{- .Date | time.Format ":date_medium" -}}</time
-  >
-  <a class="absolute inset-0 text-[0px]" href="{{- .Permalink -}}"
-    >{{- .Title -}}</a
-  >
-</section>
-{{- end -}}
-
-<!-- Main Nav -->
-{{- if gt $paginator.TotalPages 1 -}}
-<nav class="mt-14 flex">
-  {{- if $paginator.HasPrev -}}
-  <a class="btn not-prose" href="{{- $paginator.Prev.URL -}}"
-    >← {{- i18n "prev_page" -}}</a
-  >
-  {{- end -}}<!---->
-  {{- if $paginator.HasNext -}}
-  <a class="btn not-prose ml-auto" href="{{- $paginator.Next.URL -}}"
-    >{{- i18n "next_page" -}} →</a
-  >
-  {{- end -}}
-</nav>
-{{- end -}}<!---->
-
-{{- end -}}
+  <main class="wrap">
+    <div class="sec-head"><span class="n">// archive</span><h2>記事一覧</h2></div>
+    <div class="grid">
+      {{ range $i, $p := after 1 $posts }}
+        {{ $c := index (slice "--c0" "--c1" "--c2" "--c3" "--c4") (mod $i 5) }}
+        <a class="card rv a{{ mod $i 5 }}" href="{{ $p.RelPermalink }}">
+          <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">{{ with $p.File }}{{ .ContentBaseName }}{{ else }}{{ $p.Title }}{{ end }}.md</span></div>
+          {{ $cov := $p.Resources.GetMatch $p.Params.cover.image }}<div class="thumb{{ if not $cov }} noimg{{ end }}">{{ with $cov }}<img src="{{ .RelPermalink }}" alt="" loading="lazy">{{ else }}<span>{{ with $p.File }}{{ .ContentBaseName }}{{ end }}.md</span>{{ end }}</div>
+          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">// {{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
+        </a>
+      {{ end }}
+    </div>
+  </main>
+{{ else }}
+  <main class="wrap">
+    <div class="sec-head" style="margin-top:3.5rem"><span class="n">{{ if eq .Kind "term" }}// tag{{ else }}// section{{ end }}</span><h2>{{ if .Title }}{{ .Title }}{{ else }}記事一覧{{ end }}</h2></div>
+    <div class="grid">
+      {{ range $i, $p := .Pages.ByDate.Reverse }}
+        {{ $c := index (slice "--c0" "--c1" "--c2" "--c3" "--c4") (mod $i 5) }}
+        <a class="card a{{ mod $i 5 }}" href="{{ $p.RelPermalink }}">
+          <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">{{ with $p.File }}{{ .ContentBaseName }}{{ else }}{{ $p.Title }}{{ end }}.md</span></div>
+          {{ $cov := $p.Resources.GetMatch $p.Params.cover.image }}<div class="thumb{{ if not $cov }} noimg{{ end }}">{{ with $cov }}<img src="{{ .RelPermalink }}" alt="" loading="lazy">{{ else }}<span>{{ with $p.File }}{{ .ContentBaseName }}{{ end }}.md</span>{{ end }}</div>
+          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">// {{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
+        </a>
+      {{ end }}
+    </div>
+  </main>
+{{ end }}
+{{ end }}
