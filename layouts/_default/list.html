@@ -29,28 +29,28 @@
   {{ end }}
 
   <main class="wrap">
-    <div class="sec-head"><span class="n">// archive</span><h2>記事一覧</h2></div>
+    <div class="sec-head"><span class="n">archive</span><h2>記事一覧</h2></div>
     <div class="grid">
       {{ range $i, $p := after 1 $posts }}
         {{ $c := index (slice "--c0" "--c1" "--c2" "--c3" "--c4") (mod $i 5) }}
         <a class="card rv a{{ mod $i 5 }}" href="{{ $p.RelPermalink }}">
           <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">{{ with $p.File }}{{ .ContentBaseName }}{{ else }}{{ $p.Title }}{{ end }}.md</span></div>
           {{ $cov := $p.Resources.GetMatch $p.Params.cover.image }}<div class="thumb{{ if not $cov }} noimg{{ end }}">{{ with $cov }}<img src="{{ .RelPermalink }}" alt="" loading="lazy">{{ else }}<span>{{ with $p.File }}{{ .ContentBaseName }}{{ end }}.md</span>{{ end }}</div>
-          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">// {{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
+          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">{{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
         </a>
       {{ end }}
     </div>
   </main>
 {{ else }}
   <main class="wrap">
-    <div class="sec-head" style="margin-top:3.5rem"><span class="n">{{ if eq .Kind "term" }}// tag{{ else }}// section{{ end }}</span><h2>{{ if .Title }}{{ .Title }}{{ else }}記事一覧{{ end }}</h2></div>
+    <div class="sec-head" style="margin-top:3.5rem"><span class="n">{{ if eq .Kind "term" }}tag{{ else }}section{{ end }}</span><h2>{{ if .Title }}{{ .Title }}{{ else }}記事一覧{{ end }}</h2></div>
     <div class="grid">
       {{ range $i, $p := .Pages.ByDate.Reverse }}
         {{ $c := index (slice "--c0" "--c1" "--c2" "--c3" "--c4") (mod $i 5) }}
         <a class="card a{{ mod $i 5 }}" href="{{ $p.RelPermalink }}">
           <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">{{ with $p.File }}{{ .ContentBaseName }}{{ else }}{{ $p.Title }}{{ end }}.md</span></div>
           {{ $cov := $p.Resources.GetMatch $p.Params.cover.image }}<div class="thumb{{ if not $cov }} noimg{{ end }}">{{ with $cov }}<img src="{{ .RelPermalink }}" alt="" loading="lazy">{{ else }}<span>{{ with $p.File }}{{ .ContentBaseName }}{{ end }}.md</span>{{ end }}</div>
-          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">// {{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
+          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">{{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
         </a>
       {{ end }}
     </div>
