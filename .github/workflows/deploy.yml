@@ -3,6 +3,15 @@ name: Deploy Hugo to GitHub Pages
 on:
   push:
     branches: [main]
+    # Zenn/dev.to 用ファイル（articles/・台帳json・転載スクリプト）だけの変更では
+    # Hugo の再ビルドは不要なので除外する（dev.to転載cronのstateコミットでの無駄ビルド防止）
+    paths-ignore:
+      - 'articles/**'
+      - 'books/**'
+      - 'crossposted-devto.json'
+      - 'post-order.json'
+      - '.github/scripts/**'
+      - '.github/workflows/crosspost-devto.yml'
 
 permissions:
   contents: read

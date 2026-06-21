@@ -1,0 +1,137 @@
+{
+  "ai-assistant-personality": {
+    "url": "https://dev.to/quolu/i-tried-giving-my-ai-assistant-limbs-but-ended-up-giving-it-a-personality-too-2nk1",
+    "id": 3791751,
+    "pending": []
+  },
+  "ai-coding-tool-journey": {
+    "url": "https://dev.to/quolu/from-copilot-to-cursor-to-claude-code-for-vs-code-my-journey-to-the-optimal-setup-53do",
+    "id": 3721152,
+    "pending": []
+  },
+  "ai-secretary-memory-system": {
+    "url": "https://dev.to/quolu/implementing-structured-long-term-memory-for-my-ai-secretary-5dpe",
+    "id": 3806474,
+    "pending": []
+  },
+  "ai-secretary-token-diet": {
+    "url": "https://dev.to/quolu/a-journey-into-token-optimization-for-my-ai-assistant-4e1i",
+    "id": 3799172,
+    "pending": []
+  },
+  "ai-server-management": {
+    "url": "https://dev.to/quolu/delegating-full-server-management-to-ai-111f",
+    "id": 3774252,
+    "pending": []
+  },
+  "ai-server-management-log": {
+    "url": "https://dev.to/quolu/what-happened-in-3-days-of-letting-ai-manage-my-server-2ch0",
+    "id": 3781150,
+    "pending": []
+  },
+  "aiterm-release": {
+    "url": "https://dev.to/quolu/released-aiterm-mcp-on-npm-an-mcp-server-to-reduce-token-usage-by-providing-ai-with-a-persistent-a5n",
+    "id": 3910298,
+    "pending": []
+  },
+  "bc250-to-ms-a2": {
+    "url": "https://dev.to/quolu/how-i-completed-my-home-server-hardware-selection-and-migration-in-one-day-using-claude-ibk",
+    "id": 3878077,
+    "pending": []
+  },
+  "build-fast-reach-slow": {
+    "url": "https://dev.to/quolu/ive-accelerated-building-and-promoting-but-delivering-still-remains-a-challenge-3fid",
+    "id": 3902186,
+    "pending": []
+  },
+  "caveat-release": {
+    "url": "https://dev.to/quolu/published-caveat-to-npm-a-long-term-memory-layer-to-avoid-repeating-the-same-traps-2cc0",
+    "id": 3837751,
+    "pending": []
+  },
+  "claude-audit-seesaw": {
+    "url": "https://dev.to/quolu/how-i-fixed-the-infinite-feedback-loop-when-auditing-project-plans-with-claude-4gh",
+    "id": 3861526,
+    "pending": []
+  },
+  "claude-augment-trilogy": {
+    "url": "https://dev.to/quolu/stop-telling-claude-to-be-careful-reinforcing-it-from-the-outside-with-3-tools-2k8k",
+    "id": 3852287,
+    "pending": []
+  },
+  "claude-code-half-features": {
+    "url": "https://dev.to/quolu/i-realized-i-was-only-using-half-of-what-claude-code-has-to-offer-38bo",
+    "id": 3716911,
+    "pending": []
+  },
+  "claude-code-ssh-deploy": {
+    "url": "https://dev.to/quolu/how-allowing-claude-to-access-my-server-via-ssh-simplified-deployment-dramatically-12j8",
+    "id": 3760063,
+    "pending": []
+  },
+  "claude-max-plan-review": {
+    "url": "https://dev.to/quolu/what-exactly-changes-with-the-claude-max-plan-4kgb",
+    "id": 3729013,
+    "pending": []
+  },
+  "claude-research-from-papers": {
+    "url": "https://dev.to/quolu/solving-complex-logic-with-claude-and-research-papers-1gk7",
+    "id": 3752906,
+    "pending": []
+  },
+  "discord-ai-assistant": {
+    "url": "https://dev.to/quolu/how-i-built-an-ai-assistant-that-grows-its-own-tools-572g",
+    "id": 3786406,
+    "pending": []
+  },
+  "discord-bot-to-saas": {
+    "url": "https://dev.to/quolu/how-i-turned-a-discord-bot-i-built-for-my-mmo-guild-over-5-years-into-a-saas-product-1bnm",
+    "id": 3767361,
+    "pending": []
+  },
+  "dns-blindspot": {
+    "url": "https://dev.to/quolu/the-true-reason-my-ai-kept-saying-tool-not-found-was-ddns-54ja",
+    "id": 3894724,
+    "pending": []
+  },
+  "livetr-realtime-translator": {
+    "url": "https://dev.to/quolu/livetr-a-real-time-english-to-japanese-audio-translation-app-for-videos-1lek",
+    "id": 3744290,
+    "pending": []
+  },
+  "oltranslator-app": {
+    "url": "https://dev.to/quolu/oltranslator-a-real-time-screen-translation-app-for-windows-1l52",
+    "id": 3736536,
+    "pending": []
+  },
+  "pi5-server-monitor": {
+    "url": "https://dev.to/quolu/built-a-raspberry-pi-5-server-monitor-for-power-efficiency-and-turned-it-into-a-video-player-16bi",
+    "id": 3887524,
+    "pending": []
+  },
+  "spotter-release": {
+    "url": "https://dev.to/quolu/i-had-74-daemons-running-because-i-made-one-claude-audit-another-for-missed-tool-calls-5b6m",
+    "id": 3844307,
+    "pending": []
+  },
+  "throughline-context-diet": {
+    "url": "https://dev.to/quolu/87-of-my-context-was-garbage-how-i-optimized-claude-code-token-usage-534k",
+    "id": 3815133,
+    "pending": []
+  },
+  "throughline-declare-over-detect": {
+    "url": "https://dev.to/quolu/why-i-gave-up-on-automatic-detection-for-resuming-sessions-in-claude-code-3bj0",
+    "id": 3823199,
+    "pending": []
+  },
+  "throughline-release": {
+    "url": "https://dev.to/quolu/published-throughline-to-npm-a-hook-to-offload-claude-code-tool-io-to-sqlite-13d9",
+    "id": 3831380,
+    "pending": []
+  },
+  "wsl2-late-discovery": {
+    "url": "https://dev.to/quolu/i-used-claude-code-for-2-months-without-knowing-about-wsl2-2c4c",
+    "id": 3869540,
+    "pending": []
+  }
+}

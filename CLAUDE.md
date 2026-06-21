@@ -48,7 +48,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **OGP/SNS画像（X にリンクを貼った時のカード画像）**: `baseof.html` が設定。**記事は各自の `cover.png`**、**cover を持たないページ（トップ／タグ／section／About）は既定 `static/og-card.png`** を使う（昔はトップに og:image が無く X で画像が出なかった→修正済み）。常に `twitter:card=summary_large_image`＋`twitter:image`。
   - `og-card.png` ＝**リニューアル後の実トップのヒーローを再現**した意匠（カバー風ではない。クリーム地＋紙グレイン／コーラルの kicker `$ ~/claude-code-hajimemashita`＋カーソル／明朝大見出し「設計は自分、実装は**Claude**。」＋「Claude」コーラル＋下線）。再生成は `node tools/cover/gen-og-hero.js`（1200×630＝X推奨1.91:1）
   - ⚠️ **OG画像を差し替える時はファイル名を変える**（同名据え置きだと CDN/X がキャッシュして反映されない＝本文画像と同じ罠。例 `og-card.png`→`og-hero2.png` ＋ baseof.html 更新）。Xはカード自体もキャッシュするので、確認は `https://blog.kitepon.dev/?x` のようにクエリを足して取り直させる
-- **集客**: X（Twitter、Premium+）+ Zenn転載 — **Premium+特典で通常ポストも最大約25,000字の長尺OK**（X Articlesと別枠）。280字制約を前提にしない
+- **集客**: X（Twitter、Premium+）でブログ記事へ**誘導するフック投稿** ＋ Zenn / dev.to 転載。**per-article の X Article（長文全文）は廃止**（全文はブログ＋Zenn＋dev.toに既出で4本目は冗長・拡散も弱い）。Premium+の長尺（最大約25,000字）は使えるが前提にしない。280字制約も前提にしない
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
 
 ## 記事の公開フロー（全プラットフォーム）
@@ -79,60 +79,48 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - `draft: false` で公開する前に監査エージェントを通す（詳細は下の「記事の公開前チェック」節）
 - 指摘されたら即修正してから次へ
 
-### 4. Zenn転載
-- Zennリポジトリ: `C:\Users\kite_\Documents\Program\Zenn`（GitHub: kitepon-rgb/zenn-content）
-- `articles/<slug>.md` にZenn形式で作成
-- frontmatter: `title`, `emoji`, `type: "tech"`, `topics`, `published: true`
-- 冒頭に `:::message この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。:::`
-- Hugo `relref` → ブログ絶対URL（`https://blog.kitepon.dev/post/...`）に変換
-- フッターの定型文は削除
+### 4. Zenn転載（**本リポジトリに統合済み＝別repo不要**）
+- Zenn記事は**本リポジトリのルート直下 `articles/<zennSlug>.md`**（旧 `kitepon-rgb/zenn-content` / Windows パス `C:\...\Zenn` は統合済みで廃止。Zenn の連携先リポジトリも本リポジトリ＝WebAICoding）
+- **同期はスクリプトで再生成**: `node tools/zenn-sync/sync.mjs` が `content/post/<slug>/index.md` から `articles/<zennSlug>.md` を作る。Zenn固有 frontmatter（`title`/`emoji`/`type`/`topics`/`published`）は既存Zennファイルから**温存**し本文だけ差し替え（詳細 `tools/zenn-sync/README.md`）
+  - 変換: 本文画像→ブログ絶対URL `https://blog.kitepon.dev/post/<slug>/...` ＋直下に `*alt*` キャプション（Hugo の figcaption 再現）/ `{{< linkcard >}}`→`@[card](url)` / `{{< relref >}}`→ブログ絶対URL / 冒頭に転載バナー（`:::message この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。:::`）
+  - **スラッグ5本ズレ対応表**（ブログ slug→Zennファイル名。`sync.mjs` と `.github/scripts/crosspost-devto.mjs` の両方に同一定義を持つ）: `claude-code-features`→`claude-code-half-features` / `claude-code-deploy`→`claude-code-ssh-deploy` / `max-plan-review`→`claude-max-plan-review` / `claude-research-implementation`→`claude-research-from-papers` / `livetr-app`→`livetr-realtime-translator`
+- **新記事を足したら**: ①先に `articles/<zennSlug>.md` を frontmatter だけ作る（emoji/topics は Zenn 用に手で選ぶ。本文は空でよい）→ ② `node tools/zenn-sync/sync.mjs` で本文を流し込む（既存frontmatterが無い新規slugは①が無いとエラーで停止する＝取りこぼし防止）
+- 同期後は `git diff articles/` で期待差分（画像追加 / `@[card]` / ドメイン）だけかを目視してからコミット
 
 ### 5. CLAUDE.md Articles テーブル更新
-- `## Articles` テーブルに `| # | タイトル | slug | 公開済み |` の行を追加
+- `## Articles` テーブルに `| # | タイトル | slug | 状態 |` の行を追加
 
 ### 6. コミット & プッシュ
-- Web（ブログ）とZenn、**両方**コミット & プッシュ
-- 選択add（`git add CLAUDE.md content/post/<slug>/`）— `git add .` は使わない（gitignore外の作業ファイルが混入する）
-- ⚠️ Zennリポジトリは push が弾かれることがある（dev.to自動転載のActionsが先行コミットするため）→ `git pull --rebase origin main` してから push し直す
+- ブログ本文・`articles/`（Zenn）は**同一リポジトリ**なので**1回のコミットで両方入る**（別repoへの二重 push は不要になった）
+- 選択add（`git add CLAUDE.md content/post/<slug>/ articles/<zennSlug>.md`）— `git add .` は使わない（gitignore外の作業ファイルが混入する）
+- ⚠️ push が弾かれることがある（dev.to自動転載のActionsが `crossposted-devto.json` を先行コミットするため）→ `git pull --rebase origin main` してから push し直す
 
-### 7. X Article作成
-- **前提: ブログのデプロイ完了を待つ**。X Article の表紙はブログのカバーURLをサーバが取得するので、**カバーURLが 200 になってから**作る（`curl -s -o /dev/null -w '%{http_code}' <記事URL>cover.png` でポーリング。404のままなら未来日付を疑う＝§1）
-- **`xarticle` MCP 経由で直接下書きを作る**（チャットへのコピペ出力は不要になった）
-  - `x_article_post`（`publish: false`）で「タイトル＋本文＋表紙画像」入りの下書きを一発で用意
-  - **表紙画像は必ず「URL指定」で渡す**：ブログの公開カバーURL（例 `https://blog.kitepon.dev/post/<slug>/cover.png`）を `coverImageUrl`（`x_article_post`）/ `imageUrl`（`x_article_set_cover`）に渡す → サーバが取得して添付。base64手打ちは巨大すぎて破損するので使わない
-  - セッション情報はサーバ側に登録済み（`x_article_set_credentials` は再実行不要）
-  - 下書きができたらユーザーに知らせる → ユーザーがプレビュー → **GO が出たら `x_article_publish` で公開**（公開＝同時に通常ポストも一本立つ。後戻りしにくいので勝手に公開しない）
-  - マークダウンは自動変換される（見出し/太字/斜体/インラインコード/リンク/箇条書き・ネスト/順序付き/引用/コードブロック）
-  - 非公開化は `x_article_unpublish`、削除は `x_article_delete`（削除は不可逆）
-- フォーマットルールは `memory/feedback_x_article_format.md` 参照
-- 要点: 全行間に `&nbsp;` 空行、見出しに絵文字、リンクはmarkdown形式、記事間リンクはX上のURLを使う
-- 末尾に `📚 [記事一覧はこちら](トップページURL)` を入れる
+### 7. X投稿（ブログへ誘導するフック投稿）
+- **前提: ブログのデプロイ完了を待つ**（カバーURLが 200 になってから。`curl -s -o /dev/null -w '%{http_code}' <記事URL>cover.png` でポーリング。404のままなら未来日付を疑う＝§1）
+- **per-article の X Article（長文記事）は廃止**（全文はブログ＋Zenn＋dev.toに既出で4本目は冗長／長文Articleはネイティブ拡散が弱く運用も重い）。X は「フックで本家ブログへ誘導する」チャネルとして使う
+- ブログ記事URLへ誘導する**通常ポスト（必要なら短いスレッド）**を作る。フック＋記事URL＋カバー画像。Premium+の長尺は使えるが、要点はあくまで誘導
+- ⚠️ **投稿はClaudeにはできない**（`.env.x-api` は xarticle トークンのみで X API の OAuth キーが無い）→ Claudeが**ドラフトを用意し、ユーザーが手動投稿**。OAuth キー4点（`tweet.write`付き）を `.env.x-api` に足せば `twitter-api-v2` でClaude投稿も可能になる
+- 既存の per-article X Article 32本は**削除しない**（放置。`x_article_delete` は不可逆）
 
-### 8. X トップページ（目次）更新
-- **X トップページ自体が X Article**（プロフィール固定の目次記事）。その記事の entityID は `x-top-page.md` 冒頭の HTML コメントに記録してある
-- 元原稿（ソース）: `x-top-page.md`（このリポジトリ内、gitignore済み）。形式: カテゴリ見出し + 絵文字付きタイトルリンクの一覧。**1行説明はつけない**
-- 新記事を適切なカテゴリに追加（なければカテゴリも新設）。リンクは新記事の X URL（§9で確定）
-- **反映は MCP で直接やる（手動コピペ不要）**: `x_article_unpublish`（entityID）→ `x_article_update_content`（本文markdown）→ `x_article_publish`
-  - 本文markdown = `x-top-page.md` の中身を変換: 冒頭の HTML コメントは除く / `←H1にする`（=記事タイトル）は本文に含めず**触らない** / `←H2/H3にする` は `##`/`###` に / `←リンク: URL` は `[タイトル](URL)` に
-  - **本文更新は Draft 状態でしか効かない**（Published のままだと `expected Draft` で弾かれる）→ だから `unpublish` が先
-  - ⚠️ **再公開で新しいリンクツイートが立つ** → プロフィールの固定ツイートを新ツイートに付け直す（ユーザー作業）
+### 8. X トップページ（目次）— 現状維持・更新は任意
+- プロフィール固定の目次 X Article（既存）は**そのまま残す**。per-article 廃止に伴い、記事公開のたびに目次を更新する運用はやめる
+- 更新したい場合のみ手動で（手順は従来通り `x_article_unpublish`（entityID）→ `x_article_update_content`（本文markdown）→ `x_article_publish`、元原稿 `x-top-page.md`）。本文更新は Draft 状態でしか効かない／再公開で新リンクツイートが立ち固定の貼り直しが要る点も従来通り
 
-### 9. URL記録
-- X Article公開後、ユーザーにURLを聞いて `memory/reference_x_articles.md` に追記
-- 同時に `x-top-page.md` の「公開後に追記」を実URLに置き換え
+### 9.（廃止）X Article URL記録
+- per-article Article を作らなくなったため、`memory/reference_x_articles.md` への Article URL 追記工程は廃止
 
 ### 10. 英語PR (Quote-RT)
-- JA記事のX URLを引用RTする形で、英語ポストを投稿
+- JAのフック投稿（§7）の X URL を引用RTする形で、英語ポストを投稿
 - 3案（短尺/中尺/長尺）を**日本語ドラフト**で提示してユーザーに選んでもらう
 - 選択後に英語に翻訳して出力（Premium+の長尺活用OK、280字制約は前提にしない）
 - ⚠️ **投稿はClaudeにはできない**（xarticle MCP は記事専用で引用RT不可、`.env.x-api` は xarticle トークンのみで X API の OAuth キーが無い）→ **ユーザーが手動投稿**。もし `.env.x-api` に OAuth キー4点（API Key/Secret + Access Token/Secret・`tweet.write`付き）を足せば、`twitter-api-v2`（`_playwright/node_modules`）で `v2.tweet(text, { quote_tweet_id })` を叩いてClaudeが投稿可能になる
 - 用途: 英語圏Claude Code層への到達拡張
 
-### dev.to への英語転載（自動・公開フローに手動ステップなし）
-- Zennが記事を自動英訳すると（日本語公開から数日後）、`kitepon-rgb/zenn-content` リポジトリのGitHub Actions（毎日09:00 JST cron）が英語版を dev.to へ転載する
-- 時系列順に1日1本ずつ投稿。本文の内部リンクは dev.to のリンクへ貼りかえ（前方参照は後追いで自動修正）
-- 新記事はZennフィード経由で自動的に転載キューへ加わる。手動作業は不要
-- 仕組みの詳細は `zenn-content` リポジトリの README を参照
+### dev.to への英語転載（**本リポジトリに統合**・公開フローに手動ステップなし）
+- 仕組みは**本リポジトリに同居**: `.github/workflows/crosspost-devto.yml`（毎日09:00 JST cron ＋ 手動 `workflow_dispatch`）＋ `.github/scripts/crosspost-devto.mjs`（Zenn英語版ページ `?locale=en` のHTML→md化→dev.to API）＋ 台帳 `crossposted-devto.json`・順序 `post-order.json`。要 `DEVTO_API_KEY`（**本repoのSecrets**に登録）
+- Zennが記事を自動英訳すると（日本語公開から数日後）、cronが時系列順に1日1本ずつ dev.to へ投稿。新記事はZennフィード経由で自動でキュー末尾へ加わる。手動作業は不要
+- 本文の内部リンクは dev.to のリンクへ貼りかえ（前方参照は後追いで自動修正）。本文画像はブログ絶対URLが英語ページ経由でそのまま入る
+- ⚠️ **転載済み記事は自動で再送されない**（dev.to 既出分は内容を直しても更新されない設計）。既出分に後からリッチ化（画像等）を反映するには、`crosspost-devto.mjs` に再同期（台帳idへ PUT）モードを足して回す必要がある
 
 ## 記事の公開前チェック（必須）
 
