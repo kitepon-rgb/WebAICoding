@@ -17,30 +17,30 @@ meta:
   disclosure: "本欄はアフィリエイト広告を含みます。"
   amazon_statement: "当サイトは、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。"
 
-# ⚠ 下の url の tag=PLACEHOLDER-22 と画像は「見え方デモ」用の仮。
-#   Amazonアソシエイト登録後、本物のアソシエイトタグ＋商品URL（できれば /dp/ASIN）＋
-#   メーカー公式product画像（/ads/gear/ に -v1 命名で）に差し替える。
+# tag=kitepon-22 ＝本物のアソシエイトID（2026-06 登録・初期審査中）。url は Amazon 検索URL＋このタグ＝有効なアフィリリンク。
+#   画像は当面 grok 生成の代表画像（スタイライズ）。より本物にするなら url を /dp/ASIN（特定商品）に・
+#   画像をメーカー公式に差し替え（/ads/gear/ に -v2 命名でキャッシュ回避）。
 items:
   - name: "高VRAM GPU"
     category: gpu_vram
     image: "/ads/gear/gpu-vram-v1.png"
-    url: "https://www.amazon.co.jp/s?k=RTX+5090&tag=PLACEHOLDER-22"
+    url: "https://www.amazon.co.jp/s?k=RTX+5090&tag=kitepon-22"
     blurb: "<b>VRAM多め</b>でローカルLLMを動かす"
     badge: "Amazon"
     program: amazon
     rel: "sponsored nofollow noopener"
     accent: 1
-    enabled: false   # フェーズ1ではoff（Amazon未登録のうちは『参加者です』掲示＝虚偽になる&規約NG）。フェーズ2で本物のタグ+公式画像にして true
+    enabled: true
     weight: 10
 
   - name: "AIミニPC / 自宅鯖"
     category: mini_pc
     image: "/ads/gear/mini-pc-v1.png"
-    url: "https://www.amazon.co.jp/s?k=ミニPC+Ryzen+AI&tag=PLACEHOLDER-22"
+    url: "https://www.amazon.co.jp/s?k=ミニPC+Ryzen+AI&tag=kitepon-22"
     blurb: "<b>省電力で常時稼働</b>。推論・ホームラボに"
     badge: "Amazon"
     program: amazon
     rel: "sponsored nofollow noopener"
     accent: 3
-    enabled: false   # フェーズ1ではoff（Amazon未登録のうちは『参加者です』掲示＝虚偽になる&規約NG）。フェーズ2で本物のタグ+公式画像にして true
+    enabled: true
     weight: 20
