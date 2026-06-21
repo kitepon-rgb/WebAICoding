@@ -28,7 +28,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **カバー画像**: 各記事に `cover.png`（1250x500px）。生成スクリプト: `C:\Users\kite_\Documents\Program\_playwright\generate-cover.js`
   - 使い方: `node generate-cover.js "タイトル1行目" "タイトル2行目" "出力パス" ["コードテキスト"]`
   - デザイン: Claudeオレンジのグラデーション（左上暗→右下明）、ターミナル風枠（ボーダー `#dfcbc1`）、Noto Serif JP 600、背景にコードライン
-- **baseURL**: `https://kitepon-rgb.github.io/WebAICoding/` — サブパス `/WebAICoding/` があるため、内部リンクは必ず `relref` を使うこと（直書きは404になる）
+- **baseURL**: `https://blog.kitepon.dev/`（カスタムドメイン。Cloudflare DNS only の CNAME `blog`→`kitepon-rgb.github.io`／GitHub Pages が Let's Encrypt 発行）。旧 `https://kitepon-rgb.github.io/WebAICoding/` は GitHub が 301 で新ドメインへ自動リダイレクトするので過去リンクは生きている。内部リンクは引き続き `relref` を使う（ドメイン変更に強い・直書き回避）
 - **統計**: GoatCounter（claudecode-blog.goatcounter.com）
 - **集客**: X（Twitter、Premium+）+ Zenn転載 — **Premium+特典で通常ポストも最大約25,000字の長尺OK**（X Articlesと別枠）。280字制約を前提にしない
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
@@ -62,8 +62,8 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - Zennリポジトリ: `C:\Users\kite_\Documents\Program\Zenn`（GitHub: kitepon-rgb/zenn-content）
 - `articles/<slug>.md` にZenn形式で作成
 - frontmatter: `title`, `emoji`, `type: "tech"`, `topics`, `published: true`
-- 冒頭に `:::message この記事は [Claude Code 始めました](https://kitepon-rgb.github.io/WebAICoding/) からの転載です。:::`
-- Hugo `relref` → ブログ絶対URL（`https://kitepon-rgb.github.io/WebAICoding/post/...`）に変換
+- 冒頭に `:::message この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。:::`
+- Hugo `relref` → ブログ絶対URL（`https://blog.kitepon.dev/post/...`）に変換
 - フッターの定型文は削除
 
 ### 5. CLAUDE.md Articles テーブル更新
@@ -78,7 +78,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **前提: ブログのデプロイ完了を待つ**。X Article の表紙はブログのカバーURLをサーバが取得するので、**カバーURLが 200 になってから**作る（`curl -s -o /dev/null -w '%{http_code}' <記事URL>cover.png` でポーリング。404のままなら未来日付を疑う＝§1）
 - **`xarticle` MCP 経由で直接下書きを作る**（チャットへのコピペ出力は不要になった）
   - `x_article_post`（`publish: false`）で「タイトル＋本文＋表紙画像」入りの下書きを一発で用意
-  - **表紙画像は必ず「URL指定」で渡す**：ブログの公開カバーURL（例 `https://kitepon-rgb.github.io/WebAICoding/post/<slug>/cover.png`）を `coverImageUrl`（`x_article_post`）/ `imageUrl`（`x_article_set_cover`）に渡す → サーバが取得して添付。base64手打ちは巨大すぎて破損するので使わない
+  - **表紙画像は必ず「URL指定」で渡す**：ブログの公開カバーURL（例 `https://blog.kitepon.dev/post/<slug>/cover.png`）を `coverImageUrl`（`x_article_post`）/ `imageUrl`（`x_article_set_cover`）に渡す → サーバが取得して添付。base64手打ちは巨大すぎて破損するので使わない
   - セッション情報はサーバ側に登録済み（`x_article_set_credentials` は再実行不要）
   - 下書きができたらユーザーに知らせる → ユーザーがプレビュー → **GO が出たら `x_article_publish` で公開**（公開＝同時に通常ポストも一本立つ。後戻りしにくいので勝手に公開しない）
   - マークダウンは自動変換される（見出し/太字/斜体/インラインコード/リンク/箇条書き・ネスト/順序付き/引用/コードブロック）
