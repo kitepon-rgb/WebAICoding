@@ -1,11 +1,11 @@
 /**
- * トップ等（cover を持たないページ）の既定 OG 画像 static/og-hero.png を生成する。
+ * トップ等（cover を持たないページ）の既定 OG 画像 static/og-card.png を生成する。
  * デザイン＝リニューアル後の「実トップのヒーロー」を忠実に再現（カバー風ではない）:
  *   クリーム地＋紙グレイン / コーラルの kicker「$ ~/claude-code-hajimemashita」＋カーソル /
  *   明朝大見出し「設計は自分、実装はClaude。」＋「Claude」コーラル＋下線。
  *
  * 使い方（tools/cover で）:  node gen-og-hero.js
- * 1250×500・PNG を ../../static/og-hero.png に出力する。
+ * 1250×500・PNG を ../../static/og-card.png に出力する。
  *
  * ⚠️ 出力ファイル名を変えたら baseof.html の既定OG参照（"og-hero.png"）も合わせること。
  *    既存ファイルを同名で差し替えても CDN/X がキャッシュするので、意匠を変える時は
@@ -17,13 +17,13 @@
 const { chromium } = require('playwright');
 const path = require('path');
 
-const out = path.resolve(__dirname, '..', '..', 'static', 'og-hero.png');
+const out = path.resolve(__dirname, '..', '..', 'static', 'og-card.png');
 
 const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  #og{width:1250px;height:500px;position:relative;overflow:hidden;
+  #og{width:1200px;height:630px;position:relative;overflow:hidden;
     background:radial-gradient(120% 78% at 90% -10%,rgba(217,119,87,.18),transparent 52%),
                radial-gradient(80% 60% at -5% 4%,rgba(233,216,198,.5),transparent 50%),#f6ede3;
     display:flex;flex-direction:column;justify-content:center;padding:0 86px}
@@ -49,11 +49,11 @@ const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.setViewportSize({ width: 1250, height: 500 });
+  await page.setViewportSize({ width: 1200, height: 630 });
   await page.setContent(html);
   await page.evaluate(async () => { await document.fonts.ready; });
   await page.waitForTimeout(300);
   await page.screenshot({ path: out });
   await browser.close();
-  console.log(`og-hero.png generated: ${out} (1250x500)`);
+  console.log(`og-card.png generated: ${out} (1200x630)`);
 })();
