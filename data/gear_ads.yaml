@@ -1,0 +1,46 @@
+# 厳選アフィリエイト広告（記事ページ 右レール）。Amazonアソシエイト単独。手で1点ずつ選ぶ。
+# AdSense等の自動配信は使わない＝外部JSゼロの静的バナー。
+#
+# 【フェーズ1（現在）】items: [] のまま ＝ partial が右レールに自作プロダクトを出す。
+#   （フォールバック禁止の方針＝「準備中」は出さない。在庫が無いので出さないだけ）
+# 【フェーズ2】ユーザーがAmazonアソシエイトに登録し、アソシエイトタグを渡したら、
+#   下の雛形を参考に items を埋める＝右レールが厳選アフィリに切り替わる（コード変更不要）。
+#
+# 法令: 2023/10/1 景表法ステマ規制＋Amazon規約で「PR/広告」の明瞭な明示が必須。
+#   → partial が全gearバナーに PR バッジを強制付与＋レール脚に disclosure と Amazon定型文を出す。
+# 価格はバナーに焼かない（PA-API無しでのAmazon価格表示はOperating Agreement上不可）。
+# 画像はメーカー公式product画像を static/ads/gear/ に置く（-v1 命名）。Amazon掲載画像のスクレイプはしない。
+# 対象カテゴリ(enum): mini_pc / unified_mem / gpu_vram / ai_network / home_server
+#   除外: 低価格普及品(BUFFALO/Corega) / 純ゲーミングGeForce訴求
+meta:
+  pr_badge: "PR"
+  disclosure: "本欄はアフィリエイト広告を含みます。"
+  amazon_statement: "当サイトは、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。"
+
+# ⚠ 下の url の tag=PLACEHOLDER-22 と画像は「見え方デモ」用の仮。
+#   Amazonアソシエイト登録後、本物のアソシエイトタグ＋商品URL（できれば /dp/ASIN）＋
+#   メーカー公式product画像（/ads/gear/ に -v1 命名で）に差し替える。
+items:
+  - name: "高VRAM GPU"
+    category: gpu_vram
+    image: "/ads/gear/gpu-vram-v1.png"
+    url: "https://www.amazon.co.jp/s?k=RTX+5090&tag=PLACEHOLDER-22"
+    blurb: "<b>VRAM多め</b>でローカルLLMを動かす"
+    badge: "Amazon"
+    program: amazon
+    rel: "sponsored nofollow noopener"
+    accent: 1
+    enabled: false   # フェーズ1ではoff（Amazon未登録のうちは『参加者です』掲示＝虚偽になる&規約NG）。フェーズ2で本物のタグ+公式画像にして true
+    weight: 10
+
+  - name: "AIミニPC / 自宅鯖"
+    category: mini_pc
+    image: "/ads/gear/mini-pc-v1.png"
+    url: "https://www.amazon.co.jp/s?k=ミニPC+Ryzen+AI&tag=PLACEHOLDER-22"
+    blurb: "<b>省電力で常時稼働</b>。推論・ホームラボに"
+    badge: "Amazon"
+    program: amazon
+    rel: "sponsored nofollow noopener"
+    accent: 3
+    enabled: false   # フェーズ1ではoff（Amazon未登録のうちは『参加者です』掲示＝虚偽になる&規約NG）。フェーズ2で本物のタグ+公式画像にして true
+    weight: 20

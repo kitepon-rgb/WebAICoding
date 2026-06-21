@@ -51,6 +51,32 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 - **集客**: X（Twitter、Premium+）でブログ記事へ**誘導するフック投稿** ＋ Zenn / dev.to 転載。**per-article の X Article（長文全文）は廃止**（全文はブログ＋Zenn＋dev.toに既出で4本目は冗長・拡散も弱い）。Premium+の長尺（最大約25,000字）は使えるが前提にしない。280字制約も前提にしない
 - **X API**: Pay Per Use、キーは `.env.x-api`（gitignore済み）、アイデア帳は `x-api-ideas.md`（gitignore済み）、APIリファレンスは `x-api-reference.md`
 
+## 記事レール広告「旗(flag)」 — 確定仕様（このロジックで作る。再設計禁止・触る時はこの通り）
+
+PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、**縦長バナーを左右1枚ずつ＝計2枚**出す。**左=自作プロダクト / 右=厳選アフィリ(Amazonアソシエイト単独・楽天不使用)**。AdSense等の自動配信は使わない＝**外部JSゼロの静的バナー**、データ駆動。意匠は「ブランドの旗」。
+
+**表示条件・配置（CSS: `assets/css/main.css` 末尾の `@media(min-width:1100px)` ブロック）**
+- viewport **≥1100px でのみ表示**（iPad横でも出る／縦持ち・スマホ・狭PCは `display:none`）。既定 `.ad-rail{display:none}`、`@media print` も非表示。既存メディアは全て `max-width` なので衝突なし。
+- レールは本文`.post`(704px中央寄せ)を**一切動かさず**、`.post__body`（= `single.html` で cover〜pnav〜レールを包む div）を `position:relative` のアンカーにして `.ad-rail` を `position:absolute; top:var(--rail-top); bottom:0` で外側余白へ。内側 `.ad-rail__inner` が `position:sticky; top:7rem` で追従。左右位置は `left/right:calc(100% + var(--rail-gap))`。**バナー上端は記事タイトルより下**（`--rail-top:0` で `.post__body`＝カバー位置から開始）。
+- 調整は `:root` の変数：`--rail-w:160px`（幅）/ `--rail-gap:28px`（本文との間隔）/ `--rail-img:280px`（画像高）/ `--rail-top`（開始位置）/ `--flag-skew:16px`・`--flag-inset:4px`（斜めカット）。
+
+**旗の構造（`layouts/partials/ad-rail.html` が描く `.ad-flag`）**：上から
+1. **マストヘッド** `.ad-flag__mast`（espresso地）＝サイト象徴フレーズ `$ ~/claude-code-hajimemashita` ＋点滅カーソル（ヒーローのkickerと同一。mono・コーラルの`$`）。
+2. **画像** `.ad-flag__pic`（`--rail-img`高）。下地は**縦グラデ＝上espresso(マストと同色で白線が出ない)／下`flag-skew+inset`分クリーム(足元に馴染む)**。画像は `clip-path` で**上下を斜めカット**＝`polygon(0 calc(skew+inset), 100% inset, 100% calc(100%-inset), 0 calc(100%-skew-inset))`（**傾きは左が深い／右端は y=inset で角に張り付かせない＝右端も斜めに見せる**）。`margin-top:-1px`でマストと重ね白線封じ。
+3. **PR/自作チップ** `.ad-flag__chip`＝**白文字＋コーラル地で統一**（半透明だと暗い画像で溶ける）。右=「PR」/左=「自作」。
+4. **本文** `.ad-flag__body`（クリーム地）：**名前**＝先頭1文字だけ大きく（`::first-letter{font-size:1.5em}`・**フロートせずベースライン＝下端を後続と揃える**。ドロップキャップ/コーラル縦線は不可＝ダサい）／**一言**＝**「特徴(差別化点)」だけ**を `<b>` で囲み記事本文と同じコーラルのマーカー（`.ad-flag__blurb b` = `.prose strong` と同意匠。**要点(topic)でなく特徴**）／**出自**＝コーラルの□付きmono（下）。CTA・長い法令文は置かない。
+5. **コーラル旗竿**（左）＝`.ad-flag::before`のオーバーレイ（`border-left:4px` 直書きは角丸で**窪み**が出るので使わない＝カードと同じ轍）。四隅は `border-radius:13px`（左右とも丸い）。
+
+**データ駆動（新しい広告はこのロジックで＝データ編集のみ）**
+- `data/self_ads.yaml`（自作）/ `data/gear_ads.yaml`（Amazon）。各 item: `name/category/image/url/blurb/badge/accent(0-4)/rail(left|right)/enabled/weight` ＋任意 `pos`（横長OG画像は `"left top"`等で要所を見せる）/ gearは `program:amazon`・`rel:"sponsored nofollow noopener"`。
+- `blurb` は **HTML可（partialで `safeHTML`）**。**特徴のキーワードだけ `<b>`** で囲む。
+- 表示は記事ごとに pool内を**ローテーション**（`mod($page.Date.Unix, len)`＝静的・JSなし）。空(`items:[]`)なら描かない（準備中は出さない＝フォールバック禁止）。
+- 画像は `static/ads/`（self）/`static/ads/gear/`（Amazon）に置き **`-v1`等バージョン命名**（fingerprint されず Cloudflare 4hキャッシュの罠）。縦長(9:16前後)が枠に最適。Amazon機材画像は当面 grok生成のデモ仮（`mcp__claude_ai_X-HERMES-MCP__generate_image`、9:16・no-text・ダーク+コーラル）→本番はメーカー公式product画像へ差替。
+
+**法令(PR)・ロールアウト**
+- 右レール(アフィリ)は **PRチップ＋ページフッターのAmazon定型文**（`baseof.html`／`hugo.Data.gear_ads.items` に enabled があれば `.ad-legal` を1回表示）で景表法ステマ規制＋Amazon規約を満たす。**各広告に密な法令文は置かない**（広告臭を消す）。**価格はバナーに焼かない**（PA-API無しでのAmazon価格表示は規約違反）。
+- **フェーズ1=自作(左右ともローテーション可)で即公開可**。**フェーズ2=ユーザーがAmazonアソシエイト登録→アソシエイトタグを渡したら** `gear_ads.yaml` の `url` の `tag=PLACEHOLDER-22` を本物に・画像を公式に差替＝右が本番点灯（コード変更不要）。Amazon PA-APIは2026/5廃止＋新規停止＝自動取得は不可、手キュレーション。
+
 ## 記事の公開フロー（全プラットフォーム）
 
 記事を公開する時は以下を**すべて**実行する。「コミット プッシュ」と言われたら全ステップ。

@@ -45,6 +45,7 @@
   {{- with site.Params.twitter }}<a href="https://x.com/{{ . }}" rel="noopener" target="_blank">X</a>{{ end }}
   <a href="https://zenn.dev/kitepon" rel="noopener" target="_blank">Zenn</a>
   <a href="https://github.com/kitepon-rgb" rel="noopener" target="_blank">GitHub</a>
+  {{- if (where (default (slice) hugo.Data.gear_ads.items) "enabled" true) }}<p class="ad-legal">{{ hugo.Data.gear_ads.meta.amazon_statement }}</p>{{ end -}}
 </div></footer>
 
 <script data-goatcounter="https://claudecode-blog.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
