@@ -8,7 +8,9 @@
   --sans:'Zen Kaku Gothic New',system-ui,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,monospace;
   --w:74rem;
-  --rail-w:160px; --rail-gap:28px; --rail-img:280px; --rail-top:0; --flag-skew:16px; --flag-inset:4px;
+  --rail-w:160px; --rail-img:280px; --flag-skew:16px; --flag-inset:4px;
+  --post-w:44rem; /* .post の max-width と一致＝ガター幅計算の基準。変えたら .post も連動 */
+  --rail-bottom:1.25rem; /* 旗をウィンドウ下端から浮かせる隙間 */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -196,11 +198,14 @@ footer.site a{color:#bda88f;text-decoration:none}footer.site a:hover{color:var(-
    既存メディアは全て max-width(560/600/880) ＝ この min-width:1200 と交差しないので衝突なし。 */
 .kp-rail{display:none}
 @media(min-width:1100px){
-  .post__body{position:relative}
-  .kp-rail{display:block;position:absolute;top:var(--rail-top);bottom:0;width:var(--rail-w);z-index:3;pointer-events:none}
-  .kp-rail--right{left:calc(100% + var(--rail-gap))}
-  .kp-rail--left{right:calc(100% + var(--rail-gap))}
-  .kp-rail__inner{position:sticky;top:7rem;pointer-events:auto}
+  /* レール＝viewport基準の position:fixed。各ガター(本文 --post-w の左右の空き)を箱にして、中で旗を
+     左右中央(justify-content:center)＋下端固定(bottom:--rail-bottom)。スクロールしても1pxも動かない。
+     幅は calc((100% - var(--post-w))/2)＝fixedの 100% は ICB(=clientWidth・縦スクロールバー除外)に解決＝
+     .post の margin:auto と同基準なので左右ガターが完全対称（100vw/50vw はSB込みで右がズレるので使わない）。 */
+  .kp-rail{display:flex;justify-content:center;align-items:flex-end;position:fixed;bottom:var(--rail-bottom);width:calc((100% - var(--post-w)) / 2);z-index:3;pointer-events:none}
+  .kp-rail--left{left:0}   /* 左ガター帯: 内容左端0 〜 本文左端 */
+  .kp-rail--right{right:0} /* 右ガター帯: 本文右端 〜 内容右端(SB内側)＝left:0 と対称 */
+  .kp-rail__inner{position:static;width:var(--rail-w);pointer-events:auto}
   /* 旗(flag): デザインシステム準拠。コーラル旗竿(左)+象徴フレーズのマストヘッド+画像の上下斜めカット+クリームの足元 */
   /* 左のコーラル旗竿(4px)。border-left直書きは角丸で窪むので、::before(左ボーダー+同じ角丸)を重ねて描く＝窪みなし */
   .kp-flag{position:relative;display:flex;flex-direction:column;width:var(--rail-w);background:var(--paper-2);border:1px solid var(--line);border-radius:13px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 20px 44px -28px rgba(80,40,20,.55);transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s}
