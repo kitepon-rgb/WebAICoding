@@ -9,7 +9,7 @@
 # 法令: 2023/10/1 景表法ステマ規制＋Amazon規約で「PR/広告」の明瞭な明示が必須。
 #   → partial が全gearバナーに PR バッジを強制付与＋レール脚に disclosure と Amazon定型文を出す。
 # 価格はバナーに焼かない（PA-API無しでのAmazon価格表示はOperating Agreement上不可）。
-# 画像はメーカー公式product画像を static/ads/gear/ に置く（-v1 命名）。Amazon掲載画像のスクレイプはしない。
+# 画像はメーカー公式product画像を static/store/gear/ に置く（-v1 命名）。Amazon掲載画像のスクレイプはしない。
 # 対象カテゴリ(enum): mini_pc / unified_mem / gpu_vram / ai_network / home_server
 #   除外: 低価格普及品(BUFFALO/Corega) / 純ゲーミングGeForce訴求
 meta:
@@ -19,11 +19,11 @@ meta:
 
 # tag=kitepon-22 ＝本物のアソシエイトID（2026-06 登録・初期審査中）。url は Amazon 検索URL＋このタグ＝有効なアフィリリンク。
 #   画像は当面 grok 生成の代表画像（スタイライズ）。より本物にするなら url を /dp/ASIN（特定商品）に・
-#   画像をメーカー公式に差し替え（/ads/gear/ に -v2 命名でキャッシュ回避）。
+#   画像をメーカー公式に差し替え（/store/gear/ に -v2 命名でキャッシュ回避）。
 items:
   - name: "高VRAM GPU"
     category: gpu_vram
-    image: "/ads/gear/gpu-vram-v1.png"
+    image: "/store/gear/gpu-vram-v1.png"
     url: "https://www.amazon.co.jp/s?k=RTX+5090&tag=kitepon-22"
     blurb: "<b>VRAM多め</b>でローカルLLMを動かす"
     badge: "Amazon"
@@ -35,7 +35,7 @@ items:
 
   - name: "AIミニPC / 自宅鯖"
     category: mini_pc
-    image: "/ads/gear/mini-pc-v1.png"
+    image: "/store/gear/mini-pc-v1.png"
     url: "https://www.amazon.co.jp/s?k=ミニPC+Ryzen+AI&tag=kitepon-22"
     blurb: "<b>省電力で常時稼働</b>。推論・ホームラボに"
     badge: "Amazon"

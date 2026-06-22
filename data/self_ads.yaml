@@ -1,5 +1,5 @@
 # 自作プロダクト広告（記事ページ左右レール）。審査不要・即公開。
-# 画像は static/ads/ に置き /ads/<file> で参照（Page Bundle ではない＝全記事共通）。
+# 画像は static/store/ に置き /store/<file> で参照（Page Bundle ではない＝全記事共通）。
 # 差し替え時はファイル名のバージョンを上げる（-v1→-v2）＝static は fingerprint されず
 # Cloudflare が 4h キャッシュするため（CLAUDE.md のキャッシュ罠）。
 # rail: left|right。weight 昇順。新商品はここに1ブロック追加。
@@ -9,7 +9,7 @@ meta:
 items:
   - name: "Kikoeru"
     category: app
-    image: "/ads/kikoeru-v1.png"
+    image: "/store/kikoeru-v1.png"
     url: "https://apps.apple.com/jp/app/id6778238379"
     blurb: "AIが<b>無限に作る教材</b>で英語リスニング"
     badge: "App Store"
@@ -20,7 +20,7 @@ items:
 
   - name: "OLTranslator"
     category: app
-    image: "/ads/oltranslator-v1.png"
+    image: "/store/oltranslator-v1.png"
     url: "https://booth.pm/ja/items/8061243"
     blurb: "<b>画面をそのまま</b>日本語に。AI画面翻訳"
     badge: "BOOTH"
@@ -31,7 +31,7 @@ items:
 
   - name: "LiveTR"
     category: app
-    image: "/ads/livetr-v1.png"
+    image: "/store/livetr-v1.png"
     url: "https://qo-shop.booth.pm/items/8134987"
     blurb: "音声を<b>その場でリアルタイム</b>翻訳"
     badge: "BOOTH"
@@ -42,7 +42,7 @@ items:
 
   - name: "sprite-forge"
     category: mcp
-    image: "/ads/sprite-forge-v1.png"
+    image: "/store/sprite-forge-v1.png"
     url: "https://github.com/kitepon-rgb/sprite-forge-mcp"
     blurb: "<b>同じキャラを描ける</b>AIスプライト工房"
     badge: "GitHub"
@@ -53,7 +53,7 @@ items:
 
   - name: "rpgdev"
     category: tool
-    image: "/ads/rpgdev-v1.png"
+    image: "/store/rpgdev-v1.png"
     url: "https://github.com/kitepon-rgb/rpgdev"
     blurb: "AIの作業を<b>RPG化</b>するターミナルオーバーレイ"
     badge: "GitHub"
@@ -64,7 +64,7 @@ items:
 
   - name: "Throughline"
     category: tool
-    image: "/ads/throughline-v1.png"
+    image: "/store/throughline-v1.png"
     pos: "left top"   # 横長OGグラフィックはタイトル(左上)を見せる
     url: "https://github.com/kitepon-rgb/Throughline"
     blurb: "Claude CodeのI/Oを<b>SQLiteへ退避</b>するhook"
@@ -76,7 +76,7 @@ items:
 
   - name: "aiterm-mcp"
     category: mcp
-    image: "/ads/aiterm-v1.png"
+    image: "/store/aiterm-v1.png"
     pos: "left top"   # 横長OGグラフィックはタイトル(左上)を見せる
     url: "https://www.npmjs.com/package/aiterm-mcp"
     blurb: "AIに<b>1本の永続ターミナル</b>を握らせるMCP"
@@ -88,7 +88,7 @@ items:
 
   - name: "Caveat"
     category: tool
-    image: "/ads/caveat-v1.png"
+    image: "/store/caveat-v1.png"
     pos: "center top"   # 横長のターミナル窓ショット＝上側を見せる
     url: "https://github.com/kitepon-rgb/Caveat"
     blurb: "<b>同じ罠を二度踏まない</b>長期記憶レイヤ"
@@ -100,7 +100,7 @@ items:
 
   - name: "Spotter"
     category: tool
-    image: "/ads/spotter-v1.png"
+    image: "/store/spotter-v1.png"
     pos: "left top"   # 横長OGグラフィックはタイトル(左上)を見せる
     url: "https://github.com/kitepon-rgb/Spotter"
     blurb: "Claudeのツール呼び忘れを<b>別Claudeが監査</b>"

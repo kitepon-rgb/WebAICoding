@@ -2,7 +2,7 @@
        引数: (dict "side" "left"|"right" "page" .)
        右レールは data/gear_ads.yaml に有効在庫があれば「厳選アフィリ(Amazon・PR明示)」、無ければ自作の右スライス。
        記事ごとに pool 内をローテーション（記事日付で決定＝静的・JSなし）。pool が空なら何も描かない。
-       画像は static/ads/ の静的ファイル（Page Bundle ではない＝全記事共通）。
+       画像は static/store/ の静的ファイル（Page Bundle ではない＝全記事共通）。
        旗の意匠（claude-code-blog デザインシステム準拠）:
          マストヘッド = サイト象徴フレーズ `$ ~/claude-code-hajimemashita` ＋点滅カーソル
          画像は上下とも斜めカット / 左にコーラルの旗竿 / クリームの足元
@@ -22,15 +22,15 @@
        ローテーションが死ぬ（86400 は 2/3/9 等で割り切れる）→ ページURLのハッシュを seed にする */ -}}
 {{- $seed := hash.FNV32a $page.RelPermalink -}}
 {{- $it := index $pool (mod $seed (len $pool)) -}}
-<aside class="ad-rail ad-rail--{{ $side }}" aria-label="{{ if $isGear }}おすすめ機材（広告）{{ else }}自作プロダクト{{ end }}">
-  <div class="ad-rail__inner">
-    <a class="ad-flag a{{ $it.accent }}" href="{{ $it.url | safeURL }}" target="_blank" rel="{{ if $isGear }}sponsored nofollow noopener{{ else }}noopener{{ end }}">
-      <span class="ad-flag__mast"><span class="ad-flag__prompt">$</span><span class="ad-flag__path">~/claude-code-hajimemashita</span><span class="ad-flag__cursor"></span></span>
-      {{- with $it.image -}}<span class="ad-flag__pic"><img src="{{ . | relURL }}" alt="{{ $it.name }}" loading="lazy" decoding="async"{{ with $it.pos }} style="object-position:{{ . }}"{{ end }}>{{ if $isGear }}<span class="ad-flag__chip ad-flag__chip--pr">PR</span>{{ else }}<span class="ad-flag__chip">自作</span>{{ end }}</span>{{- end -}}
-      <span class="ad-flag__body">
-        <span class="ad-flag__name">{{ $it.name }}</span>
-        {{- with $it.blurb -}}<span class="ad-flag__blurb">{{ . | safeHTML }}</span>{{- end -}}
-        {{- with $it.badge -}}<span class="ad-flag__src">{{ . }}</span>{{- end -}}
+<aside class="kp-rail kp-rail--{{ $side }}" aria-label="{{ if $isGear }}おすすめ機材（広告）{{ else }}自作プロダクト{{ end }}">
+  <div class="kp-rail__inner">
+    <a class="kp-flag a{{ $it.accent }}" href="{{ $it.url | safeURL }}" target="_blank" rel="{{ if $isGear }}sponsored nofollow noopener{{ else }}noopener{{ end }}">
+      <span class="kp-flag__mast"><span class="kp-flag__prompt">$</span><span class="kp-flag__path">~/claude-code-hajimemashita</span><span class="kp-flag__cursor"></span></span>
+      {{- with $it.image -}}<span class="kp-flag__pic"><img src="{{ . | relURL }}" alt="{{ $it.name }}" loading="lazy" decoding="async"{{ with $it.pos }} style="object-position:{{ . }}"{{ end }}>{{ if $isGear }}<span class="kp-flag__chip kp-flag__chip--pr">PR</span>{{ else }}<span class="kp-flag__chip">自作</span>{{ end }}</span>{{- end -}}
+      <span class="kp-flag__body">
+        <span class="kp-flag__name">{{ $it.name }}</span>
+        {{- with $it.blurb -}}<span class="kp-flag__blurb">{{ . | safeHTML }}</span>{{- end -}}
+        {{- with $it.badge -}}<span class="kp-flag__src">{{ . }}</span>{{- end -}}
       </span>
     </a>
   </div>
