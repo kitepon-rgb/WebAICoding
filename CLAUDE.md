@@ -53,29 +53,32 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 
 ## 記事レール広告「旗(flag)」 — 確定仕様（このロジックで作る。再設計禁止・触る時はこの通り）
 
-PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、**縦長バナーを左右1枚ずつ＝計2枚**出す。**左=自作プロダクト / 右=厳選アフィリ(Amazonアソシエイト単独・楽天不使用)**。AdSense等の自動配信は使わない＝**外部JSゼロの静的バナー**、データ駆動。意匠は「ブランドの旗」。
+PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、**縦長バナーを左右1枚ずつ＝計2枚**出す。**左=自作プロダクト / 右=厳選アフィリ(Amazonアソシエイト単独・楽天不使用)**。AdSense等の他社自動配信は使わない。意匠は「ブランドの旗」。
+- **配信は動的（2026-06 に静的描画から移行）**: ブログのレールは**枠だけ静的に描き**、中身を **Ad Studio（`https://studio.kitepon.dev`）の `/serve` から fetch して差し込む**（承認済みプールから記事キーでローテで1枚）。**studioで承認した瞬間に反映＝再ビルド/GitHub不要**。studioが落ちている時は**空**（フォールバック禁止＝黙って静的に戻さない）。旧「`data/*_ads.yaml` を hugo が静的に焼き込む」方式は廃止（広告候補が複数ある以上、どれを出すかはサーバが決める）。Ad Studio は別repo `~/Developer/ad-studio`（メイン鯖192.168.1.2常駐・cloudflared）。
+- **広告ブロッカー対策（必須・触る時も維持）**: クラスは `kp-*`（旧 `ad-*` は uBlock 等のコスメティックフィルタ `[class^="ad-"]` で問答無用に消される＝自作宣伝まで巻き添え）、画像パスは `/store/`（旧 `/ads/`）、配信は同ルートドメイン `studio.kitepon.dev/serve`（中立名・`/ad` を含めない）。これで拡張・DNSフィルタに関係なく全訪問者に出る。**`ad-*`/`/ads/` へ戻さない。**
 
 **表示条件・配置（CSS: `assets/css/main.css` 末尾の `@media(min-width:1100px)` ブロック）**
-- viewport **≥1100px でのみ表示**（iPad横でも出る／縦持ち・スマホ・狭PCは `display:none`）。既定 `.ad-rail{display:none}`、`@media print` も非表示。既存メディアは全て `max-width` なので衝突なし。
-- レールは本文`.post`(704px中央寄せ)を**一切動かさず**、`.post__body`（= `single.html` で cover〜pnav〜レールを包む div）を `position:relative` のアンカーにして `.ad-rail` を `position:absolute; top:var(--rail-top); bottom:0` で外側余白へ。内側 `.ad-rail__inner` が `position:sticky; top:7rem` で追従。左右位置は `left/right:calc(100% + var(--rail-gap))`。**バナー上端は記事タイトルより下**（`--rail-top:0` で `.post__body`＝カバー位置から開始）。
+- viewport **≥1100px でのみ表示**（iPad横でも出る／縦持ち・スマホ・狭PCは `display:none`）。既定 `.kp-rail{display:none}`、`@media print` も非表示。ローダJSも `innerWidth<1100` では fetch しない（モバイルで無駄打ちしない）。既存メディアは全て `max-width` なので衝突なし。
+- レールは本文`.post`(704px中央寄せ)を**一切動かさず**、`.post__body`（= `single.html` で cover〜pnav〜レールを包む div）を `position:relative` のアンカーにして `.kp-rail` を `position:absolute; top:var(--rail-top); bottom:0` で外側余白へ。内側 `.kp-rail__inner`（＝`/serve` の旗HTMLが JS で入る箱）が `position:sticky; top:7rem` で追従。左右位置は `left/right:calc(100% + var(--rail-gap))`。**バナー上端は記事タイトルより下**（`--rail-top:0` で `.post__body`＝カバー位置から開始）。
 - 調整は `:root` の変数：`--rail-w:160px`（幅）/ `--rail-gap:28px`（本文との間隔）/ `--rail-img:280px`（画像高）/ `--rail-top`（開始位置）/ `--flag-skew:16px`・`--flag-inset:4px`（斜めカット）。
+- ローダは `layouts/partials/ad-rail.html`（partialの**ファイル名は ad-rail.html のまま**＝サーバ側で外に出ない／中身が描くクラスは `kp-*`）。**script は DOM 構築後に実行**（左レール直後に置くと右の `<aside>` をまだ拾えない罠＝`DOMContentLoaded` で両 `[data-kp-serve]` を fetch）。
 
-**旗の構造（`layouts/partials/ad-rail.html` が描く `.ad-flag`）**：上から
-1. **マストヘッド** `.ad-flag__mast`（espresso地）＝サイト象徴フレーズ `$ ~/claude-code-hajimemashita` ＋点滅カーソル（ヒーローのkickerと同一。mono・コーラルの`$`）。
-2. **画像** `.ad-flag__pic`（`--rail-img`高）。下地は**縦グラデ＝上espresso(マストと同色で白線が出ない)／下`flag-skew+inset`分クリーム(足元に馴染む)**。画像は `clip-path` で**上下を斜めカット**＝`polygon(0 calc(skew+inset), 100% inset, 100% calc(100%-inset), 0 calc(100%-skew-inset))`（**傾きは左が深い／右端は y=inset で角に張り付かせない＝右端も斜めに見せる**）。`margin-top:-1px`でマストと重ね白線封じ。
-3. **PR/自作チップ** `.ad-flag__chip`＝**白文字＋コーラル地で統一**（半透明だと暗い画像で溶ける）。右=「PR」/左=「自作」。
-4. **本文** `.ad-flag__body`（クリーム地）：**名前**＝先頭1文字だけ大きく（`::first-letter{font-size:1.5em}`・**フロートせずベースライン＝下端を後続と揃える**。ドロップキャップ/コーラル縦線は不可＝ダサい）／**一言**＝**「特徴(差別化点)」だけ**を `<b>` で囲み記事本文と同じコーラルのマーカー（`.ad-flag__blurb b` = `.prose strong` と同意匠。**要点(topic)でなく特徴**）／**出自**＝コーラルの□付きmono（下）。CTA・長い法令文は置かない。
-5. **コーラル旗竿**（左）＝`.ad-flag::before`のオーバーレイ（`border-left:4px` 直書きは角丸で**窪み**が出るので使わない＝カードと同じ轍）。四隅は `border-radius:13px`（左右とも丸い）。
+**旗の構造（`.kp-flag`。ブログ `assets/css/main.css` と Ad Studio `web/flag.mjs`＋`web/static/studio.css` の両方に同一意匠＝studio側はミラー。変えたら両方）**：上から
+1. **マストヘッド** `.kp-flag__mast`（espresso地）＝サイト象徴フレーズ `$ ~/claude-code-hajimemashita` ＋点滅カーソル（ヒーローのkickerと同一。mono・コーラルの`$`）。
+2. **画像** `.kp-flag__pic`（`--rail-img`高）。下地は**縦グラデ＝上espresso(マストと同色で白線が出ない)／下`flag-skew+inset`分クリーム(足元に馴染む)**。画像は `clip-path` で**上下を斜めカット**＝`polygon(0 calc(skew+inset), 100% inset, 100% calc(100%-inset), 0 calc(100%-skew-inset))`（**傾きは左が深い／右端は y=inset で角に張り付かせない＝右端も斜めに見せる**）。`margin-top:-1px`でマストと重ね白線封じ。
+3. **PR/自作チップ** `.kp-flag__chip`＝**白文字＋コーラル地で統一**（半透明だと暗い画像で溶ける）。右=「PR」(`.kp-flag__chip--pr`)/左=「自作」。
+4. **本文** `.kp-flag__body`（クリーム地）：**名前**＝先頭1文字だけ大きく（`::first-letter{font-size:1.5em}`・**フロートせずベースライン＝下端を後続と揃える**。ドロップキャップ/コーラル縦線は不可＝ダサい）／**一言**＝**「特徴(差別化点)」だけ**を `<b>` で囲み記事本文と同じコーラルのマーカー（`.kp-flag__blurb b` = `.prose strong` と同意匠。**要点(topic)でなく特徴**）／**出自**＝コーラルの□付きmono（下）。CTA・長い法令文は置かない。
+5. **コーラル旗竿**（左）＝`.kp-flag::before`のオーバーレイ（`border-left:4px` 直書きは角丸で**窪み**が出るので使わない＝カードと同じ轍）。四隅は `border-radius:13px`（左右とも丸い）。
 
-**データ駆動（新しい広告はこのロジックで＝データ編集のみ）**
-- `data/self_ads.yaml`（自作）/ `data/gear_ads.yaml`（Amazon）。各 item: `name/category/image/url/blurb/badge/accent(0-4)/rail(left|right)/enabled/weight` ＋任意 `pos`（横長OG画像は `"left top"`等で要所を見せる）/ gearは `program:amazon`・`rel:"sponsored nofollow noopener"`。
-- `blurb` は **HTML可（partialで `safeHTML`）**。**特徴のキーワードだけ `<b>`** で囲む。
-- 表示は記事ごとに pool内を**ローテーション**（`mod($page.Date.Unix, len)`＝静的・JSなし）。空(`items:[]`)なら描かない（準備中は出さない＝フォールバック禁止）。
-- 画像は `static/ads/`（self）/`static/ads/gear/`（Amazon）に置き **`-v1`等バージョン命名**（fingerprint されず Cloudflare 4hキャッシュの罠）。縦長(9:16前後)が枠に最適。Amazon機材画像は当面 grok生成のデモ仮（`mcp__claude_ai_X-HERMES-MCP__generate_image`、9:16・no-text・ダーク+コーラル）→本番はメーカー公式product画像へ差替。
+**配信ロジック（広告の追加・承認は Ad Studio で。`~/Developer/ad-studio`。詳細は `memory/project_ad_studio_deploy.md`）**
+- プール＝studioのSQLite上の **status=`published`（あなたがstudioで承認したもの）だけ**。`/serve?side=left|right&seed=<記事RelPermalink>` が `fnv32(seed+side) % len` で1枚返す。**左=自作、右=Amazon(gear)**、右はgear空なら**自作で埋める（左と同一広告は除外＝自作1個なら右は空）**。
+- 旗の画像は studio が `/serve-img/<imageId>` で公開配信（data/images のPNG）。既存 `/store/*.png` は blog CDN へ302。`blurb` はHTML可・特徴キーワードだけ `<b>`。
+- 旧 `data/self_ads.yaml`・`data/gear_ads.yaml`＋`static/store/*.png`（旧 `static/ads/`）は**配信には使わない**（studioへ移行済）。残置は既存画像の初期ソース＋手編集の保険。**広告を増やす＝studioで承認**（YAML手編集ではない）。
+- 承認＝published化＋採用画像確定だけ（`server.mjs` の approve）。hugoビルド・git push は無し。
 
 **法令(PR)・ロールアウト**
-- 右レール(アフィリ)は **PRチップ＋ページフッターのAmazon定型文**（`baseof.html`／`hugo.Data.gear_ads.items` に enabled があれば `.ad-legal` を1回表示）で景表法ステマ規制＋Amazon規約を満たす。**各広告に密な法令文は置かない**（広告臭を消す）。**価格はバナーに焼かない**（PA-API無しでのAmazon価格表示は規約違反）。
-- **フェーズ1=自作(左右ともローテーション可)で即公開可**。**フェーズ2=ユーザーがAmazonアソシエイト登録→アソシエイトタグを渡したら** `gear_ads.yaml` の `url` の `tag=PLACEHOLDER-22` を本物に・画像を公式に差替＝右が本番点灯（コード変更不要）。Amazon PA-APIは2026/5廃止＋新規停止＝自動取得は不可、手キュレーション。
+- 右レール(アフィリ)は **PRチップ(`.kp-flag__chip--pr`)＋ページフッターのAmazon定型文**（`baseof.html` の `.kp-legal`）で景表法ステマ規制＋Amazon規約を満たす。**各広告に密な法令文は置かない**（広告臭を消す）。**価格はバナーに焼かない**（PA-API無しでのAmazon価格表示は規約違反）。
+- **フェーズ1=自作（studioで承認した分が左右にローテ）**。**フェーズ2=ユーザーがAmazonアソシエイト登録→** studio で gear(Amazon)広告を承認＝右が本番点灯（`rel:"sponsored nofollow noopener"`・`tag=kitepon-22`）。Amazon PA-APIは2026/5廃止＋新規停止＝自動取得は不可、手キュレーション。
 
 ## 記事の公開フロー（全プラットフォーム）
 
