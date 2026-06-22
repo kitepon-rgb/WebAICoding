@@ -1,38 +1,25 @@
-{{- /* 記事レール広告＝「旗(flag)」。左右各1枚の縦長バナー。
+{{- /* 記事レール広告＝「旗(flag)」。**動的配信**: studio.kitepon.dev/serve が
+       承認(published)済みの広告からローテで1枚返し、JS が中身を差し込む。
+       静的YAML描画は廃止＝候補が複数ある以上、どれを出すかはサーバ(studio)が決める。
+       studio で承認した瞬間に反映（再ビルド/GitHub不要）。
        引数: (dict "side" "left"|"right" "page" .)
-       右レールは data/gear_ads.yaml に有効在庫があれば「厳選アフィリ(Amazon・PR明示)」、無ければ自作の右スライス。
-       記事ごとに pool 内をローテーション（記事日付で決定＝静的・JSなし）。pool が空なら何も描かない。
-       画像は static/store/ の静的ファイル（Page Bundle ではない＝全記事共通）。
-       旗の意匠（claude-code-blog デザインシステム準拠）:
-         マストヘッド = サイト象徴フレーズ `$ ~/claude-code-hajimemashita` ＋点滅カーソル
-         画像は上下とも斜めカット / 左にコーラルの旗竿 / クリームの足元
-         PR・自作は画像角のチップ（PRは法令明示）、出自バッジは足元。 */ -}}
+       枠(.kp-rail)だけ描き、.kp-rail__inner を /serve の旗HTMLで埋める。表示は ≥1100px のみ（CSSと一致）。
+       フォールバック禁止: studio が落ちている時は空のまま（黙って静的に戻さない）。 */ -}}
 {{- $side := .side -}}
 {{- $page := .page -}}
-{{- $gearAll := where (default (slice) hugo.Data.gear_ads.items) "enabled" true -}}
-{{- $isGear := and (eq $side "right") (gt (len $gearAll) 0) -}}
-{{- $pool := slice -}}
-{{- if $isGear -}}
-  {{- $pool = sort $gearAll "weight" "asc" -}}
-{{- else -}}
-  {{- $pool = sort (where (where hugo.Data.self_ads.items "enabled" true) "rail" $side) "weight" "asc" -}}
-{{- end -}}
-{{- if $pool -}}
-{{- /* seed は記事ごとに分散させる。記事日付(unix)は全記事が正午=86400秒差で mod が定数化し
-       ローテーションが死ぬ（86400 は 2/3/9 等で割り切れる）→ ページURLのハッシュを seed にする */ -}}
-{{- $seed := hash.FNV32a $page.RelPermalink -}}
-{{- $it := index $pool (mod $seed (len $pool)) -}}
-<aside class="kp-rail kp-rail--{{ $side }}" aria-label="{{ if $isGear }}おすすめ機材（広告）{{ else }}自作プロダクト{{ end }}">
-  <div class="kp-rail__inner">
-    <a class="kp-flag a{{ $it.accent }}" href="{{ $it.url | safeURL }}" target="_blank" rel="{{ if $isGear }}sponsored nofollow noopener{{ else }}noopener{{ end }}">
-      <span class="kp-flag__mast"><span class="kp-flag__prompt">$</span><span class="kp-flag__path">~/claude-code-hajimemashita</span><span class="kp-flag__cursor"></span></span>
-      {{- with $it.image -}}<span class="kp-flag__pic"><img src="{{ . | relURL }}" alt="{{ $it.name }}" loading="lazy" decoding="async"{{ with $it.pos }} style="object-position:{{ . }}"{{ end }}>{{ if $isGear }}<span class="kp-flag__chip kp-flag__chip--pr">PR</span>{{ else }}<span class="kp-flag__chip">自作</span>{{ end }}</span>{{- end -}}
-      <span class="kp-flag__body">
-        <span class="kp-flag__name">{{ $it.name }}</span>
-        {{- with $it.blurb -}}<span class="kp-flag__blurb">{{ . | safeHTML }}</span>{{- end -}}
-        {{- with $it.badge -}}<span class="kp-flag__src">{{ . }}</span>{{- end -}}
-      </span>
-    </a>
-  </div>
-</aside>
+<aside class="kp-rail kp-rail--{{ $side }}" data-kp-serve="{{ $side }}" data-kp-seed="{{ $page.RelPermalink }}" aria-label="プロモーション"><div class="kp-rail__inner"></div></aside>
+{{- if eq $side "left" -}}
+<script>
+(function(){
+  if(window.innerWidth<1100)return; /* レールはPC幅のみ（CSSと一致）→モバイルでは取りに行かない */
+  var base='https://studio.kitepon.dev';
+  document.querySelectorAll('[data-kp-serve]').forEach(function(el){
+    var seed=el.getAttribute('data-kp-seed')||location.pathname;
+    fetch(base+'/serve?side='+el.getAttribute('data-kp-serve')+'&seed='+encodeURIComponent(seed),{mode:'cors',credentials:'omit'})
+      .then(function(r){return r.ok?r.text():'';})
+      .then(function(h){var inner=el.querySelector('.kp-rail__inner');if(h&&inner){inner.innerHTML=h;}})
+      .catch(function(){});
+  });
+})();
+</script>
 {{- end -}}
