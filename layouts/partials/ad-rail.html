@@ -11,15 +11,19 @@
 {{- if eq $side "left" -}}
 <script>
 (function(){
-  if(window.innerWidth<1100)return; /* レールはPC幅のみ（CSSと一致）→モバイルでは取りに行かない */
-  var base='https://studio.kitepon.dev';
-  document.querySelectorAll('[data-kp-serve]').forEach(function(el){
-    var seed=el.getAttribute('data-kp-seed')||location.pathname;
-    fetch(base+'/serve?side='+el.getAttribute('data-kp-serve')+'&seed='+encodeURIComponent(seed),{mode:'cors',credentials:'omit'})
-      .then(function(r){return r.ok?r.text():'';})
-      .then(function(h){var inner=el.querySelector('.kp-rail__inner');if(h&&inner){inner.innerHTML=h;}})
-      .catch(function(){});
-  });
+  /* DOM構築後に走らせる（このscriptは左レール直後＝右の<aside>はまだ無いので querySelectorAll が取りこぼす） */
+  function run(){
+    if(window.innerWidth<1100)return; /* レールはPC幅のみ（CSSと一致）→モバイルでは取りに行かない */
+    var base='https://studio.kitepon.dev';
+    document.querySelectorAll('[data-kp-serve]').forEach(function(el){
+      var seed=el.getAttribute('data-kp-seed')||location.pathname;
+      fetch(base+'/serve?side='+el.getAttribute('data-kp-serve')+'&seed='+encodeURIComponent(seed),{mode:'cors',credentials:'omit'})
+        .then(function(r){return r.ok?r.text():'';})
+        .then(function(h){var inner=el.querySelector('.kp-rail__inner');if(h&&inner){inner.innerHTML=h;}})
+        .catch(function(){});
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
 })();
 </script>
 {{- end -}}
