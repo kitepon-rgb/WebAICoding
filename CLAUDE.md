@@ -59,8 +59,10 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 
 **表示条件・配置（CSS: `assets/css/main.css` 末尾の `@media(min-width:1100px)` ブロック）**
 - viewport **≥1100px でのみ表示**（iPad横でも出る／縦持ち・スマホ・狭PCは `display:none`）。既定 `.kp-rail{display:none}`、`@media print` も非表示。ローダJSも `innerWidth<1100` では fetch しない（モバイルで無駄打ちしない）。既存メディアは全て `max-width` なので衝突なし。
-- レールは本文`.post`(704px中央寄せ)を**一切動かさず**、`.post__body`（= `single.html` で cover〜pnav〜レールを包む div）を `position:relative` のアンカーにして `.kp-rail` を `position:absolute; top:var(--rail-top); bottom:0` で外側余白へ。内側 `.kp-rail__inner`（＝`/serve` の旗HTMLが JS で入る箱）が `position:sticky; top:7rem` で追従。左右位置は `left/right:calc(100% + var(--rail-gap))`。**バナー上端は記事タイトルより下**（`--rail-top:0` で `.post__body`＝カバー位置から開始）。
-- 調整は `:root` の変数：`--rail-w:160px`（幅）/ `--rail-gap:28px`（本文との間隔）/ `--rail-img:280px`（画像高）/ `--rail-top`（開始位置）/ `--flag-skew:16px`・`--flag-inset:4px`（斜めカット）。
+- **配置＝各ガター中央寄せ＋viewport下端固定（2026-06-22 確定。再設計禁止・スクロールで1pxも動かさない）**: `.kp-rail` を **`position:fixed`** にして、本文`.post`(704px=44rem)の**左右の余白(ガター)をそれぞれ箱**にする＝`width:calc((100% - var(--post-w)) / 2)`・`.kp-rail--left{left:0}`/`.kp-rail--right{right:0}`。箱の中で旗を **`justify-content:center`（ガターの左右中央）＋`align-items:flex-end`＋`bottom:var(--rail-bottom)`（ウィンドウ下端から浮かす）**。内側 `.kp-rail__inner`（＝`/serve` の旗HTMLが JS で入る箱・`position:static;width:var(--rail-w)`）。
+  - **スクロールバー非対称の罠（重要）**: 幅計算に **`vw` を使わない**。`100vw` はスクロールバーを含むので右ガターが数pxズレる。`position:fixed` の `%`／`left:0`／`right:0` は **ICB＝`clientWidth`（スクロールバー除外）** に解決され、`.post` の `margin:auto` と同基準＝左右ガターが**完全対称**（実測：両旗のマージン100.3px一致・下端gap20px・スクロール1800pxでドリフト0）。
+  - 旧 `position:absolute; sticky; top:7rem; left/right:calc(100%+gap)` は廃止（端寄せ＋スクロール端でブレた）。`.post__body{position:relative}` は残置可だが、`.post__body` か祖先に `transform/filter/will-change/contain` を**足さない**（足すと fixed の包含ブロックが祖先に移りガター基準が壊れる）。
+- 調整は `:root` の変数：`--rail-w:160px`（旗幅）/ `--post-w:44rem`（=`.post`幅・ガター計算の基準。変えたら`.post`も連動）/ `--rail-bottom:1.25rem`（下端からの隙間）/ `--rail-img:280px`（画像高）/ `--flag-skew:16px`・`--flag-inset:4px`（斜めカット）。
 - ローダは `layouts/partials/ad-rail.html`（partialの**ファイル名は ad-rail.html のまま**＝サーバ側で外に出ない／中身が描くクラスは `kp-*`）。**script は DOM 構築後に実行**（左レール直後に置くと右の `<aside>` をまだ拾えない罠＝`DOMContentLoaded` で両 `[data-kp-serve]` を fetch）。
 
 **旗の構造（`.kp-flag`。ブログ `assets/css/main.css` と Ad Studio `web/flag.mjs`＋`web/static/studio.css` の両方に同一意匠＝studio側はミラー。変えたら両方）**：上から
