@@ -1,13 +1,12 @@
 {{- /* 記事レール広告＝「旗(flag)」。**動的配信**: studio.kitepon.dev/serve が
-       承認(published)済みの広告から**毎ロード ランダム**で1枚返し（左=自作self/右=第三者gear・右はgear0なら空）、JS が中身を差し込む。
-       静的YAML描画は廃止＝候補が複数ある以上、どれを出すかはサーバ(studio)が決める。
-       studio で承認した瞬間に反映（再ビルド/GitHub不要）。
-       引数: (dict "side" "left"|"right" "page" .)
-       枠(.kp-rail)だけ描き、.kp-rail__inner を /serve の旗HTMLで埋める。表示は ≥1100px のみ（CSSと一致）。
+       承認(published)済みの**自作プロダクト**から毎ロード ランダムで1枚返し、JS が中身を差し込む。
+       2026-06: Amazonアフィリ(第三者)は規約上 商品画像をコピー/ホットリンクできず**廃止** → **左右とも自作**を配信。
+       左右で同じ製品を出さないよう、右は左のidを exclude で渡して別の1枚を取る。
+       静的YAML描画は廃止／studioで承認した瞬間に反映（再ビルド/GitHub不要）。表示は ≥1100px のみ（CSSと一致）。
        フォールバック禁止: studio が落ちている時は空のまま（黙って静的に戻さない）。 */ -}}
 {{- $side := .side -}}
 {{- $page := .page -}}
-<aside class="kp-rail kp-rail--{{ $side }}" data-kp-serve="{{ $side }}" data-kp-seed="{{ $page.RelPermalink }}" aria-label="プロモーション"><div class="kp-rail__inner"></div></aside>
+<aside class="kp-rail kp-rail--{{ $side }}" data-kp-serve="{{ $side }}" aria-label="プロモーション"><div class="kp-rail__inner"></div></aside>
 {{- if eq $side "left" -}}
 <script>
 (function(){
@@ -15,17 +14,16 @@
   function run(){
     if(window.innerWidth<1100)return; /* レールはPC幅のみ（CSSと一致）→モバイルでは取りに行かない */
     var base='https://studio.kitepon.dev';
-    document.querySelectorAll('[data-kp-serve]').forEach(function(el){
-      var seed=el.getAttribute('data-kp-seed')||location.pathname;
-      fetch(base+'/serve?side='+el.getAttribute('data-kp-serve')+'&seed='+encodeURIComponent(seed),{mode:'cors',credentials:'omit'})
-        .then(function(r){return r.ok?r.text():'';})
-        .then(function(h){var inner=el.querySelector('.kp-rail__inner');if(h&&inner){inner.innerHTML=h;
-          /* 右レールに第三者(gear)広告が実際に出た時だけ Amazon法令文(.kp-legal)を表示＝景表法ステマ規制＋Amazonアソシエイト規約。
-             旧 baseof は gear_ads.yaml items 駆動で動的配信では出なかった不整合を是正 */
-          if(el.getAttribute('data-kp-serve')==='right'){var lg=document.querySelector('[data-kp-legal]');if(lg)lg.removeAttribute('hidden');}
-        }})
-        .catch(function(){});
-    });
+    var rails={};
+    document.querySelectorAll('[data-kp-serve]').forEach(function(el){ rails[el.getAttribute('data-kp-serve')]=el; });
+    function inject(el,h){ var inner=el&&el.querySelector('.kp-rail__inner'); if(h&&inner){ inner.innerHTML=h; } }
+    function idOf(el){ var f=el&&el.querySelector('[data-kp-id]'); return f?f.getAttribute('data-kp-id'):''; }
+    function get(ex){ return fetch(base+'/serve'+(ex?('?exclude='+encodeURIComponent(ex)):''),{mode:'cors',credentials:'omit'}).then(function(r){return r.ok?r.text():'';}); }
+    /* 左を先に取得→そのidを除外して右を取る＝左右で同じ自作広告を出さない */
+    get('').then(function(h){
+      inject(rails.left,h);
+      if(rails.right){ get(idOf(rails.left)).then(function(h2){ inject(rails.right,h2); }).catch(function(){}); }
+    }).catch(function(){});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
 })();

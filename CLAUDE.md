@@ -53,7 +53,7 @@ mainブランチにpushすると GitHub Actions（`.github/workflows/deploy.yml`
 
 ## 記事レール広告「旗(flag)」 — 確定仕様（このロジックで作る。再設計禁止・触る時はこの通り）
 
-PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、**縦長バナーを左右1枚ずつ＝計2枚**出す。**左=自作プロダクト / 右=厳選アフィリ(Amazonアソシエイト単独・楽天不使用)**。AdSense等の他社自動配信は使わない。意匠は「ブランドの旗」。
+PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、**縦長バナーを左右1枚ずつ＝計2枚**出す。**左右とも自作プロダクト**（左右で別製品をローテ）。**Amazonアフィリ(第三者枠)は2026-06に廃止**＝規約上 商品画像をコピー/ホットリンクできず、正規路(PA-API/Creators API)も売上要件で使えないため（一次ソース＝`~/Developer/ad-studio/rag/amazon-associates/image-policy.md`）。AdSense等の他社自動配信も使わない。意匠は「ブランドの旗」。
 - **配信は動的（2026-06 に静的描画から移行）**: ブログのレールは**枠だけ静的に描き**、中身を **Ad Studio（`https://studio.kitepon.dev`）の `/serve` から fetch して差し込む**（承認済みプールから**毎ロード ランダム**で1枚＝記事固定でない・リロードで入替。左=自作self/右=第三者gear・右はgear0なら空）。**studioで承認した瞬間に反映＝再ビルド/GitHub不要**。studioが落ちている時は**空**（フォールバック禁止＝黙って静的に戻さない）。旧「`data/*_ads.yaml` を hugo が静的に焼き込む」方式は廃止（広告候補が複数ある以上、どれを出すかはサーバが決める）。Ad Studio は別repo `~/Developer/ad-studio`（メイン鯖192.168.1.2常駐・cloudflared）。**構造の正本＝`~/Developer/ad-studio/docs/ARCHITECTURE.md`**（HTTP API・データモデル・状態遷移・画像パイプライン・配信・レガシー判定）。
 - **広告ブロッカー対策（必須・触る時も維持）**: クラスは `kp-*`（旧 `ad-*` は uBlock 等のコスメティックフィルタ `[class^="ad-"]` で問答無用に消される＝自作宣伝まで巻き添え）、画像パスは `/store/`（旧 `/ads/`）、配信は同ルートドメイン `studio.kitepon.dev/serve`（中立名・`/ad` を含めない）。これで拡張・DNSフィルタに関係なく全訪問者に出る。**`ad-*`/`/ads/` へ戻さない。**
 
@@ -73,14 +73,14 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 5. **コーラル旗竿**（左）＝`.kp-flag::before`のオーバーレイ（`border-left:4px` 直書きは角丸で**窪み**が出るので使わない＝カードと同じ轍）。四隅は `border-radius:13px`（左右とも丸い）。
 
 **配信ロジック（広告の追加・承認は Ad Studio で。`~/Developer/ad-studio`。詳細は `memory/project_ad_studio_deploy.md`）**
-- プール＝studioのSQLite上の **status=`published`（あなたがstudioで承認したもの）だけ**。`/serve?side=left|right` が **毎ロード ランダム**で1枚返す（記事固定ではない＝リロードで入れ替わる）。**左=自作(self)のみ／右=第三者(gear)のみ**。**右は gear が0なら空**（自作で埋めるフォールバックは撤去＝個人広告を右の第三者枠に出さない）。`enabled=0`(配信停止)・採用画像欠落 は配信除外（フォールバック禁止）。第三者を点灯させる＝提案の第三者タブのワードチップで商品を選び→スタジオ→承認。
+- プール＝studioのSQLite上の **status=`published` の自作(self)だけ**。`/serve` が **毎ロード ランダム**で自作1枚を返す（記事固定ではない＝リロードで入れ替わる）。**左右とも自作**＝右レールは左で出た製品を `?exclude=<id>` で除外して別の自作を取る（左右で同じ製品を出さない。旗は `data-kp-id` を持ち、`ad-rail.html` のローダが左→右の順で取得）。`enabled=0`(配信停止)・採用画像欠落 は配信除外（フォールバック禁止）。studioで承認した自作が左右にローテ。
 - 旗の画像は studio が `/serve-img/<imageId>` で公開配信（data/images のPNG）。既存 `/store/*.png` は blog CDN へ302。`blurb` はHTML可・特徴キーワードだけ `<b>`。
 - 旧 `data/self_ads.yaml`・`data/gear_ads.yaml`＋`static/store/*.png`（旧 `static/ads/`）は**配信には使わない**（studioへ移行済）。残置は既存画像の初期ソース＋手編集の保険。**広告を増やす＝studioで承認**（YAML手編集ではない）。
 - 承認＝published化＋採用画像確定だけ（`server.mjs` の approve）。hugoビルド・git push は無し。
 
 **法令(PR)・ロールアウト**
-- 右レール(アフィリ)は **PRチップ(`.kp-flag__chip--pr`)＋ページフッターのAmazon定型文**（`baseof.html` の `.kp-legal`）で景表法ステマ規制＋Amazon規約を満たす。**法令文は動的配信に同期**＝`baseof.html` が常に `hidden` で描き、**右レールに gear広告が実際に差し込まれた時だけ `ad-rail.html` のJSが `hidden` を外して表示**する（テキストは `data/gear_ads.yaml` の `meta.amazon_statement`。旧 `items(enabled)` 駆動は動的配信で永久に出ない不整合だったので2026-06に是正）。**各広告に密な法令文は置かない**（広告臭を消す）。**価格はバナーに焼かない**（PA-API無しでのAmazon価格表示は規約違反）。
-- **フェーズ1=自作（studioで承認した分が左右にローテ）**。**フェーズ2=ユーザーがAmazonアソシエイト登録→** studio で gear(Amazon)広告を承認＝右が本番点灯（`rel:"sponsored nofollow noopener"`・`tag=kitepon-22`）。Amazon PA-APIは2026/5廃止＋新規停止＝自動取得は不可、手キュレーション。
+- **法令/開示**: 左右とも**自作プロダクト**（アフィリではない＝チップは「自作」）なので、景表法のアフィリ開示文は不要。`baseof.html` の `.kp-legal`（Amazon定型文）は Amazon廃止に伴い**撤去済み**（CSS `.kp-legal` は残置の死にルール）。
+- **Amazonアフィリ(gear)は廃止（2026-06・ユーザー決定）**: 商品画像のコピー/ホットリンクが規約上不可、正規の画像取得(PA-API→Creators API)も「直近30日に発送済み売上10件」等＋OAuth2登録の要件で使えないため（一次ソース＝`~/Developer/ad-studio/rag/amazon-associates/image-policy.md`）。studio の gear(第三者)機構＝提案タブのピッカー/`dpImages`/`propose-gear`/Amazon検証は**コードは休眠**（消さず・配信もしない）。将来 別アフィリや Creators API を入れる時の土台として残置。`data/gear_ads.yaml`・`static/store/` も残置（未使用）。
 
 ## 記事の公開フロー（全プラットフォーム）
 

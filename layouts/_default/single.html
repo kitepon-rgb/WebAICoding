@@ -33,7 +33,7 @@
   </nav>
   {{ end }}
 
-  {{/* PC記事ページの左右余白に広告レール（左=自作 / 右=厳選アフィリ。≥1100pxでのみ表示＝CSS・ad-rail.html と一致） */}}
+  {{/* PC記事ページの左右余白に広告レール（左右とも自作プロダクト＝Amazonアフィリは2026-06廃止。≥1100pxでのみ表示＝CSS・ad-rail.html と一致） */}}
   {{ partial "ad-rail.html" (dict "side" "left" "page" .) }}
   {{ partial "ad-rail.html" (dict "side" "right" "page" .) }}
   {{ end }}
