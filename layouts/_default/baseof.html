@@ -45,7 +45,9 @@
   {{- with site.Params.twitter }}<a href="https://x.com/{{ . }}" rel="noopener" target="_blank">X</a>{{ end }}
   <a href="https://zenn.dev/kitepon" rel="noopener" target="_blank">Zenn</a>
   <a href="https://github.com/kitepon-rgb" rel="noopener" target="_blank">GitHub</a>
-  {{- if (where (default (slice) hugo.Data.gear_ads.items) "enabled" true) }}<p class="kp-legal">{{ hugo.Data.gear_ads.meta.amazon_statement }}</p>{{ end -}}
+  {{- /* Amazon法令文＝動的gear配信に同期。常に hidden で描き、右レール(.kp-rail--right)に gear広告が差し込まれた時だけ ad-rail.html のJSが表示する。
+         旧実装は gear_ads.yaml の items(enabled) 駆動だったが、配信が studio /serve の動的に移行して items が常に空＝法令文が永久に出ない不整合だった（景表法/Amazon規約リスク）。 */ -}}
+  <p class="kp-legal" data-kp-legal hidden>{{ hugo.Data.gear_ads.meta.amazon_statement }}</p>
 </div></footer>
 
 <script data-goatcounter="https://claudecode-blog.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

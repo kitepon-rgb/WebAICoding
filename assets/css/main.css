@@ -192,10 +192,10 @@ footer.site a{color:#bda88f;text-decoration:none}footer.site a:hover{color:var(-
   .pnav{grid-template-columns:1fr}.pnav a.next{text-align:left}
 }
 
-/* ===== 記事レール広告（PC・160×600 縦バナー／生HTML） =====
-   本文カラム(.post 704px中央寄せ)は触らず、レールを .post の子として外側余白へ絶対配置。
-   既定は非表示。viewport ≥1200px でのみ出現（1366pxノートでも左右に出る）。
-   既存メディアは全て max-width(560/600/880) ＝ この min-width:1200 と交差しないので衝突なし。 */
+/* ===== 記事レール広告（PC・幅160px 縦バナー「旗」／studio /serve の生HTMLをJSが差込） =====
+   本文カラム(.post 704px中央寄せ)は触らず、レールを viewport基準の position:fixed で各ガター(本文の左右余白)へ配置（下端固定・スクロールで動かない。詳細は下記）。
+   既定は非表示。viewport ≥1100px でのみ出現（1366pxノートでも左右に出る）。
+   既存メディアは全て max-width(560/600/880) ＝ この min-width:1100 と交差しないので衝突なし。 */
 .kp-rail{display:none}
 @media(min-width:1100px){
   /* レール＝viewport基準の position:fixed。各ガター(本文 --post-w の左右の空き)を箱にして、中で旗を
