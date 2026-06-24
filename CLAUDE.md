@@ -105,6 +105,8 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
   1. `cd tools/cover && node generate-cover.js "1行目" "2行目" "../../content/post/<slug>/cover.png"`（記事へ直接出力。コードテキスト第4引数は省略でよい＝既定のターミナルログが入る）
   2. `file ../../content/post/<slug>/cover.png` で 1250x500 を確認（手順1で `cd tools/cover` 済みのため相対）、`Read` で日本語の化けが無いか目視
 - 1行が長すぎると折り返すので、タイトルを短く2行に分割する
+- **cover-sm（スマホ用1:1）も生成**：`node generate-cover.js --mobile "短いフック" "" "../../content/post/<slug>/cover-sm.png"` ＋ `tools/cover/mobile-covers.json` に1行追加（確定仕様＝上の「📱 スマホ記事一覧カード」節）
+- **本文画像も作る（カバーだけで終わらせない／2026-06の方針）**：figmakerのブランド図版・linkcard・実スクショ・比較の表化を**標準2〜4枚（紹介系4〜5枚）**。リード視覚フックを必ず1つ。**Claude手描き厳禁・実物/作図ベース・フル画質PNG（圧縮/WebP化しない）**。詳細は「本文画像」節＋ `memory/feedback_blog_image_policy.md` / `memory/project_blog_image_infra.md`。図版は `~/Developer/blog-figmaker/`（`render.mjs --html <f> --selector "#fig" --scale 2 --out <png>`、`.imgwork/diagrams/` に作業HTML）。出した画像は本文 `![alt](f)` 参照とファイル実在を必ず突合し、`hugo -D` ビルド＋実ページのスクショで配置を目視確認
 
 ### 3. 公開前監査（必須）
 - `draft: false` で公開する前に監査エージェントを通す（詳細は下の「記事の公開前チェック」節）
@@ -114,7 +116,8 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 - Zenn記事は**本リポジトリのルート直下 `articles/<zennSlug>.md`**（旧 `kitepon-rgb/zenn-content` / Windows パス `C:\...\Zenn` は統合済みで廃止。Zenn の連携先リポジトリも本リポジトリ＝WebAICoding）
 - **同期はスクリプトで再生成**: `node tools/zenn-sync/sync.mjs` が `content/post/<slug>/index.md` から `articles/<zennSlug>.md` を作る。Zenn固有 frontmatter（`title`/`emoji`/`type`/`topics`/`published`）は既存Zennファイルから**温存**し本文だけ差し替え（詳細 `tools/zenn-sync/README.md`）
   - 変換: 本文画像→ブログ絶対URL `https://blog.kitepon.dev/post/<slug>/...` ＋直下に `*alt*` キャプション（Hugo の figcaption 再現）/ `{{< linkcard >}}`→`@[card](url)` / `{{< relref >}}`→ブログ絶対URL / 冒頭に転載バナー（`:::message この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。:::`）
-  - **スラッグ5本ズレ対応表**（ブログ slug→Zennファイル名。`sync.mjs` と `.github/scripts/crosspost-devto.mjs` の両方に同一定義を持つ）: `claude-code-features`→`claude-code-half-features` / `claude-code-deploy`→`claude-code-ssh-deploy` / `max-plan-review`→`claude-max-plan-review` / `claude-research-implementation`→`claude-research-from-papers` / `livetr-app`→`livetr-realtime-translator`
+  - **スラッグ6本ズレ対応表**（ブログ slug→Zennファイル名。`sync.mjs` と `.github/scripts/crosspost-devto.mjs` の両方に同一定義を持つ）: `claude-code-features`→`claude-code-half-features` / `claude-code-deploy`→`claude-code-ssh-deploy` / `max-plan-review`→`claude-max-plan-review` / `claude-research-implementation`→`claude-research-from-papers` / `livetr-app`→`livetr-realtime-translator` / `bughub`→`bughub-aggregation`
+  - ⚠️ **Zennのslugは12〜50字必須**。ブログslugが12字未満（例 `bughub`=6字）だと Zenn がそのファイル名を受け付けない＝**上の対応表に ≥12字の Zenn slug を新規追加**する（`sync.mjs` と `crosspost-devto.mjs` の両方へ同一で）。12字以上のブログslugなら識別変換されるので対応表は不要。`sync.mjs` 実行時に出る「スラッグ差異 N 件」のログで反映を確認できる。
 - **新記事を足したら**: ①先に `articles/<zennSlug>.md` を frontmatter だけ作る（emoji/topics は Zenn 用に手で選ぶ。本文は空でよい）→ ② `node tools/zenn-sync/sync.mjs` で本文を流し込む（既存frontmatterが無い新規slugは①が無いとエラーで停止する＝取りこぼし防止）
 - 同期後は `git diff articles/` で期待差分（画像追加 / `@[card]` / ドメイン）だけかを目視してからコミット
 
@@ -123,8 +126,10 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 
 ### 6. コミット & プッシュ
 - ブログ本文・`articles/`（Zenn）は**同一リポジトリ**なので**1回のコミットで両方入る**（別repoへの二重 push は不要になった）
-- 選択add（`git add CLAUDE.md content/post/<slug>/ articles/<zennSlug>.md`）— `git add .` は使わない（gitignore外の作業ファイルが混入する）
+- 選択add（`git add CLAUDE.md content/post/<slug>/ articles/<zennSlug>.md` ＋ slug追加時は `tools/zenn-sync/sync.mjs` `.github/scripts/crosspost-devto.mjs` `tools/cover/mobile-covers.json`）— `git add .` は使わない（gitignore外の作業ファイルが混入する）
+  - ⚠️ **`sync.mjs` は articles/ を全件再生成する**＝他記事の WIP（例: 画像差し替え中の別記事）があるとその `articles/<other>.md` も一緒に書き換わる。**必ず選択 add で自分の記事だけ**コミットし、他記事の変更は未ステージで残す（巻き込みコミット防止）。
 - ⚠️ push が弾かれることがある（dev.to自動転載のActionsが `crossposted-devto.json` を先行コミットするため）→ `git pull --rebase origin main` してから push し直す
+  - ⚠️ **作業ツリーに未ステージ変更（他記事WIP等）があると `git pull --rebase` は失敗する**。その時は `git rev-list --left-right --count HEAD...origin/main` でリモート先行を確認し、**先行0なら rebase 不要でそのまま push**（先行があれば該当WIPを `git stash` → rebase → push → `stash pop`）。
 
 ### 7. X投稿（ブログへ誘導するフック投稿）
 - **前提: ブログのデプロイ完了を待つ**（カバーURLが 200 になってから。`curl -s -o /dev/null -w '%{http_code}' <記事URL>cover.png` でポーリング。404のままなら未来日付を疑う＝§1）
@@ -171,6 +176,7 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 - **自分・自社製品を下げない**：偽の謙遜、製品の弱点露出（未達／近似／割り切り）を書かない
 - **語ってからの否定で入らない**：「Xを出した。ただ宣伝じゃない」式のメタな前置きを置かず、本題から入る
 - **軸は著者の実体験の動機（なぜ作ったか）**：設計の落差・撤去ドラマ等のエンジニアリングの脇筋を勝手に主役にしない。一次情報（本人の語り）を最優先
+- **比喩・ポエム・飾り表現を使わない（強い指示）**：字義どおりに書く。「鏡／蘇る／入口と出口／重心が寄る／燃える／居座る／効いてくる／食い込む」式の言い換えや、機能の当たり前を「すごいこと」に飾るのを排す。動詞も figurative を避け「増える／関わる／補う／問題が出る」等の素の語に。**これは記事本文だけでなくチャットの返答でも守る**（飾りを足すと著者は「ウザい／馬鹿にされた」と受け取る）
 
 ## Content Guidelines
 
