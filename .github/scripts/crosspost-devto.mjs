@@ -24,6 +24,7 @@ const BLOG_TO_ZENN_SLUG = {
   "max-plan-review": "claude-max-plan-review",
   "claude-research-implementation": "claude-research-from-papers",
   "livetr-app": "livetr-realtime-translator",
+  "bughub": "bughub-aggregation",
 };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

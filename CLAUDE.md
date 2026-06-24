@@ -218,6 +218,7 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 | 30 | AIが働くのを眺めるのが好きすぎて、ターミナルをRPGにした話 | rpgdev-overlay | 公開済み |
 | 31 | 完全な文だけを訳に回す——その設計を、カウンタ一本が裏切っていた | livetr-complete-sentence | 公開済み |
 | 32 | 同じキャラが描けないAIに、アニメの「設定資料」を作らせた話 | sprite-forge-release | 公開済み |
+| 33 | アプリが4本になったので、バグ報告を1箇所に集めてAIに並列で潰させた話 | bughub | 公開済み |
 
 <!-- autoskills:start -->
 

@@ -1,6 +1,7 @@
 {
   "_comment": "スマホ記事一覧カード用 cover-sm.png（1:1）の短い見出し（フック）。slug -> 短見出し。本文 h4 には正式タイトルが出るので、カバーは大きく読める短いフックにする。新記事を足したらここに1行追加し、gen-mobile-covers.js で再生成する。",
   "ai-assistant-personality": "道具が秘書になった",
+  "bughub": "4本のバグを1箇所に",
   "ai-coding-tool-journey": "Claude Codeに辿り着くまで",
   "ai-secretary-memory-system": "構造化した長期記憶",
   "ai-secretary-token-diet": "トークン節約の記録",
