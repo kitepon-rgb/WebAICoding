@@ -20,7 +20,7 @@ published: true
 
 ちなみに前に書いた[ターミナルをRPGにした話](https://blog.kitepon.dev/post/rpgdev-overlay/)で、このドット絵の差分作りに手こずって、32GBのグラボを発注して「再戦する」と書いた。これはその再戦の記録でもある。
 
-![一枚絵を直し続けるのをやめ、まず設定資料を一枚作って基準にする二段構えの全体像](https://blog.kitepon.dev/post/sprite-forge-release/fig1.png)
+![一枚絵を直し続けるのをやめ、まず設定資料を一枚作って基準にする二段構えの全体像](https://blog.kitepon.dev/post/sprite-forge-release/two-stage.png)
 *一枚絵を直し続けるのをやめ、まず設定資料を一枚作って基準にする二段構えの全体像*
 
 ---
