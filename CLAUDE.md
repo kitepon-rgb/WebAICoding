@@ -6,11 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 「Claude Code 始めました」— Claude MAXユーザーの実体験ベース技術ブログ。Hugo + GitHub Pagesで構築。
 
+## Canonical Docs
+
+- 全体地図: `docs/00_overview.md`
+- 設計判断: `docs/adr/`
+- 調査・研究の再利用棚: `rag/INDEX.md`
+
+`.claude/settings.json` は端末固有のためコミットしない。必要な場合は `fewer-permission-prompts` で読み取り系 allowlist を生成し、内容を確認してからローカルに置く。
+
 ## Build & Development
 
 ```bash
 hugo server -D   # ローカルプレビュー（下書き含む。Hugo extended 推奨）
-hugo             # 本番ビルド（public/に出力）
+hugo --minify    # 本番ビルド（GitHub Pages deploy と同じ。public/に出力）
 ```
 
 自前テーマは `layouts/` + `assets/` に同梱。**外部テーマ submodule は不要**（旧 hugo-paper 廃止）。

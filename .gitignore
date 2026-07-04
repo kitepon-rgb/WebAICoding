@@ -7,6 +7,12 @@ Thumbs.db
 .vscode/
 project_handoff.md
 .env*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
 x-api-ideas.md
 x-articles.md
 x-top-page.md
@@ -14,6 +20,8 @@ promotion-tracker.md
 .spotter/
 excalidraw.log
 memory/
+.obsidian/
+.venv/
 .imgwork/
 tools/cover/node_modules/
 node_modules/
