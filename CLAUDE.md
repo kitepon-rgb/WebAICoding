@@ -141,7 +141,7 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
   - ⚠️ **作業ツリーに未ステージ変更（他記事WIP等）があると `git pull --rebase` は失敗する**。その時は `git rev-list --left-right --count HEAD...origin/main` でリモート先行を確認し、**先行0なら rebase 不要でそのまま push**（先行があれば該当WIPを `git stash` → rebase → push → `stash pop`）。
 
 ### 7. X投稿（ブログへ誘導するフック投稿）
-- **前提: ブログのデプロイ完了を待つ**（カバーURLが 200 になってから。`curl -s -o /dev/null -w '%{http_code}' <記事URL>cover.png` でポーリング。404のままなら未来日付を疑う＝§1）
+- **前提: ブログのデプロイ完了を待つ**。完了判定は**記事ページURL**でポーリングする＝`curl -s -o /dev/null -w '%{http_code}' <記事URL>/`。**cover.png を直接ポーリングしてはいけない**——デプロイ伝播前の 404 を Cloudflare がキャッシュして焼き付き、ファイルは実在するのに `cf-cache-status: HIT` で 404 が居座る（実被弾 2026-07-05: ポーリング対象の cover.png だけトップのカードで消え、叩いてない cover-sm/converse は無事だった）。カバーの到達確認は**キャッシュバスター付きで1回だけ**＝`curl -s -o /dev/null -w '%{http_code}' "<記事URL>/cover.png?cb=$(date +%s)"`。ページが 200 なのに記事が出ない時は未来日付を疑う＝§1。焼き付いた 404 は TTL 失効で自然に解ける（数分）／急ぐなら Cloudflare でそのURLをパージ
 - **per-article の X Article（長文記事）は廃止**（全文はブログ＋Zenn＋dev.toに既出で4本目は冗長／長文Articleはネイティブ拡散が弱く運用も重い）。X は「フックで本家ブログへ誘導する」チャネルとして使う
 - ブログ記事URLへ誘導する**通常ポスト（必要なら短いスレッド）**を作る。フック＋記事URL＋カバー画像。Premium+の長尺は使えるが、要点はあくまで誘導
 - ⚠️ **投稿はClaudeにはできない**（`.env.x-api` は xarticle トークンのみで X API の OAuth キーが無い）→ Claudeが**ドラフトを用意し、ユーザーが手動投稿**。OAuth キー4点（`tweet.write`付き）を `.env.x-api` に足せば `twitter-api-v2` でClaude投稿も可能になる
