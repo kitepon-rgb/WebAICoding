@@ -239,6 +239,7 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 | 33 | アプリが4本になったので、バグ報告を1箇所に集めてAIに並列で潰させた話 | bughub | 公開済み |
 | 34 | AI同士が会話して進める — aiterm-mcpが握る対話型ターミナル | aiterm-converse | 公開済み |
 | 35 | AIが賢くなるほど、俺の工夫は古くなる——そう思って、確かめた | knowhow-outlasts-model | 公開済み |
+| 36 | Codexの最上位モードに任せたら、5時間の枠を1時間で溶かした話 | codex-max-mode-quota-drain | 公開済み |
 
 <!-- autoskills:start -->
 
