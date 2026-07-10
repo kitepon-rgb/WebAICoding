@@ -23,5 +23,6 @@ memory/
 .obsidian/
 .venv/
 .imgwork/
+.playwright-mcp/
 tools/cover/node_modules/
 node_modules/
