@@ -144,6 +144,7 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 - **前提: ブログのデプロイ完了を待つ**。完了判定は**記事ページURL**でポーリングする＝`curl -s -o /dev/null -w '%{http_code}' <記事URL>/`。**cover.png を直接ポーリングしてはいけない**——デプロイ伝播前の 404 を Cloudflare がキャッシュして焼き付き、ファイルは実在するのに `cf-cache-status: HIT` で 404 が居座る（実被弾 2026-07-05: ポーリング対象の cover.png だけトップのカードで消え、叩いてない cover-sm/converse は無事だった）。カバーの到達確認は**キャッシュバスター付きで1回だけ**＝`curl -s -o /dev/null -w '%{http_code}' "<記事URL>/cover.png?cb=$(date +%s)"`。ページが 200 なのに記事が出ない時は未来日付を疑う＝§1。焼き付いた 404 は TTL 失効で自然に解ける（数分）／急ぐなら Cloudflare でそのURLをパージ
 - **per-article の X Article（長文記事）は廃止**（全文はブログ＋Zenn＋dev.toに既出で4本目は冗長／長文Articleはネイティブ拡散が弱く運用も重い）。X は「フックで本家ブログへ誘導する」チャネルとして使う
 - ブログ記事URLへ誘導する**通常ポスト（必要なら短いスレッド）**を作る。フック＋記事URL＋カバー画像。Premium+の長尺は使えるが、要点はあくまで誘導
+- **ハッシュタグ必須（毎回・ドラフト提示の時点で本文に含める）**：日本語ポストは3〜5個（基本 `#ClaudeCode` `#個人開発` ＋記事固有のタグ）。付け忘れが常態化しオーナー指摘（2026-07-11「毎回だけどハッシュタグつけてよ　ルールにしてよ」）
 - ⚠️ **投稿はClaudeにはできない**（`.env.x-api` は xarticle トークンのみで X API の OAuth キーが無い）→ Claudeが**ドラフトを用意し、ユーザーが手動投稿**。OAuth キー4点（`tweet.write`付き）を `.env.x-api` に足せば `twitter-api-v2` でClaude投稿も可能になる
 - 既存の per-article X Article 32本は**削除しない**（放置。`x_article_delete` は不可逆）
 
@@ -158,6 +159,7 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 - JAのフック投稿（§7）の X URL を引用RTする形で、英語ポストを投稿
 - 3案（短尺/中尺/長尺）を**日本語ドラフト**で提示してユーザーに選んでもらう
 - 選択後に英語に翻訳して出力（Premium+の長尺活用OK、280字制約は前提にしない）
+- **ハッシュタグ必須（毎回）**：英語は `#ClaudeCode` `#MCP` `#AIagents` `#buildinpublic` を基本に記事固有を足す（過去実績: #36 EN ポストと同系）
 - ⚠️ **投稿はClaudeにはできない**（xarticle MCP は記事専用で引用RT不可、`.env.x-api` は xarticle トークンのみで X API の OAuth キーが無い）→ **ユーザーが手動投稿**。もし `.env.x-api` に OAuth キー4点（API Key/Secret + Access Token/Secret・`tweet.write`付き）を足せば、`twitter-api-v2`（`_playwright/node_modules`）で `v2.tweet(text, { quote_tweet_id })` を叩いてClaudeが投稿可能になる
 - 用途: 英語圏Claude Code層への到達拡張
 
