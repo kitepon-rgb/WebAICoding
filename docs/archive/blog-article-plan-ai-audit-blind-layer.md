@@ -1,6 +1,6 @@
 # 記事プラン: 作ったアプリに粗がある気がするからFable 5に相談した話（旧仮題: 丸投げ軸）
 
-> スラッグ: `ai-audit-blind-layer`（仮・Zenn 12字以上OK。軸変更に伴い改名候補あり＝公開前に裁定） / 状態: **設計中（2026-07-11）** — 軸確定済み・章立て承認待ち。
+> スラッグ: `ai-audit-blind-layer`（仮・Zenn 12字以上OK。軸変更に伴い改名候補あり＝公開前に裁定） / 状態: **公開完遂（2026-07-11 22:56 JST）** — 全ステップ消化済み。
 
 ## この記事の芯（一次情報・盛らない・2026-07-11 オーナー承認の軸）
 
@@ -45,19 +45,19 @@
 
 ## 画像（標準2〜4枚）
 
-- [ ] リード視覚フック1枚：「丸投げ→自動で走った工程」図（figmaker・brand.css）。※「層」等の自作分類語は図にも使わない（2026-07-11 オーナー指摘）
-- [ ] 採点表：AI監査／CI／動かす確認 × 誰が何を拾ったか（表 or 3カラム図・具体のバグ名で）
-- [ ] 実物1枚：CI の落ちた3ジョブ or A4 の「73,176文字/4行」ログ（実物から・捏造しない）
-- [ ] cover.png（1250x500）＋ cover-sm.png（1:1・短いフック）＋ mobile-covers.json 追記
+- [x] リード視覚フック1枚：「丸投げ→自動で走った工程」図（figmaker・brand.css）。※「層」等の自作分類語は図にも使わない（2026-07-11 オーナー指摘）
+- [x] 採点表：AI監査／CI／動かす確認 × 誰が何を拾ったか（表 or 3カラム図・具体のバグ名で）
+- [x] 実物1枚：CI の落ちた3ジョブ or A4 の「73,176文字/4行」ログ（実物から・捏造しない）
+- [x] cover.png（1250x500）＋ cover-sm.png（1:1・短いフック）＋ mobile-covers.json 追記
 
 ## 公開フロー（CLAUDE.md「記事の公開フロー」全ステップ）
 
-- [ ] 1. `content/post/<slug>/index.md`（date は現在時刻より前／relref）
-- [ ] 2. cover.png / cover-sm.png 生成 ＋ mobile-covers.json
-- [ ] 3. 本文画像 標準2〜4枚（figmaker・実ログ・表化。Claude手描き厳禁・フル画質PNG）
-- [ ] 4. 公開前監査（著者像チェック含む）
-- [ ] 5. Zenn: `articles/<zennSlug>.md` frontmatter 先行作成 → `node tools/zenn-sync/sync.mjs`
-- [ ] 6. CLAUDE.md Articles テーブルに #37 追加
-- [ ] 7. 選択 add でコミット＆プッシュ（`git add .` 禁止）
-- [ ] 8. デプロイ完了を記事URLでポーリング → X フック文面を提示
-- [ ] 9. 英語 Quote-RT 3案を日本語ドラフトで提示
+- [x] 1. `content/post/<slug>/index.md`（date は現在時刻より前／relref）
+- [x] 2. cover.png / cover-sm.png 生成 ＋ mobile-covers.json
+- [x] 3. 本文画像 標準2〜4枚（figmaker・実ログ・表化。Claude手描き厳禁・フル画質PNG）
+- [x] 4. 公開前監査（著者像チェック含む）
+- [x] 5. Zenn: `articles/<zennSlug>.md` frontmatter 先行作成 → `node tools/zenn-sync/sync.mjs`
+- [x] 6. CLAUDE.md Articles テーブルに #37 追加
+- [x] 7. 選択 add でコミット＆プッシュ（`git add .` 禁止）
+- [x] 8. デプロイ完了を記事URLでポーリング → X フック文面を提示
+- [x] 9. 英語 Quote-RT 3案を日本語ドラフトで提示
