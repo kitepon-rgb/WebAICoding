@@ -254,6 +254,7 @@ PC記事ページ(`single.html`, `.Type=="post"`)の本文左右の余白に、*
 | 35 | AIが賢くなるほど、俺の工夫は古くなる——そう思って、確かめた | knowhow-outlasts-model | 公開済み |
 | 36 | Codexの最上位モードに任せたら、5時間の枠を1時間で溶かした話 | codex-max-mode-quota-drain | 公開済み |
 | 37 | 作ったアプリに粗がある気がするからFable 5に相談した話 | ai-audit-blind-layer | 公開済み |
+| 38 | オーケストレーションを組んでみた | ai-orchestration-quotas | 公開済み |
 
 <!-- autoskills:start -->
 
