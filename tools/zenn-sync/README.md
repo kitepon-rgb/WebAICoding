@@ -10,8 +10,10 @@ Hugo のブログ本文（`content/post/<slug>/index.md`）から、**同一リ�
 ## 使い方
 
 ```bash
-node tools/zenn-sync/sync.mjs          # articles/ を再生成（本番）
-node tools/zenn-sync/sync.mjs --dry    # 書き換えず対象とスラッグ対応だけ表示
+node tools/zenn-sync/sync.mjs --slug <blogSlug> # 対象記事だけ同期
+node tools/zenn-sync/sync.mjs --check           # 全記事の同期差分を検査
+node tools/zenn-sync/sync.mjs --dry             # 書き換えず変更対象だけ表示
+node tools/zenn-sync/sync.mjs                   # 全記事の変更分を同期
 ```
 
 実行後は必ず `git diff articles/` で差分を目視（期待差分＝画像追加・`@[card]`・ドメインのみ）。
@@ -32,10 +34,9 @@ node tools/zenn-sync/sync.mjs --dry    # 書き換えず対象とスラッグ対
 未対応の Hugo ショートコードが残ったら**エラーで停止**する（黙って素通ししない）。
 Hugo 記事に対応する Zenn ファイルが無い／Zenn 側に孤児がある場合も停止する。
 
-## スラッグ5本ズレ
+## スラッグ6本の差異
 
-初期記事はブログ slug と Zenn ファイル名が異なる。`sync.mjs` の `BLOG_TO_ZENN_SLUG` に定義。
-**`.github/scripts/crosspost-devto.mjs` の同名表と必ず一致させること**（dev.to 内部リンク解決に使う）。
+初期記事はブログ slug と Zenn ファイル名が異なる。`tools/article-manifest.mjs`に定義し、Zenn同期とdev.to転載が共有する。
 
 ```
 claude-code-features          → claude-code-half-features
@@ -43,10 +44,11 @@ claude-code-deploy            → claude-code-ssh-deploy
 max-plan-review               → claude-max-plan-review
 claude-research-implementation → claude-research-from-papers
 livetr-app                    → livetr-realtime-translator
+bughub                        → bughub-aggregation
 ```
 
 ## 新記事を足すとき
 
 `sync.mjs` は既存 `articles/<zennSlug>.md` の frontmatter を読むため、新規 slug はまず
 **frontmatter だけの `articles/<zennSlug>.md` を手で作る**（`emoji`/`topics` は Zenn 用に選ぶ。
-本文は空でよい）→ その後 `node tools/zenn-sync/sync.mjs` で本文を流し込む。
+本文は空でよい）→ その後 `node tools/zenn-sync/sync.mjs --slug <blogSlug>` で本文を流し込む。

@@ -3,15 +3,11 @@ name: Deploy Hugo to GitHub Pages
 on:
   push:
     branches: [main]
-    # Zenn/dev.to 用ファイル（articles/・台帳json・転載スクリプト）だけの変更では
-    # Hugo の再ビルドは不要なので除外する（dev.to転載cronのstateコミットでの無駄ビルド防止）
+    # dev.toの状態台帳だけのbot commitでは再ビルドしない。
+    # articles/・同期/転載スクリプトの変更は検査対象に含める。
     paths-ignore:
-      - 'articles/**'
       - 'books/**'
       - 'crossposted-devto.json'
-      - 'post-order.json'
-      - '.github/scripts/**'
-      - '.github/workflows/crosspost-devto.yml'
 
 permissions:
   contents: read
@@ -34,11 +30,33 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest'
+          hugo-version: '0.164.0'
           extended: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '20'
+
+      - name: Install pipeline test dependencies
+        run: npm ci
+        working-directory: .github/scripts
+
+      - name: Test content pipeline
+        run: npm test
+        working-directory: .github/scripts
+
+      - name: Validate content
+        run: node tools/validate-content.mjs
+
+      - name: Check Zenn synchronization
+        run: node tools/zenn-sync/sync.mjs --check
 
       - name: Build
         run: hugo --minify
+
+      - name: Validate rendered articles
+        run: node tools/validate-content.mjs --rendered
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

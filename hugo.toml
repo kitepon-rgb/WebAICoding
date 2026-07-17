@@ -1,5 +1,5 @@
 baseURL = 'https://blog.kitepon.dev/'
-languageCode = 'ja'
+locale = 'ja-JP'
 defaultContentLanguage = 'ja'
 hasCJKLanguage = true
 title = 'Claude Code 始めました'

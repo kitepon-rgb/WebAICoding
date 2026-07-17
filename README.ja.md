@@ -60,7 +60,7 @@ git clone https://github.com/kitepon-rgb/WebAICoding.git
 cd WebAICoding
 
 # 開発サーバーを起動（http://localhost:1313/）
-hugo server
+hugo server -D
 
 # 本番ビルド（出力は public/）
 hugo --minify
@@ -79,7 +79,7 @@ frontmatter の例（既存記事に合わせる）:
 ---
 title: "記事タイトル"
 date: 2026-06-03
-draft: false
+draft: true
 description: "一覧やSNSカードに出る要約"
 tags: ["Claude Code", "AI Coding"]
 cover:

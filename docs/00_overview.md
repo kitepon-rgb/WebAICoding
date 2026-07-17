@@ -8,7 +8,11 @@ The live site is published at <https://blog.kitepon.dev/>.
 ## Canonical Entry Points
 
 - Human entry point: [README.md](../README.md)
-- Agent entry point: [CLAUDE.md](../CLAUDE.md)
+- Agent entry point: [AGENTS.md](../AGENTS.md)
+- Claude Code import: [CLAUDE.md](../CLAUDE.md)
+- Writing voice and author model: [docs/writing-voice.md](writing-voice.md)
+- Publishing workflow: [docs/publishing.md](publishing.md)
+- Site operations: [docs/site-operations.md](site-operations.md)
 - Site config: [hugo.toml](../hugo.toml)
 - Architecture decision records: [docs/adr/](adr/)
 - Reusable research shelf: [rag/INDEX.md](../rag/INDEX.md)
@@ -23,13 +27,18 @@ The live site is published at <https://blog.kitepon.dev/>.
 - `tools/cover/`: Playwright-based cover image generator.
 - `tools/zenn-sync/`: Blog-to-Zenn synchronization tool.
 - `.github/workflows/`: GitHub Actions for Pages deploy and dev.to crossposting.
+- `.agents/skills/`: Shared project skills used by supported agents.
 
 ## Verification
 
 Use the same production build command as the deploy workflow:
 
 ```bash
+node tools/validate-content.mjs
+node tools/zenn-sync/sync.mjs --check
+npm --prefix .github/scripts test
 hugo --minify
+node tools/validate-content.mjs --rendered
 ```
 
 For draft/future-date checks while editing posts:
@@ -40,6 +49,6 @@ hugo -D
 
 ## Operational Notes
 
-- The custom theme is part of this repository; no external Hugo theme submodule is required.
+- The active custom theme is part of this repository. A legacy `themes/paper` gitlink remains unused and requires separate owner approval before removal.
 - `public/`, `resources/_gen/`, and `.hugo_build.lock` are generated locally and ignored.
-- `.claude/settings.json` is local-only. Generate it with `fewer-permission-prompts` when needed; do not commit it.
+- Agent-specific local settings are local-only; do not commit them.

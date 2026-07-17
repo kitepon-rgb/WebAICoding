@@ -14,6 +14,15 @@
  */
 const { chromium } = require('playwright');
 
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // --mobile フラグ（スマホ記事一覧カード用の正方形カバー cover-sm.png）を抜き出す
 const rawArgs = process.argv.slice(2);
 const mobile = rawArgs.includes('--mobile');
@@ -36,7 +45,10 @@ const codeText = args[3] || `$ claude --session-id example
 const W = mobile ? 1080 : 1250;
 const H = mobile ? 1080 : 500;
 // PC は手動2行（line1<br>line2）、スマホは全タイトルを正方形内で折返し
-const titleHtml = mobile ? `${line1}${line2}` : `${line1}<br>${line2}`;
+const titleHtml = mobile
+  ? `${escapeHtml(line1)}${escapeHtml(line2)}`
+  : `${escapeHtml(line1)}<br>${escapeHtml(line2)}`;
+const escapedCodeText = escapeHtml(codeText);
 
 const desktopHtml = `
     <html>
@@ -101,7 +113,7 @@ const desktopHtml = `
     </head>
     <body>
       <div class="terminal">
-        <div class="code">${codeText}</div>
+        <div class="code">${escapedCodeText}</div>
         <div class="title">${titleHtml}</div>
         <div class="divider"></div>
         <div class="subtitle">Claude Code 始めました</div>
@@ -176,7 +188,7 @@ const mobileHtml = `
     </head>
     <body>
       <div class="terminal">
-        <div class="code">${codeText}</div>
+        <div class="code">${escapedCodeText}</div>
         <div class="center">
           <div class="title" id="title">${titleHtml}</div>
           <div class="divider"></div>
@@ -193,7 +205,16 @@ const mobileHtml = `
   await page.setViewportSize({ width: W, height: H });
   await page.setContent(mobile ? mobileHtml : desktopHtml);
   // Web フォントの読み込み完了を待つ（固定待機より確実で、毎回同じ描画になる）
-  await page.evaluate(async () => { await document.fonts.ready; });
+  const fontsLoaded = await page.evaluate(async () => {
+    await document.fonts.ready;
+    const faces = [...document.fonts];
+    const loaded = (family, weight) => faces.some((face) =>
+      face.family.replace(/["']/g, '') === family &&
+      face.weight === weight &&
+      face.status === 'loaded');
+    return loaded('Noto Serif JP', '600') && loaded('Courier Prime', '400');
+  });
+  if (!fontsLoaded) throw new Error('必要なWebフォントを読み込めなかった');
   // スマホ: タイトルが枠（.center）からはみ出さないよう font-size を自動縮小
   if (mobile) {
     await page.evaluate(() => {

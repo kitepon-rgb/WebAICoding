@@ -5,9 +5,9 @@
  *   明朝大見出し「設計は自分、実装はClaude。」＋「Claude」コーラル＋下線。
  *
  * 使い方（tools/cover で）:  node gen-og-hero.js
- * 1250×500・PNG を ../../static/og-card.png に出力する。
+ * 1200×630・PNG を ../../static/og-card.png に出力する。
  *
- * ⚠️ 出力ファイル名を変えたら baseof.html の既定OG参照（"og-hero.png"）も合わせること。
+ * ⚠️ 出力ファイル名を変えたら baseof.html の既定OG参照（"og-card.png"）も合わせること。
  *    既存ファイルを同名で差し替えても CDN/X がキャッシュするので、意匠を変える時は
  *    別名（og-hero2.png 等）にして baseof.html を更新＝新URLで確実に反映させる。
  *

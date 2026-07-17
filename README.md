@@ -60,7 +60,7 @@ git clone https://github.com/kitepon-rgb/WebAICoding.git
 cd WebAICoding
 
 # Start the dev server (http://localhost:1313/)
-hugo server
+hugo server -D
 
 # Production build (output goes to public/)
 hugo --minify
@@ -79,7 +79,7 @@ Front matter (match the existing posts):
 ---
 title: "Post title"
 date: 2026-06-03
-draft: false
+draft: true
 description: "Summary shown in the list and social cards"
 tags: ["Claude Code", "AI Coding"]
 cover:

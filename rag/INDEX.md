@@ -3,5 +3,11 @@
 | Topic | Status | Location | Notes |
 | --- | --- | --- | --- |
 | AI監査・多エージェントレビュー | raw | rag/ai-audit/raw/refute-or-promote.md | arXiv 2604.19049 "Refute-or-Promote"（2026-04）。PDF→markitdown（2026-07-11 取得・105KB）。一次ソース・確度高。#37 の裏取りに使用（80体OpenSSL幻覚事例の出典） |
+| Forem API・dev.to転載回復 | compiled | rag/forem-api-crosspost-recovery.md | Forem公式API v1（2026-07-17取得）。canonical_url、認証記事一覧、idempotency key不在を確認。確度高。 |
 
-Operation rule: follow dotagents/PLAN.md principle 10 for research reuse, linting, and selective intake.
+## 運用規則
+
+- 外部仕様を調べた時は、出典、取得日、確度を記録する。
+- 一次資料の保存が必要な時は`raw/`、判断と実測をまとめる時はcompiled文書へ分ける。
+- 新しい文書を追加したら、このINDEXへ一行追加する。
+- 既存の同一調査を確認してから外部調査を始める。

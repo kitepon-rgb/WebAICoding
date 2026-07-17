@@ -1,6 +1,6 @@
 # 記事プラン正本 — Codex最上位モードがレートを溶かした話
 
-> 状態: 執筆中（2026-07-11 着手）。役目を終えたら docs/archive/ へ退避。
+> 状態: 完了・公開済み（2026-07-17に実記事、Zenn、画像、公開状態を突合してarchive）。下の未チェック項目は当時のplan更新漏れとして履歴のまま残す。
 
 ## メタ
 
@@ -60,7 +60,7 @@
 - 候補: ①「親Sol→子も全部Sol」の連鎖を示すブランド図版（figmaker）②before/after のレート消費イメージ or 実Xポストの linkcard ③解決の config 2行を強調した図 or コード ④役割別配分（implementer=Terra/medium 等）の表→図
 - カバー: `cover.png`（tools/cover）＋ `cover-sm.png`（--mobile・短見出し）＋ mobile-covers.json に1行
 
-## 公開フロー チェックリスト（CLAUDE.md §記事の公開フロー）
+## 公開フロー チェックリスト（当時の履歴）
 
 - [ ] `content/post/<slug>/index.md` 作成（frontmatter・relref・過去date）
 - [ ] 本文画像 2〜4枚（figmaker/linkcard/実スクショ）＋実在突合＋hugoビルドで目視

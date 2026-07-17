@@ -1,8 +1,7 @@
-# 自作プロダクト広告（記事ページ左右レール）。審査不要・即公開。
-# 画像は static/store/ に置き /store/<file> で参照（Page Bundle ではない＝全記事共通）。
-# 差し替え時はファイル名のバージョンを上げる（-v1→-v2）＝static は fingerprint されず
-# Cloudflare が 4h キャッシュするため（CLAUDE.md のキャッシュ罠）。
-# rail: left|right。weight 昇順。新商品はここに1ブロック追加。
+# 旧静的データ。現在の配信には使わないため、広告追加のために編集しない。
+# 現在はAd Studioのpublished selfプールを左右へ動的配信する。
+# 既存画像の初期ソースと手編集時代の記録として残置している。
+# キャッシュ規則と現行配信はdocs/site-operations.mdを参照する。
 # blurb は HTML 可（safeHTML）。大事なキーワードだけ <b> で囲む＝本文と同じコーラルのハイライトが付く。
 meta:
   label: "自作"

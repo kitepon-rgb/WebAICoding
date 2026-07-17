@@ -1,44 +1,34 @@
 #!/usr/bin/env node
-// Zenn の英語自動翻訳記事を dev.to へ転載する。
-// 毎日 cron で起動し、時系列順(post-order.json)で進める。1実行あたり:
-//   1) 次の1本を投稿（未翻訳なら投稿せず順番を保持）
-//   2) 投稿済み記事のうち、未解決だった内部リンクが解決できるものを1本だけ更新
-// dev.to のレート制限がきついため、書き込みは1実行あたり最大2回に抑える。
+// Zennの英語自動翻訳記事をdev.toへ転載する。
+//
+// workflowは次の二相で動く。
+//   1. --prepare: posting予約を台帳へ保存する。workflowがmainへpushする。
+//   2. --send-new: 同じworkflow runの予約だけをPOSTし、台帳をpublishedへ更新する。
+//
+// 次runにpostingが残っていた場合、遠隔canonical_urlを照合する。1件なら台帳を
+// 回復し、0件・複数件なら自動POSTせず停止する。
+
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
+import { toZennSlug } from "../../tools/article-manifest.mjs";
 
 const ZENN_USER = "kitepon";
 const DEVTO_API = "https://dev.to/api/articles";
-const ZENN_FEED = `https://zenn.dev/${ZENN_USER}/feed?all=1`;
-const UA = "zenn-devto-crosspost (+https://github.com/kitepon-rgb/zenn-content)";
-const WRITE_GAP_MS = 5000; // 投稿と更新の間隔（レート制限よけ）
-
-// 本文中の内部リンクはブログ slug を使う。大半は Zenn のファイル名と一致するが、
-// 初期記事は slug が異なるため対応表で吸収する。
-const BLOG_TO_ZENN_SLUG = {
-  "claude-code-features": "claude-code-half-features",
-  "claude-code-deploy": "claude-code-ssh-deploy",
-  "max-plan-review": "claude-max-plan-review",
-  "claude-research-implementation": "claude-research-from-papers",
-  "livetr-app": "livetr-realtime-translator",
-  "bughub": "bughub-aggregation",
-};
-
+const UA = "WebAICoding dev.to crosspost (+https://github.com/kitepon-rgb/WebAICoding)";
+const WRITE_GAP_MS = 5000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../..");
+const POST_DIR = path.join(REPO_ROOT, "content", "post");
 const ARTICLES_DIR = path.join(REPO_ROOT, "articles");
 const STATE_FILE = path.join(REPO_ROOT, "crossposted-devto.json");
-const ORDER_FILE = path.join(REPO_ROOT, "post-order.json");
 
-// ブログ内部リンク。旧 GitHub Pages ドメインと現行カスタムドメインの両方を拾う
-// （カスタムドメイン移行後に再生成した記事は blog.kitepon.dev を使う）
 const INTERNAL_LINK_RE =
-  /\]\(https:\/\/(?:kitepon-rgb\.github\.io\/WebAICoding|blog\.kitepon\.dev)\/post\/([a-z0-9-]+)\/\)/g;
+  /\]\(https:\/\/(?:kitepon-rgb\.github\.io\/WebAICoding|blog\.kitepon\.dev)\/post\/([a-z0-9-]+)\/(#[^)]+)?\)/g;
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const turndown = new TurndownService({
   headingStyle: "atx",
@@ -46,38 +36,35 @@ const turndown = new TurndownService({
   bulletListMarker: "-",
 });
 turndown.use(gfm);
-// Zenn の見出しに付くアンカーリンク（#始まり）は本文に不要なので落とす
 turndown.addRule("stripAnchorLinks", {
   filter: (node) =>
     node.nodeName === "A" && (node.getAttribute("href") || "").startsWith("#"),
   replacement: () => "",
 });
-// 各記事の冒頭にある「ブログからの転載です」お知らせ枠（:::message）は落とす
 turndown.addRule("stripReprintNotice", {
   filter: (node) =>
     node.nodeName === "ASIDE" &&
     (node.getAttribute("class") || "").includes("msg") &&
-    /kitepon-rgb\.github\.io\/WebAICoding|blog\.kitepon\.dev/.test(
-      node.innerHTML || "",
-    ),
+    /kitepon-rgb\.github\.io\/WebAICoding|blog\.kitepon\.dev/.test(node.innerHTML || ""),
   replacement: () => "",
 });
 
-// __NEXT_DATA__ JSON から記事オブジェクト（isTranslated と bodyHtml を持つ）を再帰探索
-export function findArticle(node) {
+export function findArticle(node, requestedSlug) {
   if (Array.isArray(node)) {
-    for (const v of node) {
-      const r = findArticle(v);
-      if (r) return r;
+    for (const value of node) {
+      const found = findArticle(value, requestedSlug);
+      if (found) return found;
     }
     return null;
   }
-  if (node && typeof node === "object") {
-    if ("isTranslated" in node && "bodyHtml" in node) return node;
-    for (const k of Object.keys(node)) {
-      const r = findArticle(node[k]);
-      if (r) return r;
-    }
+  if (!node || typeof node !== "object") return null;
+  if ("isTranslated" in node && "bodyHtml" in node) {
+    const slug = node.slug || String(node.path || "").split("/").filter(Boolean).at(-1);
+    if (slug === requestedSlug) return node;
+  }
+  for (const value of Object.values(node)) {
+    const found = findArticle(value, requestedSlug);
+    if (found) return found;
   }
   return null;
 }
@@ -86,46 +73,41 @@ export function htmlToMarkdown(html) {
   return turndown.turndown(html || "").trim();
 }
 
-// 本文中のブログ内部リンクを、dev.to へ投稿済みの記事のリンクへ貼りかえる。
-// state は { zennSlug: { url, id, pending } }。未投稿のリンク先は元のまま残す。
 export function rewriteInternalLinks(markdown, state) {
-  return markdown.replace(INTERNAL_LINK_RE, (whole, blogSlug) => {
-    const zennSlug = BLOG_TO_ZENN_SLUG[blogSlug] || blogSlug;
-    const entry = state[zennSlug];
-    return entry && entry.url ? `](${entry.url})` : whole;
+  return markdown.replace(INTERNAL_LINK_RE, (whole, blogSlug, anchor = "") => {
+    const entry = state[toZennSlug(blogSlug)];
+    return entry && entry.url ? `](${entry.url}${anchor})` : whole;
   });
 }
 
-// 貼りかえ後の本文に残った内部リンクの Zenn slug 一覧（＝まだ未投稿のリンク先）
 export function unresolvedTargets(markdown) {
-  const out = new Set();
-  for (const m of markdown.matchAll(INTERNAL_LINK_RE)) {
-    out.add(BLOG_TO_ZENN_SLUG[m[1]] || m[1]);
+  const targets = new Set();
+  for (const match of markdown.matchAll(INTERNAL_LINK_RE)) {
+    targets.add(toZennSlug(match[1]));
   }
-  return [...out];
+  return [...targets];
 }
 
-// Zenn の topics を dev.to のタグ規則（英数小文字のみ・最大4件）に整える
 export function buildTags(topics) {
   const seen = new Set();
-  const out = [];
-  for (const t of topics || []) {
-    const tag = String(t).toLowerCase();
+  const tags = [];
+  for (const topic of topics || []) {
+    const tag = String(topic).toLowerCase();
     if (/^[a-z0-9]+$/.test(tag) && !seen.has(tag)) {
       seen.add(tag);
-      out.push(tag);
-      if (out.length === 4) break;
+      tags.push(tag);
+      if (tags.length === 4) break;
     }
   }
-  return out;
+  return tags;
 }
 
 export function buildDescription(markdown) {
   for (const line of markdown.split("\n")) {
-    const l = line.trim();
-    if (!l || /^[>#`!|-]/.test(l) || l.startsWith("![")) continue;
-    return l
-      .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") // [text](url) -> text
+    const value = line.trim();
+    if (!value || /^[>#`!|-]/.test(value) || value.startsWith("![")) continue;
+    return value
+      .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
       .replace(/[#*`_>\[\]!]/g, "")
       .replace(/\s+/g, " ")
       .slice(0, 120)
@@ -134,225 +116,382 @@ export function buildDescription(markdown) {
   return "";
 }
 
-export function buildPayload(article, topics, state) {
-  const body = rewriteInternalLinks(htmlToMarkdown(article.bodyHtml), state);
-  return {
-    article: {
-      title: article.title,
-      body_markdown: `${body}\n`,
-      published: true,
-      tags: buildTags(topics),
-      description: buildDescription(body),
-    },
-  };
+export function canonicalUrlFor(zennSlug) {
+  return `https://zenn.dev/${ZENN_USER}/articles/${zennSlug}?locale=en`;
 }
 
-function loadState() {
+export function buildPayload(article, topics, state, canonicalUrl) {
+  const body = rewriteInternalLinks(htmlToMarkdown(article.bodyHtml), state);
+  const tags = buildTags(topics);
+  if (tags.length === 0) throw new Error("dev.toで使える英数字tagが無い");
+  const payload = {
+    title: article.title,
+    body_markdown: `${body}\n`,
+    published: true,
+    tags,
+    description: buildDescription(body),
+  };
+  if (canonicalUrl) payload.canonical_url = canonicalUrl;
+  return { article: payload };
+}
+
+function readJsonStrict(file, label) {
+  let text;
   try {
-    const o = JSON.parse(fs.readFileSync(STATE_FILE, "utf8"));
-    return o && typeof o === "object" && !Array.isArray(o) ? o : {};
-  } catch {
-    return {};
+    text = fs.readFileSync(file, "utf8");
+  } catch (error) {
+    throw new Error(`${label}を読めない: ${error.message}`);
   }
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`${label}が不正JSON: ${error.message}`);
+  }
+}
+
+export function validateState(state, candidates) {
+  if (!state || typeof state !== "object" || Array.isArray(state)) {
+    throw new Error("crosspost stateはobjectである必要がある");
+  }
+  const candidateSet = new Set(candidates.map((item) => item.zennSlug));
+  for (const [slug, entry] of Object.entries(state)) {
+    if (!candidateSet.has(slug)) throw new Error(`台帳に管理外slugがある: ${slug}`);
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+      throw new Error(`台帳entryが不正: ${slug}`);
+    }
+    if (entry.status === "posting") {
+      if (
+        entry.sourceKey !== slug ||
+        typeof entry.canonicalUrl !== "string" ||
+        typeof entry.reservationToken !== "string"
+      ) {
+        throw new Error(`posting予約が不正: ${slug}`);
+      }
+      continue;
+    }
+    if (!Number.isInteger(entry.id) || typeof entry.url !== "string") {
+      throw new Error(`published台帳entryが不正: ${slug}`);
+    }
+    if (entry.pending !== undefined && !Array.isArray(entry.pending)) {
+      throw new Error(`pendingが配列ではない: ${slug}`);
+    }
+  }
+  const posting = Object.entries(state).filter(([, entry]) => entry.status === "posting");
+  if (posting.length > 1) throw new Error("posting予約が複数ある");
+  return posting[0] || null;
+}
+
+function loadState(candidates) {
+  const state = readJsonStrict(STATE_FILE, "crossposted-devto.json");
+  validateState(state, candidates);
+  return state;
 }
 
 function saveState(state) {
   const sorted = Object.fromEntries(
     Object.keys(state)
       .sort()
-      .map((k) => [k, state[k]]),
+      .map((key) => [key, state[key]]),
   );
-  fs.writeFileSync(STATE_FILE, JSON.stringify(sorted, null, 2) + "\n");
+  fs.writeFileSync(STATE_FILE, `${JSON.stringify(sorted, null, 2)}\n`);
 }
 
-function loadPostOrder() {
+function splitFrontmatter(text, label) {
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+  if (!match) throw new Error(`${label}: YAML frontmatterが無い`);
+  return { raw: match[1], body: text.slice(match[0].length) };
+}
+
+function readTopicsAndPublished(zennSlug) {
+  const file = path.join(ARTICLES_DIR, `${zennSlug}.md`);
+  let text;
   try {
-    const a = JSON.parse(fs.readFileSync(ORDER_FILE, "utf8"));
-    return Array.isArray(a) ? a : [];
+    text = fs.readFileSync(file, "utf8");
+  } catch (error) {
+    throw new Error(`Zenn記事を読めない: ${zennSlug}: ${error.message}`);
+  }
+  const { raw } = splitFrontmatter(text, `articles/${zennSlug}.md`);
+  if (!/^published:\s*true\s*$/m.test(raw)) {
+    throw new Error(`Zenn記事がpublished:trueではない: ${zennSlug}`);
+  }
+  const topicsText = raw.match(/^topics:\s*(\[[^\n]*\])\s*$/m)?.[1];
+  if (!topicsText) throw new Error(`Zenn topicsが無い: ${zennSlug}`);
+  let topics;
+  try {
+    topics = JSON.parse(topicsText);
   } catch {
-    return [];
+    throw new Error(`Zenn topicsが不正: ${zennSlug}`);
   }
-}
-
-function readTopics(slug) {
-  try {
-    const md = fs.readFileSync(path.join(ARTICLES_DIR, `${slug}.md`), "utf8");
-    const m = md.match(/^topics:\s*(\[.*\])\s*$/m);
-    return m ? JSON.parse(m[1]) : [];
-  } catch {
-    return [];
+  if (!Array.isArray(topics) || topics.length === 0) {
+    throw new Error(`Zenn topicsが空または配列ではない: ${zennSlug}`);
   }
+  return topics;
 }
 
-// Zenn フィードから記事 slug を古い順で返す（フィードは新しい順なので反転）
-async function fetchFeedSlugs() {
-  const res = await fetch(ZENN_FEED, { headers: { "User-Agent": UA } });
-  if (!res.ok) throw new Error(`feed HTTP ${res.status}`);
-  const xml = await res.text();
-  const slugs = [
-    ...xml.matchAll(/<link>https:\/\/zenn\.dev\/[^/]+\/articles\/([^<]+)<\/link>/g),
-  ].map((m) => m[1]);
-  return slugs.reverse();
+function readHugoMeta(blogSlug) {
+  const file = path.join(POST_DIR, blogSlug, "index.md");
+  const text = fs.readFileSync(file, "utf8");
+  const yaml = text.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1];
+  const toml = text.match(/^\+\+\+\r?\n([\s\S]*?)\r?\n\+\+\+/)?.[1];
+  const raw = yaml || toml;
+  if (!raw) throw new Error(`Hugo frontmatterが無い: ${blogSlug}`);
+  const date = raw.match(/^date\s*[:=]\s*["']?([^"'\n]+)["']?\s*$/m)?.[1]?.trim();
+  const draft = raw.match(/^draft\s*[:=]\s*(true|false)\s*$/m)?.[1];
+  if (!date || !draft) throw new Error(`Hugo date/draftが不正: ${blogSlug}`);
+  return { date, draft: draft === "true" };
 }
 
-// 時系列順の slug 一覧。post-order.json を基準にし、未登録の新記事はフィード順で末尾に足す
-async function getChronologicalOrder() {
-  const pinned = loadPostOrder();
-  let feed = [];
-  try {
-    feed = await fetchFeedSlugs();
-  } catch (e) {
-    console.warn(`Feed fetch failed (${e.message}); using post-order.json only.`);
+export function listLocalCandidates() {
+  const candidates = fs
+    .readdirSync(POST_DIR, { withFileTypes: true })
+    .filter(
+      (entry) =>
+        entry.isDirectory() && fs.existsSync(path.join(POST_DIR, entry.name, "index.md")),
+    )
+    .map((entry) => {
+      const meta = readHugoMeta(entry.name);
+      return {
+        blogSlug: entry.name,
+        zennSlug: toZennSlug(entry.name),
+        date: meta.date,
+        draft: meta.draft,
+      };
+    })
+    .filter((item) => !item.draft)
+    .sort((a, b) => a.date.localeCompare(b.date) || a.blogSlug.localeCompare(b.blogSlug));
+
+  const zennSlugs = new Set(
+    fs.readdirSync(ARTICLES_DIR).filter((name) => name.endsWith(".md")).map((name) => name.slice(0, -3)),
+  );
+  for (const item of candidates) {
+    if (!zennSlugs.has(item.zennSlug)) {
+      throw new Error(`公開Hugo記事に対応するZenn記事が無い: ${item.blogSlug}`);
+    }
+    readTopicsAndPublished(item.zennSlug);
   }
-  const extra = feed.filter((s) => !pinned.includes(s));
-  return [...pinned, ...extra];
+  const candidateSet = new Set(candidates.map((item) => item.zennSlug));
+  const orphan = [...zennSlugs].filter((slug) => !candidateSet.has(slug));
+  if (orphan.length) throw new Error(`管理外Zenn記事がある: ${orphan.join(", ")}`);
+  return candidates;
 }
 
-async function fetchTranslatedArticle(slug) {
-  const url = `https://zenn.dev/${ZENN_USER}/articles/${slug}?locale=en`;
-  const res = await fetch(url, { headers: { "User-Agent": UA } });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const html = await res.text();
-  const m = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-  if (!m) throw new Error("__NEXT_DATA__ not found");
-  const article = findArticle(JSON.parse(m[1]));
-  if (!article) throw new Error("article object not found in __NEXT_DATA__");
+async function fetchTranslatedArticle(zennSlug) {
+  const url = canonicalUrlFor(zennSlug);
+  const response = await fetch(url, { headers: { "User-Agent": UA } });
+  if (!response.ok) throw new Error(`Zenn HTTP ${response.status}`);
+  const html = await response.text();
+  const match = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+  if (!match) throw new Error("Zenn __NEXT_DATA__が無い");
+  const article = findArticle(JSON.parse(match[1]), zennSlug);
+  if (!article) throw new Error(`要求slugと一致するZenn記事が無い: ${zennSlug}`);
   return article;
 }
 
-// dev.to へ記事を作成(POST)/更新(PUT)する
 async function devtoRequest(method, url, payload, apiKey) {
-  const res = await fetch(url, {
+  const options = {
     method,
     headers: {
       "api-key": apiKey,
-      "Content-Type": "application/json",
       Accept: "application/vnd.forem.api-v1+json",
+      "User-Agent": UA,
     },
-    body: JSON.stringify(payload),
-  });
-  const text = await res.text();
-  if (res.status !== 200 && res.status !== 201) {
-    throw new Error(`dev.to ${res.status}: ${text.slice(0, 300)}`);
+  };
+  if (payload !== undefined) {
+    options.headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify(payload);
   }
-  return JSON.parse(text);
+  const response = await fetch(url, options);
+  const text = await response.text();
+  if (!response.ok) throw new Error(`dev.to ${response.status}: ${text.slice(0, 300)}`);
+  return text ? JSON.parse(text) : null;
 }
 
-// --- 1) 次の1本を投稿する。戻り値: "posted" | "holding" | "blocked" | "done"
-async function postNext(state, order, dryRun, apiKey) {
-  const orderSet = new Set(order);
-  const target = order.find((s) => !state[s]);
-  if (!target) {
-    console.log(`All ${order.length} articles already crossposted.`);
-    return "done";
+export async function fetchMyArticles(apiKey) {
+  const all = [];
+  const perPage = 100;
+  for (let page = 1; ; page += 1) {
+    const batch = await devtoRequest(
+      "GET",
+      `${DEVTO_API}/me/all?page=${page}&per_page=${perPage}`,
+      undefined,
+      apiKey,
+    );
+    if (!Array.isArray(batch)) throw new Error("dev.to記事一覧が配列ではない");
+    all.push(...batch);
+    if (batch.length < perPage) return all;
   }
-  console.log(`Next: ${target} (${Object.keys(state).length}/${order.length} done)`);
+}
 
-  let article;
-  try {
-    article = await fetchTranslatedArticle(target);
-  } catch (e) {
-    console.error(`Fetch failed for ${target}: ${e.message}`);
-    return "blocked";
+export function canonicalMatches(articles, canonicalUrl) {
+  return articles.filter((article) => article.canonical_url === canonicalUrl);
+}
+
+export function requireSingleCanonicalMatch(matches, zennSlug) {
+  if (matches.length !== 1) {
+    throw new Error(
+      `posting予約 ${zennSlug} の遠隔一致が${matches.length}件。自動POSTせず停止する`,
+    );
   }
+  return matches[0];
+}
+
+function publishedEntry(remote, pending, canonicalUrl) {
+  if (!Number.isInteger(remote.id) || typeof remote.url !== "string") {
+    throw new Error("dev.to応答にid/urlが無い");
+  }
+  return {
+    status: "published",
+    url: remote.url,
+    id: remote.id,
+    canonicalUrl,
+    pending,
+  };
+}
+
+function setOutput(name, value) {
+  if (process.env.GITHUB_OUTPUT) {
+    fs.appendFileSync(process.env.GITHUB_OUTPUT, `${name}=${value}\n`);
+  }
+}
+
+function reservationToken() {
+  const token = process.env.CROSSPOST_RESERVATION_TOKEN ||
+    (process.env.GITHUB_RUN_ID && `${process.env.GITHUB_RUN_ID}:${process.env.GITHUB_RUN_ATTEMPT || "1"}`);
+  if (!token) throw new Error("予約tokenが無い");
+  return token;
+}
+
+async function recoverPosting(state, posting, apiKey) {
+  const [zennSlug, reservation] = posting;
+  const matches = canonicalMatches(await fetchMyArticles(apiKey), reservation.canonicalUrl);
+  const remote = requireSingleCanonicalMatch(matches, zennSlug);
+  const article = await fetchTranslatedArticle(zennSlug);
+  const payload = buildPayload(article, readTopicsAndPublished(zennSlug), state, reservation.canonicalUrl);
+  state[zennSlug] = publishedEntry(
+    remote,
+    unresolvedTargets(payload.article.body_markdown),
+    reservation.canonicalUrl,
+  );
+  saveState(state);
+  console.log(`Recovered ${zennSlug} -> ${remote.url}`);
+}
+
+async function prepare(apiKey) {
+  const candidates = listLocalCandidates();
+  const state = loadState(candidates);
+  const posting = validateState(state, candidates);
+  if (posting) {
+    await recoverPosting(state, posting, apiKey);
+    setOutput("created", "false");
+    setOutput("recovered", "true");
+    return;
+  }
+
+  const target = candidates.find((item) => !state[item.zennSlug]);
+  if (!target) {
+    console.log(`All ${candidates.length} local articles already crossposted.`);
+    setOutput("created", "false");
+    return;
+  }
+  const article = await fetchTranslatedArticle(target.zennSlug);
   if (article.isTranslated !== true) {
-    console.log(`"${target}" is not translated on Zenn yet — holding chronological order.`);
-    return "holding";
+    console.log(`${target.zennSlug} is not translated yet.`);
+    setOutput("created", "false");
+    return;
   }
   if (!article.title || !article.bodyHtml) {
-    console.error(`"${target}" is translated but title/body is empty.`);
-    return "blocked";
+    throw new Error(`Zenn英訳のtitle/bodyが空: ${target.zennSlug}`);
   }
-
-  const payload = buildPayload(article, readTopics(target), state);
-  const pending = unresolvedTargets(payload.article.body_markdown).filter((s) =>
-    orderSet.has(s),
-  );
-
-  if (dryRun) {
-    console.log(
-      `[dry-run] would post "${target}" — tags ${JSON.stringify(payload.article.tags)}, ` +
-        `${payload.article.body_markdown.length} chars, pending links: ${JSON.stringify(pending)}`,
-    );
-    return "posted";
-  }
-  try {
-    const created = await devtoRequest("POST", DEVTO_API, payload, apiKey);
-    state[target] = { url: created.url, id: created.id, pending };
-    saveState(state);
-    console.log(
-      `Posted "${target}" -> ${created.url}` +
-        (pending.length ? ` (pending links: ${pending.join(", ")})` : ""),
-    );
-    return "posted";
-  } catch (e) {
-    console.error(`Post failed for ${target}: ${e.message}`);
-    return "blocked";
-  }
+  state[target.zennSlug] = {
+    status: "posting",
+    sourceKey: target.zennSlug,
+    canonicalUrl: canonicalUrlFor(target.zennSlug),
+    reservationToken: reservationToken(),
+    reservedAt: new Date().toISOString(),
+  };
+  saveState(state);
+  setOutput("created", "true");
+  setOutput("slug", target.zennSlug);
+  console.log(`Reserved ${target.zennSlug}; commit and push this state before POST.`);
 }
 
-// --- 2) 未解決リンクが全て解決できる投稿済み記事を1本だけ更新する
-async function fixupOneArticle(state, order, dryRun, apiKey) {
-  const orderSet = new Set(order);
-  const fixSlug = Object.keys(state).find(
-    (s) =>
-      (state[s].pending || []).length > 0 &&
-      state[s].pending.every((t) => state[t] && state[t].url),
+async function sendNew(apiKey) {
+  const candidates = listLocalCandidates();
+  const state = loadState(candidates);
+  const posting = validateState(state, candidates);
+  if (!posting) throw new Error("送信対象のposting予約が無い");
+  const [zennSlug, reservation] = posting;
+  if (reservation.reservationToken !== reservationToken()) {
+    throw new Error("posting予約は別runのもの。自動POSTせず--prepareで回復する");
+  }
+
+  const matches = canonicalMatches(await fetchMyArticles(apiKey), reservation.canonicalUrl);
+  if (matches.length > 1) {
+    throw new Error(`canonical_urlがdev.toに複数ある: ${zennSlug}`);
+  }
+  const article = await fetchTranslatedArticle(zennSlug);
+  if (article.isTranslated !== true || !article.title || !article.bodyHtml) {
+    throw new Error(`Zenn英訳が送信可能な状態ではない: ${zennSlug}`);
+  }
+  const payload = buildPayload(
+    article,
+    readTopicsAndPublished(zennSlug),
+    state,
+    reservation.canonicalUrl,
   );
-  if (!fixSlug) {
+  const pending = unresolvedTargets(payload.article.body_markdown);
+  if (matches.length === 1) {
+    state[zennSlug] = publishedEntry(matches[0], pending, reservation.canonicalUrl);
+    saveState(state);
+    console.log(`Recovered before POST ${zennSlug} -> ${matches[0].url}`);
+    return;
+  }
+
+  const created = await devtoRequest("POST", DEVTO_API, payload, apiKey);
+  state[zennSlug] = publishedEntry(created, pending, reservation.canonicalUrl);
+  saveState(state);
+  console.log(`Posted ${zennSlug} -> ${created.url}`);
+}
+
+async function fixupOne(apiKey) {
+  const candidates = listLocalCandidates();
+  const state = loadState(candidates);
+  const posting = validateState(state, candidates);
+  if (posting) throw new Error("posting予約があるためリンク更新を行わない");
+  const zennSlug = Object.keys(state).find(
+    (slug) =>
+      (state[slug].pending || []).length > 0 &&
+      state[slug].pending.every((target) => state[target]?.url),
+  );
+  if (!zennSlug) {
     console.log("No link fixups ready.");
     return;
   }
-  console.log(`Link fixup ready: ${fixSlug} (pending: ${state[fixSlug].pending.join(", ")})`);
-  if (dryRun) {
-    console.log("[dry-run] would re-fetch and update the above article.");
-    return;
-  }
-  try {
-    await sleep(WRITE_GAP_MS);
-    const article = await fetchTranslatedArticle(fixSlug);
-    if (!article.bodyHtml) throw new Error("body empty on re-fetch");
-    const payload = buildPayload(article, readTopics(fixSlug), state);
-    const stillPending = unresolvedTargets(payload.article.body_markdown).filter((s) =>
-      orderSet.has(s),
-    );
-    await devtoRequest("PUT", `${DEVTO_API}/${state[fixSlug].id}`, payload, apiKey);
-    state[fixSlug].pending = stillPending;
-    saveState(state);
-    console.log(
-      `Updated "${fixSlug}" — internal links now point to dev.to.` +
-        (stillPending.length ? ` Still pending: ${stillPending.join(", ")}` : ""),
-    );
-  } catch (e) {
-    // 投稿自体は成功しているのでジョブは失敗扱いにしない（次回の実行で再試行）
-    console.error(`Link fixup failed for ${fixSlug}: ${e.message}`);
-  }
+  await sleep(WRITE_GAP_MS);
+  const article = await fetchTranslatedArticle(zennSlug);
+  const canonicalUrl = state[zennSlug].canonicalUrl;
+  const payload = buildPayload(article, readTopicsAndPublished(zennSlug), state, canonicalUrl);
+  await devtoRequest("PUT", `${DEVTO_API}/${state[zennSlug].id}`, payload, apiKey);
+  state[zennSlug].pending = unresolvedTargets(payload.article.body_markdown);
+  saveState(state);
+  console.log(`Updated internal links: ${zennSlug}`);
 }
 
-async function main() {
-  const dryRun = process.argv.includes("--dry-run");
+export async function main(argv = process.argv.slice(2)) {
+  const mode = argv[0];
+  if (!["--prepare", "--send-new", "--fix-links"].includes(mode) || argv.length !== 1) {
+    throw new Error("使い方: --prepare | --send-new | --fix-links");
+  }
   const apiKey = process.env.DEVTO_API_KEY;
-  if (!apiKey && !dryRun) {
-    console.error("DEVTO_API_KEY is not set.");
-    process.exit(1);
-  }
-
-  const state = loadState();
-  const order = await getChronologicalOrder();
-
-  const result = await postNext(state, order, dryRun, apiKey);
-  if (result === "blocked") {
-    // 投稿がレート制限/エラーで失敗。更新も同じく弾かれるので今回はここで終了
-    process.exitCode = 1;
-    console.log("Skipping link fixup (posting was blocked).");
-    return;
-  }
-  await fixupOneArticle(state, order, dryRun, apiKey);
+  if (!apiKey) throw new Error("DEVTO_API_KEY is not set");
+  if (mode === "--prepare") await prepare(apiKey);
+  if (mode === "--send-new") await sendNew(apiKey);
+  if (mode === "--fix-links") await fixupOne(apiKey);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((e) => {
-    console.error(e);
+  main().catch((error) => {
+    console.error(`✗ ${error.message}`);
     process.exit(1);
   });
 }

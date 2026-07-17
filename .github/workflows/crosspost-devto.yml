@@ -12,6 +12,10 @@ on:
 permissions:
   contents: write # crossposted-devto.json のコミットに必要
 
+concurrency:
+  group: crosspost-devto
+  cancel-in-progress: false
+
 jobs:
   crosspost:
     runs-on: ubuntu-latest
@@ -25,21 +29,51 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
         working-directory: .github/scripts
 
-      - name: Crosspost translated articles
-        run: node .github/scripts/crosspost-devto.mjs
+      - name: Test and validate local sources
+        run: |
+          npm --prefix .github/scripts test
+          node tools/validate-content.mjs
+          node tools/zenn-sync/sync.mjs --check
+
+      - name: Prepare reservation or recover previous posting
+        id: prepare
+        run: node .github/scripts/crosspost-devto.mjs --prepare
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
-      - name: Commit crosspost state
+      - name: Persist reservation before external POST
         run: |
           if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add crossposted-devto.json
-            git commit -m "chore: update dev.to crosspost state"
+            git commit -m "chore: reserve dev.to crosspost"
+            git push
+          else
+            echo "No state change."
+          fi
+
+      - name: Send newly reserved article
+        if: steps.prepare.outputs.created == 'true'
+        run: node .github/scripts/crosspost-devto.mjs --send-new
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+
+      - name: Fix one resolvable internal link set
+        run: node .github/scripts/crosspost-devto.mjs --fix-links
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+
+      - name: Persist finalized crosspost state
+        run: |
+          if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add crossposted-devto.json
+            git commit -m "chore: finalize dev.to crosspost state"
             git push
           else
             echo "No state change."

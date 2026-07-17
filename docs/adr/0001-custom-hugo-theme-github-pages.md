@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-The repository is a Japanese technical blog built with Hugo. README.md and CLAUDE.md describe the site as a Hugo static site hosted on GitHub Pages. They also state that the theme is custom and lives inside this repository under `layouts/` and `assets/`, so no external Hugo theme submodule is required.
+The repository is a Japanese technical blog built with Hugo. README.md, AGENTS.md, and docs/site-operations.md describe the site as a Hugo static site hosted on GitHub Pages. The active theme is custom and lives inside this repository under `layouts/` and `assets/`.
 
 ## Decision
 

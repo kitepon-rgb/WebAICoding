@@ -48,9 +48,12 @@ node generate-cover.js --mobile "短い見出し" "" "../../content/post/<slug>/
 
 # 全記事まとめて（slug→短見出しは mobile-covers.json）
 node gen-mobile-covers.js
+
+# 対象記事だけ
+node gen-mobile-covers.js --slug <blogSlug>
 ```
 
-新記事を足したら **`mobile-covers.json` に `"slug": "短見出し"` を1行追加** → `node gen-mobile-covers.js`。
+新記事を足したら **`mobile-covers.json` に `"slug": "短見出し"` を1行追加** → `node gen-mobile-covers.js --slug <blogSlug>`。
 
 **デザイン（`--mobile`）**: PC版と同じグラデ・枠・コード背景。タイトルは**左寄せ・最大3行・自動縮小**で大きく。
 その下に**センタリングの区切り線（264×4px・`#d6bcae`）**＋**センタリングの「Claude Code 始めました」（54px）**。
