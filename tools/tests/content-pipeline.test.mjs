@@ -203,8 +203,8 @@ test("Hugo frontmatterは未来の公開日を拒否する", () => {
 });
 
 test("現行コンテンツとカバー寸法がpreflightを通る", () => {
-  const result = validateContent({ now: new Date("2026-07-17T23:59:59+09:00") });
-  assert.deepEqual(result, { posts: 38, zenn: 38, mobile: 38 });
+  const result = validateContent({ now: new Date("2026-07-19T23:59:59+09:00") });
+  assert.deepEqual(result, { posts: 39, zenn: 39, mobile: 39 });
   assert.deepEqual(
     pngDimensions(path.join(repoRoot, "content/post/bughub/cover.png")),
     { width: 1250, height: 500 },
