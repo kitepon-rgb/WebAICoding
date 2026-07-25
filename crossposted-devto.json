@@ -93,6 +93,13 @@
     "id": 3752906,
     "pending": []
   },
+  "codex-max-mode-quota-drain": {
+    "status": "posting",
+    "sourceKey": "codex-max-mode-quota-drain",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/codex-max-mode-quota-drain?locale=en",
+    "reservationToken": "30153992711:1",
+    "reservedAt": "2026-07-25T10:10:16.849Z"
+  },
   "discord-ai-assistant": {
     "url": "https://dev.to/quolu/how-i-built-an-ai-assistant-that-grows-its-own-tools-572g",
     "id": 3786406,
