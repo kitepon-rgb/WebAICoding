@@ -19,6 +19,7 @@ const ZENN_USER = "kitepon";
 const DEVTO_API = "https://dev.to/api/articles";
 const UA = "WebAICoding dev.to crosspost (+https://github.com/kitepon-rgb/WebAICoding)";
 const WRITE_GAP_MS = 5000;
+const ZENN_FETCH_GAP_MS = 1000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../..");
 const POST_DIR = path.join(REPO_ROOT, "content", "post");
@@ -278,13 +279,47 @@ export function listLocalCandidates() {
 async function fetchTranslatedArticle(zennSlug) {
   const url = canonicalUrlFor(zennSlug);
   const response = await fetch(url, { headers: { "User-Agent": UA } });
-  if (!response.ok) throw new Error(`Zenn HTTP ${response.status}`);
+  if (!response.ok) {
+    const error = new Error(`Zenn HTTP ${response.status}`);
+    error.zennStatus = response.status;
+    throw error;
+  }
   const html = await response.text();
   const match = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
   if (!match) throw new Error("Zenn __NEXT_DATA__が無い");
   const article = findArticle(JSON.parse(match[1]), zennSlug);
   if (!article) throw new Error(`要求slugと一致するZenn記事が無い: ${zennSlug}`);
   return article;
+}
+
+// 未転載候補を日付の古い順に走査し、Zennの英訳が済んだ最初の1件を返す。
+// Zennの自動翻訳は来ない記事があるため、英訳未完とZenn未公開(404)は飛ばして
+// 後続をブロックしない。それ以外の異常はthrowして握りつぶさない。
+export async function selectTarget(
+  candidates,
+  state,
+  fetchArticle,
+  { gapMs = ZENN_FETCH_GAP_MS } = {},
+) {
+  const skipped = [];
+  for (const item of candidates) {
+    if (state[item.zennSlug]) continue;
+    if (skipped.length > 0 && gapMs > 0) await sleep(gapMs);
+    let article;
+    try {
+      article = await fetchArticle(item.zennSlug);
+    } catch (error) {
+      if (error.zennStatus !== 404) throw error;
+      skipped.push({ zennSlug: item.zennSlug, reason: "Zenn未公開(404)" });
+      continue;
+    }
+    if (article.isTranslated !== true) {
+      skipped.push({ zennSlug: item.zennSlug, reason: "英訳未完" });
+      continue;
+    }
+    return { target: item, article, skipped };
+  }
+  return { target: null, article: null, skipped };
 }
 
 async function devtoRequest(method, url, payload, apiKey) {
@@ -387,15 +422,21 @@ async function prepare(apiKey) {
     return;
   }
 
-  const target = candidates.find((item) => !state[item.zennSlug]);
-  if (!target) {
-    console.log(`All ${candidates.length} local articles already crossposted.`);
-    setOutput("created", "false");
-    return;
+  const { target, article, skipped } = await selectTarget(
+    candidates,
+    state,
+    fetchTranslatedArticle,
+  );
+  for (const item of skipped) {
+    console.log(`Skipped ${item.zennSlug}: ${item.reason}`);
   }
-  const article = await fetchTranslatedArticle(target.zennSlug);
-  if (article.isTranslated !== true) {
-    console.log(`${target.zennSlug} is not translated yet.`);
+  if (!target) {
+    const remaining = candidates.filter((item) => !state[item.zennSlug]).length;
+    console.log(
+      remaining === 0
+        ? `All ${candidates.length} local articles already crossposted.`
+        : `No article ready to crosspost. Skipped ${skipped.length} of ${remaining} remaining.`,
+    );
     setOutput("created", "false");
     return;
   }

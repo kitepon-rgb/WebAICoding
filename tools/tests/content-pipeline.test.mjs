@@ -29,6 +29,7 @@ import {
   listLocalCandidates,
   requireSingleCanonicalMatch,
   rewriteInternalLinks,
+  selectTarget,
   unresolvedTargets,
   validateState,
 } from "../../.github/scripts/crosspost-devto.mjs";
@@ -180,6 +181,82 @@ test("posting予約の欠損と複数予約を拒否する", () => {
       ),
     /posting予約が複数/,
   );
+});
+
+const SELECT_CANDIDATES = [
+  { zennSlug: "posted-article", date: "2026-06-01" },
+  { zennSlug: "untranslated-article", date: "2026-06-02" },
+  { zennSlug: "missing-article", date: "2026-06-03" },
+  { zennSlug: "translated-article", date: "2026-06-04" },
+];
+
+function fakeFetch(articles, calls) {
+  return async (zennSlug) => {
+    calls.push(zennSlug);
+    const article = articles[zennSlug];
+    if (!article) throw new Error(`fixture未定義: ${zennSlug}`);
+    if (article.zennStatus) {
+      const error = new Error(`Zenn HTTP ${article.zennStatus}`);
+      error.zennStatus = article.zennStatus;
+      throw error;
+    }
+    return article;
+  };
+}
+
+const SELECT_FIXTURE = {
+  "untranslated-article": { isTranslated: false, bodyHtml: "ja" },
+  "missing-article": { zennStatus: 404 },
+  "translated-article": { isTranslated: true, title: "Title", bodyHtml: "en" },
+};
+
+test("英訳未完とZenn未公開を飛ばして次の英訳済み記事を選ぶ", async () => {
+  const calls = [];
+  const result = await selectTarget(
+    SELECT_CANDIDATES,
+    { "posted-article": { status: "published", id: 1, url: "https://dev.to/x/posted" } },
+    fakeFetch(SELECT_FIXTURE, calls),
+    { gapMs: 0 },
+  );
+  assert.equal(result.target.zennSlug, "translated-article");
+  assert.equal(result.article.bodyHtml, "en");
+  assert.deepEqual(result.skipped, [
+    { zennSlug: "untranslated-article", reason: "英訳未完" },
+    { zennSlug: "missing-article", reason: "Zenn未公開(404)" },
+  ]);
+  assert.deepEqual(calls, ["untranslated-article", "missing-article", "translated-article"]);
+});
+
+test("404以外のZennエラーは飛ばさずthrowする", async () => {
+  const calls = [];
+  await assert.rejects(
+    () =>
+      selectTarget(
+        SELECT_CANDIDATES.slice(2),
+        {},
+        fakeFetch({ ...SELECT_FIXTURE, "missing-article": { zennStatus: 500 } }, calls),
+        { gapMs: 0 },
+      ),
+    /Zenn HTTP 500/,
+  );
+  assert.deepEqual(calls, ["missing-article"]);
+});
+
+test("英訳済み候補が無ければtargetはnullで全件をskippedへ残す", async () => {
+  const calls = [];
+  const result = await selectTarget(
+    SELECT_CANDIDATES.slice(1, 3),
+    {},
+    fakeFetch(SELECT_FIXTURE, calls),
+    { gapMs: 0 },
+  );
+  assert.equal(result.target, null);
+  assert.equal(result.article, null);
+  assert.deepEqual(result.skipped.map((item) => item.zennSlug), [
+    "untranslated-article",
+    "missing-article",
+  ]);
+  assert.deepEqual(calls, ["untranslated-article", "missing-article"]);
 });
 
 test("Hugo frontmatterは未来の公開日を拒否する", () => {
