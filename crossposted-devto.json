@@ -101,6 +101,13 @@
     "canonicalUrl": "https://zenn.dev/kitepon/articles/kikoeru-listening?locale=en",
     "pending": []
   },
+  "livetr-complete-sentence": {
+    "status": "posting",
+    "sourceKey": "livetr-complete-sentence",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/livetr-complete-sentence?locale=en",
+    "reservationToken": "30153927216:1",
+    "reservedAt": "2026-07-25T10:07:51.134Z"
+  },
   "livetr-realtime-translator": {
     "url": "https://dev.to/quolu/livetr-a-real-time-english-to-japanese-audio-translation-app-for-videos-1lek",
     "id": 3744290,
