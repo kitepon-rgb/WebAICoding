@@ -30,11 +30,11 @@
     "pending": []
   },
   "aiterm-converse": {
-    "status": "posting",
-    "sourceKey": "aiterm-converse",
+    "status": "published",
+    "url": "https://dev.to/quolu/ai-to-ai-conversations-the-interactive-terminal-powered-by-aiterm-mcp-2i6l",
+    "id": 4230199,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/aiterm-converse?locale=en",
-    "reservationToken": "30153975434:1",
-    "reservedAt": "2026-07-25T10:09:40.570Z"
+    "pending": []
   },
   "aiterm-release": {
     "url": "https://dev.to/quolu/released-aiterm-mcp-on-npm-an-mcp-server-to-reduce-token-usage-by-providing-ai-with-a-persistent-a5n",
