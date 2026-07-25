@@ -135,6 +135,13 @@
     "id": 3844307,
     "pending": []
   },
+  "sprite-forge-release": {
+    "status": "posting",
+    "sourceKey": "sprite-forge-release",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/sprite-forge-release?locale=en",
+    "reservationToken": "30153938767:1",
+    "reservedAt": "2026-07-25T10:08:23.279Z"
+  },
   "throughline-context-diet": {
     "url": "https://dev.to/quolu/87-of-my-context-was-garbage-how-i-optimized-claude-code-token-usage-534k",
     "id": 3815133,
