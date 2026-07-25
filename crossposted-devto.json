@@ -29,6 +29,13 @@
     "id": 3781150,
     "pending": []
   },
+  "aiterm-converse": {
+    "status": "posting",
+    "sourceKey": "aiterm-converse",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/aiterm-converse?locale=en",
+    "reservationToken": "30153975434:1",
+    "reservedAt": "2026-07-25T10:09:40.570Z"
+  },
   "aiterm-release": {
     "url": "https://dev.to/quolu/released-aiterm-mcp-on-npm-an-mcp-server-to-reduce-token-usage-by-providing-ai-with-a-persistent-a5n",
     "id": 3910298,
