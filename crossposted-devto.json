@@ -116,6 +116,13 @@
     "id": 3887524,
     "pending": []
   },
+  "rpgdev-overlay": {
+    "status": "posting",
+    "sourceKey": "rpgdev-overlay",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/rpgdev-overlay?locale=en",
+    "reservationToken": "30153909183:1",
+    "reservedAt": "2026-07-25T10:07:15.871Z"
+  },
   "spotter-release": {
     "url": "https://dev.to/quolu/i-had-74-daemons-running-because-i-made-one-claude-audit-another-for-missed-tool-calls-5b6m",
     "id": 3844307,
