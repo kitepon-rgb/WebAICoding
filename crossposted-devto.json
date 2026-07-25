@@ -117,11 +117,11 @@
     "pending": []
   },
   "rpgdev-overlay": {
-    "status": "posting",
-    "sourceKey": "rpgdev-overlay",
+    "status": "published",
+    "url": "https://dev.to/quolu/i-love-watching-ai-work-so-much-that-i-turned-my-terminal-into-an-rpg-51jf",
+    "id": 4230185,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/rpgdev-overlay?locale=en",
-    "reservationToken": "30153909183:1",
-    "reservedAt": "2026-07-25T10:07:15.871Z"
+    "pending": []
   },
   "spotter-release": {
     "url": "https://dev.to/quolu/i-had-74-daemons-running-because-i-made-one-claude-audit-another-for-missed-tool-calls-5b6m",
