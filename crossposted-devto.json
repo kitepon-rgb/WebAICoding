@@ -94,11 +94,11 @@
     "pending": []
   },
   "codex-max-mode-quota-drain": {
-    "status": "posting",
-    "sourceKey": "codex-max-mode-quota-drain",
+    "status": "published",
+    "url": "https://dev.to/quolu/how-codexs-top-tier-mode-burned-through-a-5-hour-quota-in-1-hour-51o2",
+    "id": 4230204,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/codex-max-mode-quota-drain?locale=en",
-    "reservationToken": "30153992711:1",
-    "reservedAt": "2026-07-25T10:10:16.849Z"
+    "pending": []
   },
   "discord-ai-assistant": {
     "url": "https://dev.to/quolu/how-i-built-an-ai-assistant-that-grows-its-own-tools-572g",
