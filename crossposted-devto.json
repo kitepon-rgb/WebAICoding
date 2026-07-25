@@ -5,11 +5,11 @@
     "pending": []
   },
   "ai-audit-blind-layer": {
-    "status": "posting",
-    "sourceKey": "ai-audit-blind-layer",
+    "status": "published",
+    "url": "https://dev.to/quolu/i-suspected-my-app-had-flaws-so-i-consulted-fable-5-565n",
+    "id": 4230209,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/ai-audit-blind-layer?locale=en",
-    "reservationToken": "30154010469:1",
-    "reservedAt": "2026-07-25T10:10:51.298Z"
+    "pending": []
   },
   "ai-coding-tool-journey": {
     "url": "https://dev.to/quolu/from-copilot-to-cursor-to-claude-code-for-vs-code-my-journey-to-the-optimal-setup-53do",
