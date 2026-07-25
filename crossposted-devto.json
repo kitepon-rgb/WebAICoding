@@ -136,11 +136,11 @@
     "pending": []
   },
   "sprite-forge-release": {
-    "status": "posting",
-    "sourceKey": "sprite-forge-release",
+    "status": "published",
+    "url": "https://dev.to/quolu/how-i-made-an-ai-that-cant-draw-the-same-character-create-anime-model-sheets-19cn",
+    "id": 4230190,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/sprite-forge-release?locale=en",
-    "reservationToken": "30153938767:1",
-    "reservedAt": "2026-07-25T10:08:23.279Z"
+    "pending": []
   },
   "throughline-context-diet": {
     "url": "https://dev.to/quolu/87-of-my-context-was-garbage-how-i-optimized-claude-code-token-usage-534k",
