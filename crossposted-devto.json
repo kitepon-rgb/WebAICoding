@@ -94,6 +94,13 @@
     "id": 3894724,
     "pending": []
   },
+  "kikoeru-listening": {
+    "status": "posting",
+    "sourceKey": "kikoeru-listening",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/kikoeru-listening?locale=en",
+    "reservationToken": "30153864607:1",
+    "reservedAt": "2026-07-25T10:05:39.889Z"
+  },
   "livetr-realtime-translator": {
     "url": "https://dev.to/quolu/livetr-a-real-time-english-to-japanese-audio-translation-app-for-videos-1lek",
     "id": 3744290,
