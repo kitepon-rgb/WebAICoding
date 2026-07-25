@@ -77,7 +77,9 @@ export function htmlToMarkdown(html) {
 export function rewriteInternalLinks(markdown, state) {
   return markdown.replace(INTERNAL_LINK_RE, (whole, blogSlug, anchor = "") => {
     const entry = state[toZennSlug(blogSlug)];
-    return entry && entry.url ? `](${entry.url}${anchor})` : whole;
+    // hiddenは下書きへ戻した記事。読者から見えないURLへ張らず、pendingへ残して
+    // 再公開後に--fix-linksで解決する。
+    return entry && entry.url && !entry.hidden ? `](${entry.url}${anchor})` : whole;
   });
 }
 
@@ -175,6 +177,9 @@ export function validateState(state, candidates) {
     }
     if (entry.pending !== undefined && !Array.isArray(entry.pending)) {
       throw new Error(`pendingが配列ではない: ${slug}`);
+    }
+    if (entry.hidden !== undefined && typeof entry.hidden !== "boolean") {
+      throw new Error(`hiddenがbooleanではない: ${slug}`);
     }
   }
   const posting = Object.entries(state).filter(([, entry]) => entry.status === "posting");
@@ -494,16 +499,86 @@ async function sendNew(apiKey) {
   console.log(`Posted ${zennSlug} -> ${created.url}`);
 }
 
+// 下書きへ戻した記事のうち、公開日が最も古い1件を返す。再公開は1 runで1件だけ。
+export function findHiddenTarget(candidates, state) {
+  return candidates.find((item) => state[item.zennSlug]?.hidden === true) || null;
+}
+
+// リンク更新の対象は、参照先が全て公開済み（下書きへ戻していない）記事だけ。
+export function findFixupTarget(state) {
+  return (
+    Object.keys(state).find(
+      (slug) =>
+        !state[slug].hidden &&
+        (state[slug].pending || []).length > 0 &&
+        state[slug].pending.every((target) => state[target]?.url && !state[target].hidden),
+    ) || null
+  );
+}
+
+// dev.toへ出しすぎた記事を下書きへ戻す。台帳へhiddenを立て、--republishが
+// 1日1件ずつ再公開する。対象slugはHIDE_SLUGSで明示的に渡す。
+async function hideArticles(apiKey) {
+  const slugs = (process.env.HIDE_SLUGS || "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+  if (slugs.length === 0) throw new Error("HIDE_SLUGSが空");
+  const candidates = listLocalCandidates();
+  const state = loadState(candidates);
+  if (validateState(state, candidates)) {
+    throw new Error("posting予約があるため非公開化を行わない");
+  }
+  for (const slug of slugs) {
+    const entry = state[slug];
+    if (!entry) throw new Error(`台帳に無いslug: ${slug}`);
+    if (!Number.isInteger(entry.id)) throw new Error(`台帳entryにidが無い: ${slug}`);
+    if (entry.hidden) {
+      console.log(`Already hidden ${slug}`);
+      continue;
+    }
+    await sleep(WRITE_GAP_MS);
+    await devtoRequest(
+      "PUT",
+      `${DEVTO_API}/${entry.id}`,
+      { article: { published: false } },
+      apiKey,
+    );
+    entry.hidden = true;
+    saveState(state);
+    console.log(`Hidden ${slug} -> ${entry.url}`);
+  }
+}
+
+// 下書きへ戻した記事を1件だけ再公開する。1日1本の上限を守るため、
+// 再公開した日は新規転載を行わない（workflowがoutputで分岐する）。
+async function republishOne(apiKey) {
+  const candidates = listLocalCandidates();
+  const state = loadState(candidates);
+  if (validateState(state, candidates)) {
+    throw new Error("posting予約があるため再公開を行わない");
+  }
+  const target = findHiddenTarget(candidates, state);
+  if (!target) {
+    console.log("No hidden article to republish.");
+    setOutput("republished", "false");
+    return;
+  }
+  const entry = state[target.zennSlug];
+  await sleep(WRITE_GAP_MS);
+  await devtoRequest("PUT", `${DEVTO_API}/${entry.id}`, { article: { published: true } }, apiKey);
+  delete entry.hidden;
+  saveState(state);
+  setOutput("republished", "true");
+  console.log(`Republished ${target.zennSlug} -> ${entry.url}`);
+}
+
 async function fixupOne(apiKey) {
   const candidates = listLocalCandidates();
   const state = loadState(candidates);
   const posting = validateState(state, candidates);
   if (posting) throw new Error("posting予約があるためリンク更新を行わない");
-  const zennSlug = Object.keys(state).find(
-    (slug) =>
-      (state[slug].pending || []).length > 0 &&
-      state[slug].pending.every((target) => state[target]?.url),
-  );
+  const zennSlug = findFixupTarget(state);
   if (!zennSlug) {
     console.log("No link fixups ready.");
     return;
@@ -520,14 +595,17 @@ async function fixupOne(apiKey) {
 
 export async function main(argv = process.argv.slice(2)) {
   const mode = argv[0];
-  if (!["--prepare", "--send-new", "--fix-links"].includes(mode) || argv.length !== 1) {
-    throw new Error("使い方: --prepare | --send-new | --fix-links");
+  const modes = ["--prepare", "--send-new", "--fix-links", "--hide", "--republish"];
+  if (!modes.includes(mode) || argv.length !== 1) {
+    throw new Error(`使い方: ${modes.join(" | ")}`);
   }
   const apiKey = process.env.DEVTO_API_KEY;
   if (!apiKey) throw new Error("DEVTO_API_KEY is not set");
   if (mode === "--prepare") await prepare(apiKey);
   if (mode === "--send-new") await sendNew(apiKey);
   if (mode === "--fix-links") await fixupOne(apiKey);
+  if (mode === "--hide") await hideArticles(apiKey);
+  if (mode === "--republish") await republishOne(apiKey);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

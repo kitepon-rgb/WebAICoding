@@ -27,6 +27,8 @@ import {
   canonicalUrlFor,
   findArticle,
   listLocalCandidates,
+  findFixupTarget,
+  findHiddenTarget,
   requireSingleCanonicalMatch,
   rewriteInternalLinks,
   selectTarget,
@@ -257,6 +259,63 @@ test("英訳済み候補が無ければtargetはnullで全件をskippedへ残す
     "missing-article",
   ]);
   assert.deepEqual(calls, ["untranslated-article", "missing-article"]);
+});
+
+test("下書きへ戻した記事は公開日順に1件だけ再公開対象になる", () => {
+  const state = {
+    "posted-article": { id: 1, url: "https://dev.to/x/a" },
+    "untranslated-article": { id: 2, url: "https://dev.to/x/b", hidden: true },
+    "translated-article": { id: 3, url: "https://dev.to/x/d", hidden: true },
+  };
+  assert.equal(findHiddenTarget(SELECT_CANDIDATES, state).zennSlug, "untranslated-article");
+  delete state["untranslated-article"].hidden;
+  assert.equal(findHiddenTarget(SELECT_CANDIDATES, state).zennSlug, "translated-article");
+  delete state["translated-article"].hidden;
+  assert.equal(findHiddenTarget(SELECT_CANDIDATES, state), null);
+});
+
+test("hiddenは非booleanを拒否し、下書き記事へのリンクはpendingへ残す", () => {
+  assert.throws(
+    () =>
+      validateState(
+        { "article-one": { id: 1, url: "https://dev.to/x/a", hidden: "yes" } },
+        [{ zennSlug: "article-one" }],
+      ),
+    /hiddenがboolean/,
+  );
+  const markdown = "[内部](https://blog.kitepon.dev/post/bughub/)";
+  const hiddenState = {
+    "bughub-aggregation": { id: 1, url: "https://dev.to/x/bughub", hidden: true },
+  };
+  assert.equal(rewriteInternalLinks(markdown, hiddenState), markdown);
+  assert.deepEqual(unresolvedTargets(markdown), ["bughub-aggregation"]);
+  delete hiddenState["bughub-aggregation"].hidden;
+  assert.match(rewriteInternalLinks(markdown, hiddenState), /dev\.to\/x\/bughub/);
+});
+
+test("リンク更新は参照先が下書きの記事を対象にしない", () => {
+  const state = {
+    "waiting-article": { id: 1, url: "https://dev.to/x/a", pending: ["hidden-target"] },
+    "hidden-target": { id: 2, url: "https://dev.to/x/b", hidden: true },
+  };
+  assert.equal(findFixupTarget(state), null);
+  delete state["hidden-target"].hidden;
+  assert.equal(findFixupTarget(state), "waiting-article");
+  state["waiting-article"].hidden = true;
+  assert.equal(findFixupTarget(state), null);
+});
+
+test("workflowは再公開した日に新規転載を行わない", () => {
+  const crosspost = fs.readFileSync(
+    path.join(repoRoot, ".github/workflows/crosspost-devto.yml"),
+    "utf8",
+  );
+  assert.match(crosspost, /--republish/);
+  assert.match(
+    crosspost,
+    /if: github\.event\.inputs\.hide_slugs == '' && steps\.republish\.outputs\.republished != 'true'/,
+  );
+  assert.ok(crosspost.indexOf("--republish") < crosspost.indexOf("--prepare"));
 });
 
 test("Hugo frontmatterは未来の公開日を拒否する", () => {

@@ -3,11 +3,19 @@ name: Crosspost to dev.to
 # Zenn の英語自動翻訳が付いた記事を dev.to へ転載する。
 # Zenn の翻訳は日本語公開から数日後に非同期で進むため、push ではなく
 # 毎日のポーリングで「翻訳済みか」を確認する。
+#
+# dev.to へ出るのは 1 run で最大 1 本。下書きへ戻した記事があればその再公開を
+# 優先し、その日は新規転載を行わない。
 
 on:
   schedule:
     - cron: "0 0 * * *" # 毎日 00:00 UTC = 09:00 JST
   workflow_dispatch: # 手動実行用
+    inputs:
+      hide_slugs:
+        description: "下書きへ戻すZenn slug（カンマ区切り）。空なら通常の転載処理"
+        required: false
+        default: ""
 
 permissions:
   contents: write # crossposted-devto.json のコミットに必要
@@ -38,13 +46,55 @@ jobs:
           node tools/validate-content.mjs
           node tools/zenn-sync/sync.mjs --check
 
+      - name: Hide over-posted articles
+        if: github.event.inputs.hide_slugs != ''
+        run: node .github/scripts/crosspost-devto.mjs --hide
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+          HIDE_SLUGS: ${{ github.event.inputs.hide_slugs }}
+
+      - name: Persist hidden state
+        if: github.event.inputs.hide_slugs != ''
+        run: |
+          if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add crossposted-devto.json
+            git commit -m "chore: hide over-posted dev.to articles"
+            git push
+          else
+            echo "No state change."
+          fi
+
+      - name: Republish one hidden article
+        id: republish
+        if: github.event.inputs.hide_slugs == ''
+        run: node .github/scripts/crosspost-devto.mjs --republish
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+
+      - name: Persist republished state
+        if: steps.republish.outputs.republished == 'true'
+        run: |
+          if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add crossposted-devto.json
+            git commit -m "chore: republish one dev.to article"
+            git push
+          else
+            echo "No state change."
+          fi
+
       - name: Prepare reservation or recover previous posting
         id: prepare
+        if: github.event.inputs.hide_slugs == '' && steps.republish.outputs.republished != 'true'
         run: node .github/scripts/crosspost-devto.mjs --prepare
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Persist reservation before external POST
+        if: github.event.inputs.hide_slugs == '' && steps.republish.outputs.republished != 'true'
         run: |
           if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
             git config user.name "github-actions[bot]"
@@ -63,11 +113,13 @@ jobs:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Fix one resolvable internal link set
+        if: github.event.inputs.hide_slugs == ''
         run: node .github/scripts/crosspost-devto.mjs --fix-links
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Persist finalized crosspost state
+        if: github.event.inputs.hide_slugs == ''
         run: |
           if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
             git config user.name "github-actions[bot]"
