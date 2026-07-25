@@ -39,6 +39,13 @@
     "id": 3878077,
     "pending": []
   },
+  "bughub-aggregation": {
+    "status": "posting",
+    "sourceKey": "bughub-aggregation",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/bughub-aggregation?locale=en",
+    "reservationToken": "30153957088:1",
+    "reservedAt": "2026-07-25T10:08:58.045Z"
+  },
   "build-fast-reach-slow": {
     "url": "https://dev.to/quolu/ive-accelerated-building-and-promoting-but-delivering-still-remains-a-challenge-3fid",
     "id": 3902186,
