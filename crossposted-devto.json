@@ -9,7 +9,8 @@
     "url": "https://dev.to/quolu/i-suspected-my-app-had-flaws-so-i-consulted-fable-5-565n",
     "id": 4230209,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/ai-audit-blind-layer?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "ai-coding-tool-journey": {
     "url": "https://dev.to/quolu/from-copilot-to-cursor-to-claude-code-for-vs-code-my-journey-to-the-optimal-setup-53do",
@@ -21,7 +22,8 @@
     "url": "https://dev.to/quolu/implementing-orchestration-jhf",
     "id": 4230218,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/ai-orchestration-quotas?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "ai-secretary-memory-system": {
     "url": "https://dev.to/quolu/implementing-structured-long-term-memory-for-my-ai-secretary-5dpe",
@@ -48,7 +50,8 @@
     "url": "https://dev.to/quolu/ai-to-ai-conversations-the-interactive-terminal-powered-by-aiterm-mcp-2i6l",
     "id": 4230199,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/aiterm-converse?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "aiterm-release": {
     "url": "https://dev.to/quolu/released-aiterm-mcp-on-npm-an-mcp-server-to-reduce-token-usage-by-providing-ai-with-a-persistent-a5n",
@@ -65,7 +68,8 @@
     "url": "https://dev.to/quolu/how-i-consolidated-bug-reports-from-four-apps-and-let-ai-fix-them-in-parallel-1501",
     "id": 4230194,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/bughub-aggregation?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "build-fast-reach-slow": {
     "url": "https://dev.to/quolu/ive-accelerated-building-and-promoting-but-delivering-still-remains-a-challenge-3fid",
@@ -112,7 +116,8 @@
     "url": "https://dev.to/quolu/how-codexs-top-tier-mode-burned-through-a-5-hour-quota-in-1-hour-51o2",
     "id": 4230204,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/codex-max-mode-quota-drain?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "discord-ai-assistant": {
     "url": "https://dev.to/quolu/how-i-built-an-ai-assistant-that-grows-its-own-tools-572g",
@@ -141,7 +146,8 @@
     "url": "https://dev.to/quolu/only-complete-sentences-should-be-translated-but-a-single-counter-betrayed-that-design-1kcl",
     "id": 4230187,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/livetr-complete-sentence?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "livetr-realtime-translator": {
     "url": "https://dev.to/quolu/livetr-a-real-time-english-to-japanese-audio-translation-app-for-videos-1lek",
@@ -163,7 +169,8 @@
     "url": "https://dev.to/quolu/i-love-watching-ai-work-so-much-that-i-turned-my-terminal-into-an-rpg-51jf",
     "id": 4230185,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/rpgdev-overlay?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "spotter-release": {
     "url": "https://dev.to/quolu/i-had-74-daemons-running-because-i-made-one-claude-audit-another-for-missed-tool-calls-5b6m",
@@ -175,7 +182,8 @@
     "url": "https://dev.to/quolu/how-i-made-an-ai-that-cant-draw-the-same-character-create-anime-model-sheets-19cn",
     "id": 4230190,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/sprite-forge-release?locale=en",
-    "pending": []
+    "pending": [],
+    "hidden": true
   },
   "throughline-context-diet": {
     "url": "https://dev.to/quolu/87-of-my-context-was-garbage-how-i-optimized-claude-code-token-usage-534k",
