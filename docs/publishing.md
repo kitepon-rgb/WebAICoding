@@ -109,15 +109,19 @@ hugo --minify
 - カバー到達確認は記事ページのデプロイ完了後、キャッシュバスター付きURLで一度だけ行う
 - `cover.png`を公開前から繰り返し取得しない。Cloudflareに404がキャッシュされる
 
-英語Quote-RTが必要な時は、日本語で方向を相談してから英語文を作る。基本タグは`#ClaudeCode`、`#MCP`、`#AIagents`、`#buildinpublic`。
+英語Quote-RTが必要な時は、日本語で方向を相談してから英語文を作る。英語文にも本文中へ3〜5個のハッシュタグを必ず含め、タグなしの文案を完成扱いにしない。基本タグは`#ClaudeCode`、`#MCP`、`#AIagents`、`#buildinpublic`。
 
 ## 8. 非同期転載
 
-Zennの英訳公開後、`.github/workflows/crosspost-devto.yml`がdev.toへ時系列で転載する。これは非同期処理であり、ブログとZennの公開を止めない。
+Zennの英訳公開後、`.github/workflows/crosspost-devto.yml`がdev.toへ転載する。これは非同期処理であり、ブログとZennの公開を止めない。
 
 - 状態台帳: `crossposted-devto.json`
 - ブログslugとZenn slug: `tools/article-manifest.mjs`
 - 実装: `.github/scripts/crosspost-devto.mjs`
+
+未転載記事を公開日の古い順に走査し、Zennの英訳が済んだ最初の1件だけを1 runで転載する。Zennの自動翻訳は来ない記事があるため、英訳未完とZenn未公開(404)は飛ばして次の候補へ進み、飛ばした記事と理由をログへ残す。それ以外のZennエラーは停止させる。転載順はZennの英訳完了順であり、公開日順にはならない。参照先が未転載の内部リンクは台帳の`pending`に残り、参照先の転載後に`--fix-links`が直す。
+
+滞留が溜まった時は`workflow_dispatch`の手動実行で1件ずつ消化する。
 
 dev.to投稿前に台帳へ`status: posting`の予約をpushする。投稿後の台帳pushに失敗した場合、次回は認証済みユーザーの記事一覧を`canonical_url`で照合し、1件だけ一致した時に台帳を回復する。0件または複数件は自動投稿せず失敗する。
 
