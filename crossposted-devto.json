@@ -4,6 +4,13 @@
     "id": 3791751,
     "pending": []
   },
+  "ai-audit-blind-layer": {
+    "status": "posting",
+    "sourceKey": "ai-audit-blind-layer",
+    "canonicalUrl": "https://zenn.dev/kitepon/articles/ai-audit-blind-layer?locale=en",
+    "reservationToken": "30154010469:1",
+    "reservedAt": "2026-07-25T10:10:51.298Z"
+  },
   "ai-coding-tool-journey": {
     "url": "https://dev.to/quolu/from-copilot-to-cursor-to-claude-code-for-vs-code-my-journey-to-the-optimal-setup-53do",
     "id": 3721152,
