@@ -17,11 +17,11 @@
     "pending": []
   },
   "ai-orchestration-quotas": {
-    "status": "posting",
-    "sourceKey": "ai-orchestration-quotas",
+    "status": "published",
+    "url": "https://dev.to/quolu/implementing-orchestration-jhf",
+    "id": 4230218,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/ai-orchestration-quotas?locale=en",
-    "reservationToken": "30154028163:1",
-    "reservedAt": "2026-07-25T10:11:30.186Z"
+    "pending": []
   },
   "ai-secretary-memory-system": {
     "url": "https://dev.to/quolu/implementing-structured-long-term-memory-for-my-ai-secretary-5dpe",
