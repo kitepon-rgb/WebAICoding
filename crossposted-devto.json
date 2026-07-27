@@ -169,8 +169,7 @@
     "url": "https://dev.to/quolu/i-love-watching-ai-work-so-much-that-i-turned-my-terminal-into-an-rpg-51jf",
     "id": 4230185,
     "canonicalUrl": "https://zenn.dev/kitepon/articles/rpgdev-overlay?locale=en",
-    "pending": [],
-    "hidden": true
+    "pending": []
   },
   "spotter-release": {
     "url": "https://dev.to/quolu/i-had-74-daemons-running-because-i-made-one-claude-audit-another-for-missed-tool-calls-5b6m",
