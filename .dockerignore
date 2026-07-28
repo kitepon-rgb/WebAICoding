@@ -1,0 +1,12 @@
+.git
+.github
+.DS_Store
+public
+resources
+node_modules
+docs
+rag
+tools
+articles
+books
+*.log

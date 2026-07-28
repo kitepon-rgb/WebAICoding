@@ -1,0 +1,61 @@
+# syntax=docker/dockerfile:1.7
+
+# ブログを kitepon.dev/blog/ の静的配信物として焼く。
+# baseURL は hugo.toml を書き換えず build 引数で渡す。GitHub Pages 側の
+# blog.kitepon.dev を壊さずに、新しい配信面を並行して立てるため。
+# hugo_extended は glibc ビルドで musl では動かない（C++ シンボルの relocation で落ちる）。
+# CI と同じ extended バイナリを使うため builder は glibc 系にする。
+# 最終 image は nginx:alpine のままなので、配信物のサイズには影響しない。
+FROM debian:bookworm-slim AS builder
+
+ARG HUGO_VERSION=0.164.0
+ARG BLOG_BASE_URL=https://kitepon.dev/blog/
+
+# 実行中の arch から解決する。buildx の TARGETARCH に依存しないので、
+# BuildKit の無い環境でも同じ Dockerfile がそのまま通る。
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/* \
+    && case "$(uname -m)" in \
+         x86_64) HUGO_ARCH=linux-amd64 ;; \
+         aarch64|arm64) HUGO_ARCH=linux-arm64 ;; \
+         *) echo "未対応の arch: $(uname -m)" >&2; exit 1 ;; \
+       esac \
+    && curl -fsSL -o /tmp/hugo.tar.gz \
+      "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_${HUGO_ARCH}.tar.gz" \
+    && tar -xzf /tmp/hugo.tar.gz -C /usr/local/bin hugo \
+    && hugo version
+
+WORKDIR /src
+COPY . .
+
+# 生成物は /blog 配下へ出す。nginx の root と Caddy が渡す path を一致させる。
+RUN hugo --minify --baseURL "${BLOG_BASE_URL}" --destination /out/blog
+
+FROM nginx:1.29-alpine
+
+COPY deploy/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /out /usr/share/nginx/html
+
+RUN mkdir -p \
+      /tmp/client_temp \
+      /tmp/proxy_temp \
+      /tmp/fastcgi_temp \
+      /tmp/uwsgi_temp \
+      /tmp/scgi_temp \
+    && chown -R nginx:nginx \
+      /tmp/client_temp \
+      /tmp/proxy_temp \
+      /tmp/fastcgi_temp \
+      /tmp/uwsgi_temp \
+      /tmp/scgi_temp \
+      /usr/share/nginx/html
+
+USER nginx
+EXPOSE 8080
+
+HEALTHCHECK --interval=15s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1
+
+ENTRYPOINT []
+CMD ["nginx", "-g", "daemon off;"]
