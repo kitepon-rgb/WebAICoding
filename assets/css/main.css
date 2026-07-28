@@ -26,7 +26,9 @@ a{color:inherit}
 /* top bar */
 .bar{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(246,237,227,.78);border-bottom:1px solid var(--line)}
 .bar .wrap{display:flex;align-items:center;height:62px;gap:1rem}
+/* ヘッダーの wordmark はルートサイトと同じ資産。1200x360 なのでバー高さへ収める */
 .brand{font-family:var(--mono);font-weight:700;font-size:.92rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:.55rem}
+.brand img{height:26px;width:auto;display:block}
 .brand .dot{width:9px;height:9px;border-radius:2px;background:var(--coral);box-shadow:0 0 0 3px rgba(217,119,87,.2)}
 .bar nav{margin-left:auto;display:flex;gap:1.3rem;font-family:var(--mono);font-size:.8rem}
 .bar nav a{color:var(--ink-soft);text-decoration:none;transition:color .2s}
@@ -156,6 +158,9 @@ footer.site{margin-top:4.5rem;background:var(--espresso);color:#bda88f;border-to
 footer.site .wrap{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:.76rem;padding:2.4rem 1.6rem 3rem}
 footer.site .prompt{color:var(--coral)}
 footer.site a{color:#bda88f;text-decoration:none}footer.site a:hover{color:var(--coral)}
+footer.site .tagline{margin-left:auto;color:#8a7560}
+footer.site .root-link{color:#e8d9c6;font-weight:700}
+@media(max-width:640px){footer.site .tagline{margin-left:0;flex-basis:100%}}
 .kp-legal{flex-basis:100%;font-family:var(--mono);font-size:.66rem;line-height:1.6;color:#8a7560;margin:.2rem 0 0}/* アフィリのAmazon定型文＝ページに1回だけ（各広告に密な法令文を置かない＝広告臭を消す） */
 
 .rv{opacity:0;transform:translateY(18px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}

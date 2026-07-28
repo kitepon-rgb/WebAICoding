@@ -30,11 +30,20 @@
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 </head>
 <body>
+{{- /* ヘッダーとフッターはルートサイトと共通の要素構成にする。ブログは kitepon.dev の
+       コンテンツの一つなので、wordmark からブランドへ戻れるようにする。記事本文の
+       見た目（paper / coral のパレット）は読み心地なので変えない。
+       wordmark は static/brand/ に自前で持つ。GitHub Pages と並行稼働している間、
+       ルートサイト側の /brand/ を参照すると旧経路で 404 になるため。 */ -}}
+{{- $root := site.Params.rootSiteUrl | default "https://kitepon.dev/" -}}
 <div class="bar"><div class="wrap">
-  <a class="brand" href="{{ "" | relURL }}"><span class="dot"></span>claude-code.log</a>
+  <a class="brand" href="{{ $root }}" aria-label="kitepon.dev トップ">
+    <img src="{{ "brand/kitepon-dev-primary.png" | relURL }}" alt="kitepon.dev" width="1200" height="360">
+  </a>
   <nav>
     <a href="{{ "" | relURL }}">記事</a>
     <a href="{{ "about/" | relURL }}">About</a>
+    <a href="{{ $root }}">プロダクト</a>
     {{- with site.Params.twitter }}<a href="https://x.com/{{ . }}" rel="noopener" target="_blank">X →</a>{{ end }}
   </nav>
 </div></div>
@@ -42,11 +51,14 @@
 {{ block "main" . }}{{ end }}
 
 <footer class="site"><div class="wrap">
-  <span><span class="prompt">$</span> echo &copy; {{ now.Year }} {{ site.Title }}</span>
-  <span style="margin-left:auto">blog.kitepon.dev</span>
-  {{- with site.Params.twitter }}<a href="https://x.com/{{ . }}" rel="noopener" target="_blank">X</a>{{ end }}
-  <a href="https://zenn.dev/kitepon" rel="noopener" target="_blank">Zenn</a>
+  <span><span class="prompt">$</span> echo &copy; {{ now.Year }} kitepon.dev</span>
+  <span class="tagline">面白いを見つけ、面白いを動かす。</span>
+  <a href="{{ $root }}" class="root-link">kitepon.dev</a>
   <a href="https://github.com/kitepon-rgb" rel="noopener" target="_blank">GitHub</a>
+  {{- with site.Params.twitter }}<a href="https://x.com/{{ . }}" rel="noopener" target="_blank">X</a>{{ end }}
+  <a href="https://qo-shop.booth.pm/" rel="noopener" target="_blank">BOOTH</a>
+  <a href="https://zenn.dev/kitepon" rel="noopener" target="_blank">Zenn</a>
+  <a href="https://dev.to/quolu" rel="noopener" target="_blank">dev.to</a>
   {{- /* Amazonアフィリ(第三者)は2026-06に廃止（商品画像をコピー/ホットリンクできず規約上不可。rag/amazon-associates 参照）。
          記事レールは左右とも自作プロダクト＝アフィリ開示文(.kp-legal)は不要なので撤去。 */ -}}
 </div></footer>
