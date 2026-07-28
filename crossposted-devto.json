@@ -2,205 +2,232 @@
   "ai-assistant-personality": {
     "url": "https://dev.to/quolu/i-tried-giving-my-ai-assistant-limbs-but-ended-up-giving-it-a-personality-too-2nk1",
     "id": 3791751,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-assistant-personality/"
   },
   "ai-audit-blind-layer": {
     "status": "published",
     "url": "https://dev.to/quolu/i-suspected-my-app-had-flaws-so-i-consulted-fable-5-565n",
     "id": 4230209,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/ai-audit-blind-layer?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-audit-blind-layer/",
     "pending": [],
     "hidden": true
   },
   "ai-coding-tool-journey": {
     "url": "https://dev.to/quolu/from-copilot-to-cursor-to-claude-code-for-vs-code-my-journey-to-the-optimal-setup-53do",
     "id": 3721152,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-coding-tool-journey/"
   },
   "ai-orchestration-quotas": {
     "status": "published",
     "url": "https://dev.to/quolu/implementing-orchestration-jhf",
     "id": 4230218,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/ai-orchestration-quotas?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-orchestration-quotas/",
     "pending": [],
     "hidden": true
   },
   "ai-secretary-memory-system": {
     "url": "https://dev.to/quolu/implementing-structured-long-term-memory-for-my-ai-secretary-5dpe",
     "id": 3806474,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-secretary-memory-system/"
   },
   "ai-secretary-token-diet": {
     "url": "https://dev.to/quolu/a-journey-into-token-optimization-for-my-ai-assistant-4e1i",
     "id": 3799172,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-secretary-token-diet/"
   },
   "ai-server-management": {
     "url": "https://dev.to/quolu/delegating-full-server-management-to-ai-111f",
     "id": 3774252,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-server-management/"
   },
   "ai-server-management-log": {
     "url": "https://dev.to/quolu/what-happened-in-3-days-of-letting-ai-manage-my-server-2ch0",
     "id": 3781150,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/ai-server-management-log/"
   },
   "aiterm-converse": {
     "status": "published",
     "url": "https://dev.to/quolu/ai-to-ai-conversations-the-interactive-terminal-powered-by-aiterm-mcp-2i6l",
     "id": 4230199,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/aiterm-converse?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/aiterm-converse/",
     "pending": [],
     "hidden": true
   },
   "aiterm-release": {
     "url": "https://dev.to/quolu/released-aiterm-mcp-on-npm-an-mcp-server-to-reduce-token-usage-by-providing-ai-with-a-persistent-a5n",
     "id": 3910298,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/aiterm-release/"
   },
   "bc250-to-ms-a2": {
     "url": "https://dev.to/quolu/how-i-completed-my-home-server-hardware-selection-and-migration-in-one-day-using-claude-ibk",
     "id": 3878077,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/bc250-to-ms-a2/"
   },
   "bughub-aggregation": {
     "status": "published",
     "url": "https://dev.to/quolu/how-i-consolidated-bug-reports-from-four-apps-and-let-ai-fix-them-in-parallel-1501",
     "id": 4230194,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/bughub-aggregation?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/bughub/",
     "pending": [],
     "hidden": true
   },
   "build-fast-reach-slow": {
     "url": "https://dev.to/quolu/ive-accelerated-building-and-promoting-but-delivering-still-remains-a-challenge-3fid",
     "id": 3902186,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/build-fast-reach-slow/"
   },
   "caveat-release": {
     "url": "https://dev.to/quolu/published-caveat-to-npm-a-long-term-memory-layer-to-avoid-repeating-the-same-traps-2cc0",
     "id": 3837751,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/caveat-release/"
   },
   "claude-audit-seesaw": {
     "url": "https://dev.to/quolu/how-i-fixed-the-infinite-feedback-loop-when-auditing-project-plans-with-claude-4gh",
     "id": 3861526,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/claude-audit-seesaw/"
   },
   "claude-augment-trilogy": {
     "url": "https://dev.to/quolu/stop-telling-claude-to-be-careful-reinforcing-it-from-the-outside-with-3-tools-2k8k",
     "id": 3852287,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/claude-augment-trilogy/"
   },
   "claude-code-half-features": {
     "url": "https://dev.to/quolu/i-realized-i-was-only-using-half-of-what-claude-code-has-to-offer-38bo",
     "id": 3716911,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/claude-code-features/"
   },
   "claude-code-ssh-deploy": {
     "url": "https://dev.to/quolu/how-allowing-claude-to-access-my-server-via-ssh-simplified-deployment-dramatically-12j8",
     "id": 3760063,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/claude-code-deploy/"
   },
   "claude-max-plan-review": {
     "url": "https://dev.to/quolu/what-exactly-changes-with-the-claude-max-plan-4kgb",
     "id": 3729013,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/max-plan-review/"
   },
   "claude-research-from-papers": {
     "url": "https://dev.to/quolu/solving-complex-logic-with-claude-and-research-papers-1gk7",
     "id": 3752906,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/claude-research-implementation/"
   },
   "codex-max-mode-quota-drain": {
     "status": "published",
     "url": "https://dev.to/quolu/how-codexs-top-tier-mode-burned-through-a-5-hour-quota-in-1-hour-51o2",
     "id": 4230204,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/codex-max-mode-quota-drain?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/codex-max-mode-quota-drain/",
     "pending": [],
     "hidden": true
   },
   "discord-ai-assistant": {
     "url": "https://dev.to/quolu/how-i-built-an-ai-assistant-that-grows-its-own-tools-572g",
     "id": 3786406,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/discord-ai-assistant/"
   },
   "discord-bot-to-saas": {
     "url": "https://dev.to/quolu/how-i-turned-a-discord-bot-i-built-for-my-mmo-guild-over-5-years-into-a-saas-product-1bnm",
     "id": 3767361,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/discord-bot-to-saas/"
   },
   "dns-blindspot": {
     "url": "https://dev.to/quolu/the-true-reason-my-ai-kept-saying-tool-not-found-was-ddns-54ja",
     "id": 3894724,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/dns-blindspot/"
   },
   "kikoeru-listening": {
     "status": "published",
     "url": "https://dev.to/quolu/i-can-read-english-but-i-cant-hear-it-how-i-realized-ai-makes-unlimited-learning-materials-and-2fh7",
     "id": 4230176,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/kikoeru-listening?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/kikoeru-listening/",
     "pending": []
   },
   "livetr-complete-sentence": {
     "status": "published",
     "url": "https://dev.to/quolu/only-complete-sentences-should-be-translated-but-a-single-counter-betrayed-that-design-1kcl",
     "id": 4230187,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/livetr-complete-sentence?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/livetr-complete-sentence/",
     "pending": []
   },
   "livetr-realtime-translator": {
     "url": "https://dev.to/quolu/livetr-a-real-time-english-to-japanese-audio-translation-app-for-videos-1lek",
     "id": 3744290,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/livetr-app/"
   },
   "oltranslator-app": {
     "url": "https://dev.to/quolu/oltranslator-a-real-time-screen-translation-app-for-windows-1l52",
     "id": 3736536,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/oltranslator-app/"
   },
   "pi5-server-monitor": {
     "url": "https://dev.to/quolu/built-a-raspberry-pi-5-server-monitor-for-power-efficiency-and-turned-it-into-a-video-player-16bi",
     "id": 3887524,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/pi5-server-monitor/"
   },
   "rpgdev-overlay": {
     "status": "published",
     "url": "https://dev.to/quolu/i-love-watching-ai-work-so-much-that-i-turned-my-terminal-into-an-rpg-51jf",
     "id": 4230185,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/rpgdev-overlay?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/rpgdev-overlay/",
     "pending": []
   },
   "spotter-release": {
     "url": "https://dev.to/quolu/i-had-74-daemons-running-because-i-made-one-claude-audit-another-for-missed-tool-calls-5b6m",
     "id": 3844307,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/spotter-release/"
   },
   "sprite-forge-release": {
     "status": "published",
     "url": "https://dev.to/quolu/how-i-made-an-ai-that-cant-draw-the-same-character-create-anime-model-sheets-19cn",
     "id": 4230190,
-    "canonicalUrl": "https://zenn.dev/kitepon/articles/sprite-forge-release?locale=en",
+    "canonicalUrl": "https://kitepon.dev/blog/post/sprite-forge-release/",
     "pending": [],
     "hidden": true
   },
   "throughline-context-diet": {
     "url": "https://dev.to/quolu/87-of-my-context-was-garbage-how-i-optimized-claude-code-token-usage-534k",
     "id": 3815133,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/throughline-context-diet/"
   },
   "throughline-declare-over-detect": {
     "url": "https://dev.to/quolu/why-i-gave-up-on-automatic-detection-for-resuming-sessions-in-claude-code-3bj0",
     "id": 3823199,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/throughline-declare-over-detect/"
   },
   "throughline-release": {
     "url": "https://dev.to/quolu/published-throughline-to-npm-a-hook-to-offload-claude-code-tool-io-to-sqlite-13d9",
     "id": 3831380,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/throughline-release/"
   },
   "wsl2-late-discovery": {
     "url": "https://dev.to/quolu/i-used-claude-code-for-2-months-without-knowing-about-wsl2-2c4c",
     "id": 3869540,
-    "pending": []
+    "pending": [],
+    "canonicalUrl": "https://kitepon.dev/blog/post/wsl2-late-discovery/"
   }
 }
