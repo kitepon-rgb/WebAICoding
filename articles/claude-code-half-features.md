@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -21,7 +21,7 @@ Claude MAXを契約して、毎日のようにコーディングに使ってい�
 `/init`すら知らなかったし、`/rc`の存在を知ったのもつい最近だ。
 同じような人、けっこういるんじゃないかと思ってこの記事を書いている。
 
-![PCで動いているClaude Codeのセッションを、スマホがそのまま覗き込む。`/rc` の体験のイメージ](https://blog.kitepon.dev/post/claude-code-features/eyecatch.png)
+![PCで動いているClaude Codeのセッションを、スマホがそのまま覗き込む。`/rc` の体験のイメージ](https://kitepon.dev/blog/post/claude-code-features/eyecatch.png)
 *PCで動いているClaude Codeのセッションを、スマホがそのまま覗き込む。`/rc` の体験のイメージ*
 
 ---
@@ -38,7 +38,7 @@ PCでClaude Codeのセッションを起動したまま、スマホのClaudeア�
 
 これだけでQRコードが表示されて、スマホで読み取れば接続完了。
 
-![`/rc` を打つとセッションにQRコードが出る。コードはローカルPCで走り、スマホはその「窓」になる](https://blog.kitepon.dev/post/claude-code-features/fig2.png)
+![`/rc` を打つとセッションにQRコードが出る。コードはローカルPCで走り、スマホはその「窓」になる](https://kitepon.dev/blog/post/claude-code-features/fig2.png)
 *`/rc` を打つとセッションにQRコードが出る。コードはローカルPCで走り、スマホはその「窓」になる*
 
 ### 何が嬉しいか
@@ -157,7 +157,7 @@ SonnetやHaikuに落としてコスト節約、という記事をよく見かけ
 
 ---
 
-![この記事で触った機能の早見表。立ち上げ／操作のしかた／調整・立て直しの3グループ](https://blog.kitepon.dev/post/claude-code-features/fig1.png)
+![この記事で触った機能の早見表。立ち上げ／操作のしかた／調整・立て直しの3グループ](https://kitepon.dev/blog/post/claude-code-features/fig1.png)
 *この記事で触った機能の早見表。立ち上げ／操作のしかた／調整・立て直しの3グループ*
 
 ## まとめ
@@ -166,7 +166,7 @@ Claude Codeは、普通に使っているだけだと機能の半分も触れて
 
 自分と同じように「MAXに課金してガンガン使ってるけど、実はよく知らない機能がたくさんある」という人に向けて、これからも実体験ベースで書いていく。
 
-実際にClaude Codeでアプリを作った話は、[OLTranslator](https://blog.kitepon.dev/post/oltranslator-app/)と[LiveTR](https://blog.kitepon.dev/post/livetr-app/)の記事で書いている。Claude Codeが「コードを書く」以上の価値を出した話は「[Claudeと論文から組み立てた話](https://blog.kitepon.dev/post/claude-research-implementation/)」で。
+実際にClaude Codeでアプリを作った話は、[OLTranslator](https://kitepon.dev/blog/post/oltranslator-app/)と[LiveTR](https://kitepon.dev/blog/post/livetr-app/)の記事で書いている。Claude Codeが「コードを書く」以上の価値を出した話は「[Claudeと論文から組み立てた話](https://kitepon.dev/blog/post/claude-research-implementation/)」で。
 
 ---
 

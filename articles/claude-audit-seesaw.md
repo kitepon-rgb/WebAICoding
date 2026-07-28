@@ -7,14 +7,14 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 いつも楽しくAIプログラミングー。
 
 俺はいつも、計画書を作って監査させて、さぁ実装だ、という流れでやってます。
 
-![計画書の上をモグラ叩きのハンマーが追いかける——観点が広いままだと、何を直しても別の穴が顔を出す](https://blog.kitepon.dev/post/claude-audit-seesaw/eyecatch.png)
+![計画書の上をモグラ叩きのハンマーが追いかける——観点が広いままだと、何を直しても別の穴が顔を出す](https://kitepon.dev/blog/post/claude-audit-seesaw/eyecatch.png)
 *計画書の上をモグラ叩きのハンマーが追いかける——観点が広いままだと、何を直しても別の穴が顔を出す*
 
 特に Opus 4.7 になってから、その監査がうまくいかない気がしてた。Opusの視野が広がったからだろうか？ 自分の計画とは的外れな指摘を持ってきたり、監査・修正の自動ループ回させると指摘が収束しないことも増えた。
@@ -39,7 +39,7 @@ published: true
 
 矛盾点の数は有限だから、ちゃんと収束するんだね。
 
-![普通に監査すると指摘が往復し続ける（左）が、評価軸を矛盾点だけに絞ると有限集合になり潰し切れる（右）](https://blog.kitepon.dev/post/claude-audit-seesaw/fig1.png)
+![普通に監査すると指摘が往復し続ける（左）が、評価軸を矛盾点だけに絞ると有限集合になり潰し切れる（右）](https://kitepon.dev/blog/post/claude-audit-seesaw/fig1.png)
 *普通に監査すると指摘が往復し続ける（左）が、評価軸を矛盾点だけに絞ると有限集合になり潰し切れる（右）*
 
 そして計画書の矛盾が無くなった状態で実装させると、どこも止まらないで最後まで突っ走る（笑）

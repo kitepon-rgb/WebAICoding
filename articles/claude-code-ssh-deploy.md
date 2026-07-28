@@ -7,12 +7,12 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
 
-![鍵認証が通れば、Claudeからすると「ちょっと遠いターミナル」でしかない](https://blog.kitepon.dev/post/claude-code-deploy/eyecatch.png)
+![鍵認証が通れば、Claudeからすると「ちょっと遠いターミナル」でしかない](https://kitepon.dev/blog/post/claude-code-deploy/eyecatch.png)
 *鍵認証が通れば、Claudeからすると「ちょっと遠いターミナル」でしかない*
 
 AIにコードを書かせるのはもう慣れた。設計は自分でやって、実装はClaudeに任せる。いつものスタイルだ。
@@ -53,7 +53,7 @@ deploy.shの中身はシンプルだ。ローカルでDockerイメージをビ�
 
 ## コピペと直接触らせるの差
 
-![コピペ中継だとAIはサーバーが見えず推測でループする（左）。SSHで直接触らせると、事実ベースで一巡が閉じる（右）](https://blog.kitepon.dev/post/claude-code-deploy/fig1.png)
+![コピペ中継だとAIはサーバーが見えず推測でループする（左）。SSHで直接触らせると、事実ベースで一巡が閉じる（右）](https://kitepon.dev/blog/post/claude-code-deploy/fig1.png)
 *コピペ中継だとAIはサーバーが見えず推測でループする（左）。SSHで直接触らせると、事実ベースで一巡が閉じる（右）*
 
 コピペで相談していた頃は、AIはサーバーの状態が見えていなかった。エラーメッセージだけ渡されても、「操作ミスでは？」「環境設定が違うのでは？」という可能性を一個ずつ手動で潰すしかない。人間がコピペで中継する分、遠回りになる。

@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -28,7 +28,7 @@ npm にあって、Mac専用。先に言っておくと、くだらない。で�
 
 ## 第1章：何が起きるのか
 
-![rpgdev のオーバーレイ実画面。左下で勇者が技を出し、中央に敵、右上にAIのTODOがクエストとして並ぶ](https://blog.kitepon.dev/post/rpgdev-overlay/overlay.png)
+![rpgdev のオーバーレイ実画面。左下で勇者が技を出し、中央に敵、右上にAIのTODOがクエストとして並ぶ](https://kitepon.dev/blog/post/rpgdev-overlay/overlay.png)
 *rpgdev のオーバーレイ実画面。左下で勇者が技を出し、中央に敵、右上にAIのTODOがクエストとして並ぶ*
 
 仕組みはこうだ。AIがツールを1回使うたびに、一定確率で敵が湧く。出れば戦闘。勇者が技を出して倒す。
@@ -39,7 +39,7 @@ AIが作る TODO リストは、そのままクエスト一覧になって画面
 
 舞台も進む。作業が進むほど、草原 → 洞窟 → 城、と奥に入っていく。背景もBGMも切り替わる。
 
-![3つの舞台背景。左から草原（FIELD）・洞窟（DUNGEON）・城（CASTLE）。作業が進むほど右へ移る](https://blog.kitepon.dev/post/rpgdev-overlay/stages.png)
+![3つの舞台背景。左から草原（FIELD）・洞窟（DUNGEON）・城（CASTLE）。作業が進むほど右へ移る](https://kitepon.dev/blog/post/rpgdev-overlay/stages.png)
 *3つの舞台背景。左から草原（FIELD）・洞窟（DUNGEON）・城（CASTLE）。作業が進むほど右へ移る*
 
 AIがサブの作業役（サブエージェント）を立てると、精霊が仲間として参戦してくる。火・地・風・水の4属性。勇者の攻撃のあとに追撃してくれる。
@@ -80,7 +80,7 @@ AIがサブの作業役（サブエージェント）を立てると、精霊が
 
 リポジトリには、その過程で溜まった禁止リストが残ってる。「手で描き足すな、気に入らなければ生成し直せ」「この背景色はキャラと色がぶつかるから使うな」みたいなやつ。苦労の化石だ。でも、おかげで火・地・風・水の4体の、ドットの粒度がやっと揃った。
 
-![草原・洞窟・城に出る15体のモンスターと、勇者＋火（Ignis）・地（Terra）・風（Sylph）・水（Aqua）の精霊。全部自作のドット絵](https://blog.kitepon.dev/post/rpgdev-overlay/roster.png)
+![草原・洞窟・城に出る15体のモンスターと、勇者＋火（Ignis）・地（Terra）・風（Sylph）・水（Aqua）の精霊。全部自作のドット絵](https://kitepon.dev/blog/post/rpgdev-overlay/roster.png)
 *草原・洞窟・城に出る15体のモンスターと、勇者＋火（Ignis）・地（Terra）・風（Sylph）・水（Aqua）の精霊。全部自作のドット絵*
 
 ---

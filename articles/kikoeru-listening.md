@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -18,7 +18,7 @@ AIを使って開発してると、嫌でも分かる。**大事な情報は、�
 
 この「読めるのに聞こえない」をどうにかしたくて、聞き取りの鍛え方を調べ始めた。
 
-![読めるのに、聞こえない。その一点を埋めたかった。](https://blog.kitepon.dev/post/kikoeru-listening/eyecatch.png)
+![読めるのに、聞こえない。その一点を埋めたかった。](https://kitepon.dev/blog/post/kikoeru-listening/eyecatch.png)
 *読めるのに、聞こえない。その一点を埋めたかった。*
 
 ---
@@ -45,7 +45,7 @@ AIを使って開発してると、嫌でも分かる。**大事な情報は、�
 
 これを繰り返して、「なんとなく聞こえる音」を「意味のわかる音」に変えていく。
 
-![音だけ → 答え合わせ → 字幕つき。この3周で「聞こえる音」を「意味のわかる音」に変える。](https://blog.kitepon.dev/post/kikoeru-listening/flow.png)
+![音だけ → 答え合わせ → 字幕つき。この3周で「聞こえる音」を「意味のわかる音」に変える。](https://kitepon.dev/blog/post/kikoeru-listening/flow.png)
 *音だけ → 答え合わせ → 字幕つき。この3周で「聞こえる音」を「意味のわかる音」に変える。*
 
 ---
@@ -81,7 +81,7 @@ Cloudflare は JSON を標準ではキャッシュしないので、`Cache-Contr
 
 名前は **Kikoeru（聞こえる）**。「聞こえる音が、聞き取れる音になる」——最初に自分が欲しかったもの、そのままだ。
 
-![アカウント登録なしで入れて、学年を選べばすぐ始められる。進捗も設定も端末の中だけに残る。](https://blog.kitepon.dev/post/kikoeru-listening/screens.png)
+![アカウント登録なしで入れて、学年を選べばすぐ始められる。進捗も設定も端末の中だけに残る。](https://kitepon.dev/blog/post/kikoeru-listening/screens.png)
 *アカウント登録なしで入れて、学年を選べばすぐ始められる。進捗も設定も端末の中だけに残る。*
 
 ---

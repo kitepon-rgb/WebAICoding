@@ -7,10 +7,10 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-![照準を合わせる監視役と、それに気づかず作業を進める実行役。気づく役と実行する役を分けるのがSpotterの発想。](https://blog.kitepon.dev/post/spotter-release/eyecatch.png)
+![照準を合わせる監視役と、それに気づかず作業を進める実行役。気づく役と実行する役を分けるのがSpotterの発想。](https://kitepon.dev/blog/post/spotter-release/eyecatch.png)
 *照準を合わせる監視役と、それに気づかず作業を進める実行役。気づく役と実行する役を分けるのがSpotterの発想。*
 
 ## きっかけ
@@ -39,7 +39,7 @@ published: true
 
 ポイントは **メインのClaude本人の自覚に頼らない** こと。Claudeに「気をつけて」って書くんじゃなく、もう一人の目を物理的に置く。判定は2段階で、ユーザーが入力した瞬間（要請に対して使うべきツールを列挙）と、メインのClaudeが応答を返した直後（事実の断定に検証ツールを差し込めるか）に hook が走る。
 
-![監査役Haikuの2段階判定。入力時のUserPromptSubmitで使うべきツールを先回りし、応答後のStopで断定に検証ツールを差し込めるか確かめる。](https://blog.kitepon.dev/post/spotter-release/fig2.png)
+![監査役Haikuの2段階判定。入力時のUserPromptSubmitで使うべきツールを先回りし、応答後のStopで断定に検証ツールを差し込めるか確かめる。](https://kitepon.dev/blog/post/spotter-release/fig2.png)
 *監査役Haikuの2段階判定。入力時のUserPromptSubmitで使うべきツールを先回りし、応答後のStopで断定に検証ツールを差し込めるか確かめる。*
 
 これを `claude-spotter` という名前で作った。
@@ -58,7 +58,7 @@ published: true
 
 Throughlineは内部で `claude -p` を呼ぶ。`claude -p` を呼ぶと SessionStart hook が走る。SessionStart hook で Spotter の daemon が立つ。Spotter の daemon は監査のために `claude -p` を呼ぶ。**…無限再帰じゃないけど、再帰的増殖**。
 
-![claude -p → SessionStart hook → Spotter daemon → claude -p の輪。64分でデーモンが74個立ち、うち51個がThroughline由来だった。](https://blog.kitepon.dev/post/spotter-release/fig1.png)
+![claude -p → SessionStart hook → Spotter daemon → claude -p の輪。64分でデーモンが74個立ち、うち51個がThroughline由来だった。](https://kitepon.dev/blog/post/spotter-release/fig1.png)
 *claude -p → SessionStart hook → Spotter daemon → claude -p の輪。64分でデーモンが74個立ち、うち51個がThroughline由来だった。*
 
 `postinstall` で `~/.claude/settings.json` に書き込んでたせいで、システム上のあらゆる Claude Code セッションが Spotter の hook を読み込む構造になってた。「全プロジェクト自動有効化」の代償。
@@ -87,7 +87,7 @@ Throughlineは内部で `claude -p` を呼ぶ。`claude -p` を呼ぶと Session
 
 Node.jsの `spawn` は Windows で `CreateProcess` を直接呼ぶけど、`CreateProcess` は `.exe` しか解決しない (PATHEXT の `.cmd` は解決しない)。`cmd.exe /c` で包めば動く、という同じパターンを Spotter 自身が claude CLI起動で過去に踏んで直してたんだけど、**MCPサーバ起動経路にこのパターンを横展開し忘れてた** (v1.2.2 で修正)。
 
-自分で踏んだ罠を、別の経路でまた踏む。これがあって [Caveat](https://blog.kitepon.dev/post/caveat-release/) の必要性を強く感じた。同じ罠を二度踏まない仕組みがないと、こうなる。
+自分で踏んだ罠を、別の経路でまた踏む。これがあって [Caveat](https://kitepon.dev/blog/post/caveat-release/) の必要性を強く感じた。同じ罠を二度踏まない仕組みがないと、こうなる。
 
 ## 現状
 
@@ -115,7 +115,7 @@ spotter uninstall   # hook登録を解除
 
 ## Throughline / Caveat との関係
 
-Spotter は同じ作者が作った [Throughline](https://blog.kitepon.dev/post/throughline-release/) と [Caveat](https://blog.kitepon.dev/post/caveat-release/) と、**哲学を共有する別プロダクト**。
+Spotter は同じ作者が作った [Throughline](https://kitepon.dev/blog/post/throughline-release/) と [Caveat](https://kitepon.dev/blog/post/caveat-release/) と、**哲学を共有する別プロダクト**。
 
 |  | Throughline | Caveat | Spotter |
 |---|---|---|---|

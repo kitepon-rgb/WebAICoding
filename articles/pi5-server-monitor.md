@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -22,10 +22,10 @@ published: true
 
 というわけで、**サーバー監視専用の端末を作ることにした**。低消費電力のやつを。
 
-![省エネのため、大きなメインPCの代わりに小さな低消費電力の端末へ見張り役を移す](https://blog.kitepon.dev/post/pi5-server-monitor/eyecatch.png)
+![省エネのため、大きなメインPCの代わりに小さな低消費電力の端末へ見張り役を移す](https://kitepon.dev/blog/post/pi5-server-monitor/eyecatch.png)
 *省エネのため、大きなメインPCの代わりに小さな低消費電力の端末へ見張り役を移す*
 
-サーバー本体を MS-A2 に乗り換えた話は[前回の記事](https://blog.kitepon.dev/post/bc250-to-ms-a2/)で書いた。今回はその鯖を「見張る側」を独立させる話。
+サーバー本体を MS-A2 に乗り換えた話は[前回の記事](https://kitepon.dev/blog/post/bc250-to-ms-a2/)で書いた。今回はその鯖を「見張る側」を独立させる話。
 
 ---
 
@@ -77,7 +77,7 @@ published: true
 
 組み立ては説明書どおり。OS のインストールは、**Claude様の言うとおりの手順**で進めるだけ。監視プログラムのセットアップも、鯖への SSH 監視の設定も、いつものように任せた。
 
-ここはもう驚きがない。Claude にサーバー周りを任せる話は[何度も書いてきた](https://blog.kitepon.dev/post/ai-server-management/)し、淡々と終わる。
+ここはもう驚きがない。Claude にサーバー周りを任せる話は[何度も書いてきた](https://kitepon.dev/blog/post/ai-server-management/)し、淡々と終わる。
 
 問題はこのあとだ。**ハードに付いてる画面たちの使い道**である。
 
@@ -95,7 +95,7 @@ published: true
 
 ということで Claude に「OLED にエヴァ風の状態表示を出してくれ」と要望。あっさり完成した。鯖が無事なら「正常」、何か起きてたら「警告」「異常」。ひと目でわかる。
 
-![OLEDの3状態。正常は角ブラケットだけ、警告で上下にストライプ、異常で全周がストライプ枠に変わる](https://blog.kitepon.dev/post/pi5-server-monitor/oled.png)
+![OLEDの3状態。正常は角ブラケットだけ、警告で上下にストライプ、異常で全周がストライプ枠に変わる](https://kitepon.dev/blog/post/pi5-server-monitor/oled.png)
 *OLEDの3状態。正常は角ブラケットだけ、警告で上下にストライプ、異常で全周がストライプ枠に変わる*
 
 ん――、マンダム。
@@ -118,7 +118,7 @@ published: true
 
 これだ。これがいい。異変があったときだけ画面が「仕事モード」になる。普段はインテリアとして動いてる。
 
-![Pi 5 監視機。左の OLED が「正常」、右の 4.3 インチは動画再生中](https://blog.kitepon.dev/post/pi5-server-monitor/pi5.jpg)
+![Pi 5 監視機。左の OLED が「正常」、右の 4.3 インチは動画再生中](https://kitepon.dev/blog/post/pi5-server-monitor/pi5.jpg)
 *Pi 5 監視機。左の OLED が「正常」、右の 4.3 インチは動画再生中*
 
 *平常運転の図。左の OLED が「SERVER MONITOR 正常」を伝え、右のメイン画面はただ動画を流してる。*

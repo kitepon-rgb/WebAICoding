@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -18,7 +18,7 @@ Claude Code CLIは手元にある。Discordに投げたメッセージをCLIに�
 
 だから作った。
 
-![Discordを窓口にClaude Code CLIへつながった先で、AIが自分の手足（ツール）を足していくイメージ](https://blog.kitepon.dev/post/discord-ai-assistant/eyecatch.png)
+![Discordを窓口にClaude Code CLIへつながった先で、AIが自分の手足（ツール）を足していくイメージ](https://kitepon.dev/blog/post/discord-ai-assistant/eyecatch.png)
 *Discordを窓口にClaude Code CLIへつながった先で、AIが自分の手足（ツール）を足していくイメージ*
 
 ---
@@ -141,7 +141,7 @@ Claudeはこの指示を受けて、自分で判断する。
 🟢 現在、異常のある路線はありません！
 ```
 
-![出発30分前にLogBotがDiscordへ投げてくる通知。予定の開始時刻ではなく、移動55分を引いた12:35を「出る時刻」にしている](https://blog.kitepon.dev/post/discord-ai-assistant/fig1.png)
+![出発30分前にLogBotがDiscordへ投げてくる通知。予定の開始時刻ではなく、移動55分を引いた12:35を「出る時刻」にしている](https://kitepon.dev/blog/post/discord-ai-assistant/fig1.png)
 *出発30分前にLogBotがDiscordへ投げてくる通知。予定の開始時刻ではなく、移動55分を引いた12:35を「出る時刻」にしている*
 
 ### ロジックはどこにあるか
@@ -167,7 +167,7 @@ Claudeはこの指示を受けて、自分で判断する。
 | 目覚まし | **CRON** | Claudeを定期的に起こす。叩くのはプロンプト |
 | 窓口 | **Discord** | リクエストも通知もここ |
 
-![頭（Claude）が手足（MCPツール）を選んで判断し、CRONが起こしてDiscordが受け渡す。足りない手足はその場でClaude自身が tools/ に書いて生やす](https://blog.kitepon.dev/post/discord-ai-assistant/fig2.png)
+![頭（Claude）が手足（MCPツール）を選んで判断し、CRONが起こしてDiscordが受け渡す。足りない手足はその場でClaude自身が tools/ に書いて生やす](https://kitepon.dev/blog/post/discord-ai-assistant/fig2.png)
 *頭（Claude）が手足（MCPツール）を選んで判断し、CRONが起こしてDiscordが受け渡す。足りない手足はその場でClaude自身が tools/ に書いて生やす*
 
 そして最大の特徴は、**手足が足りなければClaudeがその場で作る**こと。

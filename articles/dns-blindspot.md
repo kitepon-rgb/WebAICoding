@@ -7,15 +7,15 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
 
 自宅サーバーで MCP サーバーを何本か立てて、Claude や ChatGPT から叩かせている。
-[サーバー本体](https://blog.kitepon.dev/post/bc250-to-ms-a2/)も[監視機](https://blog.kitepon.dev/post/pi5-server-monitor/)も AI に組ませて、わりと安定運用してるつもりでいた。
+[サーバー本体](https://kitepon.dev/blog/post/bc250-to-ms-a2/)も[監視機](https://kitepon.dev/blog/post/pi5-server-monitor/)も AI に組ませて、わりと安定運用してるつもりでいた。
 
-![暗い部屋で温かく灯るターミナル。足元の層が一枚ずつ剥がれていくイメージ。](https://blog.kitepon.dev/post/dns-blindspot/eyecatch.png)
+![暗い部屋で温かく灯るターミナル。足元の層が一枚ずつ剥がれていくイメージ。](https://kitepon.dev/blog/post/dns-blindspot/eyecatch.png)
 *暗い部屋で温かく灯るターミナル。足元の層が一枚ずつ剥がれていくイメージ。*
 
 なのに、ある日 Claude が言う。
@@ -105,7 +105,7 @@ AI に毎日叩かせて、初めてそこに意識が向いた、というこ�
 
 自分のドメイン（`kitepon.dev`）を Cloudflare に NS 登録して、サブドメインごとに tunnel route を切るだけ。固定IPは要らない。ポート開放も要らない。DDNS の更新スクリプトも要らない。
 
-![旧経路は自宅サーバーの名前を DDNS で晒し、その解決が落ちた瞬間にツールが消えた。新経路は自宅から Cloudflare へ outbound の常設接続を張るだけ。](https://blog.kitepon.dev/post/dns-blindspot/fig1.png)
+![旧経路は自宅サーバーの名前を DDNS で晒し、その解決が落ちた瞬間にツールが消えた。新経路は自宅から Cloudflare へ outbound の常設接続を張るだけ。](https://kitepon.dev/blog/post/dns-blindspot/fig1.png)
 *旧経路は自宅サーバーの名前を DDNS で晒し、その解決が落ちた瞬間にツールが消えた。新経路は自宅から Cloudflare へ outbound の常設接続を張るだけ。*
 
 @[card](https://www.cloudflare.com/products/tunnel/)

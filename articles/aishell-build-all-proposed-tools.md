@@ -7,13 +7,13 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-![作った道具が全部つながった箱を、ストップウォッチと天秤で測っている](https://blog.kitepon.dev/post/aishell-build-all-proposed-tools/eyecatch.png)
+![作った道具が全部つながった箱を、ストップウォッチと天秤で測っている](https://kitepon.dev/blog/post/aishell-build-all-proposed-tools/eyecatch.png)
 *作った道具が全部つながった箱を、ストップウォッチと天秤で測っている*
 
-[前回の記事](https://blog.kitepon.dev/post/learning-shell-and-terminal-with-aishell/)で、自作のAIShellを使うCodexと通常のCodexへ同じ課題を渡して比べたら、tokenが25.86%減った。効果は出そうだと思った。ただ、3課題9試行の結果なので、確信までは持てなかった。
+[前回の記事](https://kitepon.dev/blog/post/learning-shell-and-terminal-with-aishell/)で、自作のAIShellを使うCodexと通常のCodexへ同じ課題を渡して比べたら、tokenが25.86%減った。効果は出そうだと思った。ただ、3課題9試行の結果なので、確信までは持てなかった。
 
 今回は機能を増やして、ベンチマークも大きくして測り直した。結果から書くと、tokenは52.44%減まで行った。前回より上がっていて、思った以上だった。
 
@@ -75,7 +75,7 @@ Claudeは最初、数個だけ実装して様子を見る案を勧めてきた�
 
 成功1課題あたりのtokenは、失敗した試行に使った分も含めた合計を、3回すべて成功した課題の数で割った数字だ。前回の25.86%減より上がって、成功した課題の数も増えた。
 
-![課題別のtoken削減率。プロジェクト構成の把握し直しと待つ場面で7割減、壊れた診断の判定では3割増](https://blog.kitepon.dev/post/aishell-build-all-proposed-tools/fig2.png)
+![課題別のtoken削減率。プロジェクト構成の把握し直しと待つ場面で7割減、壊れた診断の判定では3割増](https://kitepon.dev/blog/post/aishell-build-all-proposed-tools/fig2.png)
 *課題別のtoken削減率。プロジェクト構成の把握し直しと待つ場面で7割減、壊れた診断の判定では3割増*
 
 ここから、機能ごとに何を作って、どの課題で何が起きたかを見ていく。効かなかった機能もそのまま書く。
@@ -86,7 +86,7 @@ Claudeは最初、数個だけ実装して様子を見る案を勧めてきた�
 
 通常のCodexは待っている間も確認のコマンドを打ち続けるので、その確認がすべてtokenと時間になる。AIShellは変化が起きた時に知らせる。
 
-![通常のCodexは確認コマンドを繰り返し、AIShellは1回頼んで知らせを待つ](https://blog.kitepon.dev/post/aishell-build-all-proposed-tools/fig1.png)
+![通常のCodexは確認コマンドを繰り返し、AIShellは1回頼んで知らせを待つ](https://kitepon.dev/blog/post/aishell-build-all-proposed-tools/fig1.png)
 *通常のCodexは確認コマンドを繰り返し、AIShellは1回頼んで知らせを待つ*
 
 32課題の中で一番差が付いた機能だった。外部の編集を待つ課題でtokenが75〜78%減り、時間は9割以上短くなった。変更の通知が途切れたことを検知して、調べ直しへ切り替える課題でも68%減った。

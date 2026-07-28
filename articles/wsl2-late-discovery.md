@@ -7,13 +7,13 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
 
 Claude MAXを契約して、毎日のようにコーディングに使っている。
-[最初の記事](https://blog.kitepon.dev/post/claude-code-features/) で「俺、Claude Codeの機能を半分も知らなかった」と書いた。`/init` も `CLAUDE.md` も知らなかった、あの話だ。
+[最初の記事](https://kitepon.dev/blog/post/claude-code-features/) で「俺、Claude Codeの機能を半分も知らなかった」と書いた。`/init` も `CLAUDE.md` も知らなかった、あの話だ。
 
 あれから1ヶ月半。同じことがまた起きた。
 
@@ -24,7 +24,7 @@ Claude MAXを契約して、毎日のようにコーディングに使ってい�
 
 WSL……2？
 
-![Windowsの窓の中に、小さく温かく光るLinuxターミナルが入れ子で走り出すイメージ。2ヶ月間ロックされていた本来の速度が解ける。](https://blog.kitepon.dev/post/wsl2-late-discovery/eyecatch.png)
+![Windowsの窓の中に、小さく温かく光るLinuxターミナルが入れ子で走り出すイメージ。2ヶ月間ロックされていた本来の速度が解ける。](https://kitepon.dev/blog/post/wsl2-late-discovery/eyecatch.png)
 *Windowsの窓の中に、小さく温かく光るLinuxターミナルが入れ子で走り出すイメージ。2ヶ月間ロックされていた本来の速度が解ける。*
 
 ---
@@ -86,7 +86,7 @@ WSL……2？
 あの夜に諦めて投げ出したプラグインも、頑張って通したあのフックも、最初から Linux 側で動かしてたら一瞬だったのか。
 **返してくれ俺の週末を。**
 
-![左がWindowsネイティブで詰まっていた事例、右がWSL2に移して素直に動くようになった挙動。土台がLinuxかWindowsかだけの違い。](https://blog.kitepon.dev/post/wsl2-late-discovery/fig1.png)
+![左がWindowsネイティブで詰まっていた事例、右がWSL2に移して素直に動くようになった挙動。土台がLinuxかWindowsかだけの違い。](https://kitepon.dev/blog/post/wsl2-late-discovery/fig1.png)
 *左がWindowsネイティブで詰まっていた事例、右がWSL2に移して素直に動くようになった挙動。土台がLinuxかWindowsかだけの違い。*
 
 ---
@@ -124,7 +124,7 @@ wsl --install
 これでデフォルトの Ubuntu が落ちてきて、再起動して、ユーザー作って、終わり。
 あとは VS Code に **WSL 拡張** を入れて、左下の緑のボタンから「Connect to WSL」を選ぶと、VS Code が Linux 側にシームレスに繋がる。
 
-![引っ越しの全手順。管理者PowerShellでwsl --install、VS Codeの左下緑ボタンでConnect to WSL、あとはLinux側でClaude Codeがそのまま動く。](https://blog.kitepon.dev/post/wsl2-late-discovery/fig2.png)
+![引っ越しの全手順。管理者PowerShellでwsl --install、VS Codeの左下緑ボタンでConnect to WSL、あとはLinux側でClaude Codeがそのまま動く。](https://kitepon.dev/blog/post/wsl2-late-discovery/fig2.png)
 *引っ越しの全手順。管理者PowerShellでwsl --install、VS Codeの左下緑ボタンでConnect to WSL、あとはLinux側でClaude Codeがそのまま動く。*
 
 Claude Code の再インストールも、Linux 側のターミナルで素直に通った。

@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 Fable 5 でエンジョイしてたら、Claude が1週間ぶんの上限に達した。ちょうど GPT-5.6 が出たので、今度は Codex から Sol を使うことにした。いちばん上の Ultra を選んだ。
@@ -22,7 +22,7 @@ Codex には、一つの作業を子のAIに分けて手分けさせる仕組み
 
 俺は `~/.codex/agents/` に、役割ごとのモデルを決めた設定を置いている。調べ物をする子は安いモデル、実装する子は中くらい、というふうに割り当てた。ログを見ると、その設定が一つも効いていなかった。子を立てる指令（`spawn_agent`）に渡せるのは作業の名前（`task_name`）だけで、役割やモデルを選ぶ欄がない。だから役割は空のまま（`agent_role` が空）になり、モデルは親からそのまま受け継がれていた。全員が Sol の Ultra だった。
 
-![親のSol/Ultraが子を何体も立て、子がまた子を立てる。モデル指定が渡らないので、ぶら下がる子はすべて同じSol/Ultraになる](https://blog.kitepon.dev/post/codex-max-mode-quota-drain/chain.png)
+![親のSol/Ultraが子を何体も立て、子がまた子を立てる。モデル指定が渡らないので、ぶら下がる子はすべて同じSol/Ultraになる](https://kitepon.dev/blog/post/codex-max-mode-quota-drain/chain.png)
 *親のSol/Ultraが子を何体も立て、子がまた子を立てる。モデル指定が渡らないので、ぶら下がる子はすべて同じSol/Ultraになる*
 
 いちばん上のモデルを一体動かすと、その下に同じいちばん上のモデルが何体もぶら下がる。子がまた子を呼べば、その分だけ増える。1時間で5時間ぶん減っていたのは、これが原因だった。安く済ませるつもりで役割を分けた設定は、まるごと素通りされて、全部が最高価格で走っていた。
@@ -61,7 +61,7 @@ tool_namespace = "agents"
 
 戻ったあとは、`~/.codex/agents/` に置いていた役割ごとの割り当てがそのまま効くようになった。実際に役割を指定して子を立てると、設定どおり安いモデルで動いた。全部が最上位で走っていたのが、必要なところだけ最上位で、あとは軽いモデルという配分に変わった。枠の減り方も元に戻った。
 
-![設定前は親も子も全部Sol/Ultraで枠が一気に減る。設定後は親がSol、子は役割ごとに安いモデル（調べ物は軽い、実装は中くらい）へ振り分けられ、減り方がゆるやかになる](https://blog.kitepon.dev/post/codex-max-mode-quota-drain/routing.png)
+![設定前は親も子も全部Sol/Ultraで枠が一気に減る。設定後は親がSol、子は役割ごとに安いモデル（調べ物は軽い、実装は中くらい）へ振り分けられ、減り方がゆるやかになる](https://kitepon.dev/blog/post/codex-max-mode-quota-drain/routing.png)
 *設定前は親も子も全部Sol/Ultraで枠が一気に減る。設定後は親がSol、子は役割ごとに安いモデル（調べ物は軽い、実装は中くらい）へ振り分けられ、減り方がゆるやかになる*
 
 ## いちばん上を選ぶだけでは足りなかった

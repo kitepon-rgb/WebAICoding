@@ -7,15 +7,15 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
 
-![夜のサーバーラックを、灯りをともしたAIが静かに見守るイメージ](https://blog.kitepon.dev/post/ai-server-management-log/eyecatch.png)
+![夜のサーバーラックを、灯りをともしたAIが静かに見守るイメージ](https://kitepon.dev/blog/post/ai-server-management-log/eyecatch.png)
 *夜のサーバーラックを、灯りをともしたAIが静かに見守るイメージ*
 
-[前回の記事](https://blog.kitepon.dev/post/ai-server-management/)で、自宅サーバーの管理をAIに丸ごと任せた話を書いた。深夜にAIがパトロールして、昼間は監視スクリプトが異常を検知したらAIが出動する仕組みだ。
+[前回の記事](https://kitepon.dev/blog/post/ai-server-management/)で、自宅サーバーの管理をAIに丸ごと任せた話を書いた。深夜にAIがパトロールして、昼間は監視スクリプトが異常を検知したらAIが出動する仕組みだ。
 
 仕組みを作った話はした。では、実際に動かしてみてどうだったか。3日間の運用で起きたことを書く。
 
@@ -37,7 +37,7 @@ AIが突き止めた原因はこうだ。
 
 OpenSSHには`MaxStartups`という設定がある。同時接続数の上限だ。デフォルトは10。監視スクリプトがこの上限を超えていて、接続が弾かれていた。つまり、**監視スクリプト自身がサーバーに負荷をかけて、自分のSSH接続を失敗させていた。**
 
-![同時SSH接続がMaxStartups上限10を超えて自分を弾く因果と、並列→直列・リトライ追加の2段階修正](https://blog.kitepon.dev/post/ai-server-management-log/fig1.png)
+![同時SSH接続がMaxStartups上限10を超えて自分を弾く因果と、並列→直列・リトライ追加の2段階修正](https://kitepon.dev/blog/post/ai-server-management-log/fig1.png)
 *同時SSH接続がMaxStartups上限10を超えて自分を弾く因果と、並列→直列・リトライ追加の2段階修正*
 
 ### 1回目の修正：並列を直列に
@@ -58,7 +58,7 @@ AIはヘルスチェックの実行方式を`Promise.allSettled()`による全�
 
 毎日深夜4時にAIがサーバー全体を巡回する。セキュリティ設定、リソース使用量、コンテナの構成、ログの中身。人間が日常的にチェックしない部分を、AIが代わりに見る。
 
-![深夜パトロールが拾った異常: Nextcloudログ21.3GB・SELinux拒否1241件/24h・スワップとfail2banの推移](https://blog.kitepon.dev/post/ai-server-management-log/fig2.png)
+![深夜パトロールが拾った異常: Nextcloudログ21.3GB・SELinux拒否1241件/24h・スワップとfail2banの推移](https://kitepon.dev/blog/post/ai-server-management-log/fig2.png)
 *深夜パトロールが拾った異常: Nextcloudログ21.3GB・SELinux拒否1241件/24h・スワップとfail2banの推移*
 
 ### Nextcloudのログが21GB

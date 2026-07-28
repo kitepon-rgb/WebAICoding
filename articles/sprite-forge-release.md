@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 俺は自分のRPG（rpgdev）のキャラを、全部AIに描かせてる。ドット絵の勇者、火・水・風・土の精霊、敵のモンスター。一枚一枚、生成して、透過して、ゲームに入れてきた。
@@ -18,9 +18,9 @@ published: true
 
 一枚絵を編集してバリエーションを増やす、というやり方は、一貫性の面で信用できなかった。
 
-ちなみに前に書いた[ターミナルをRPGにした話](https://blog.kitepon.dev/post/rpgdev-overlay/)で、このドット絵の差分作りに手こずって、32GBのグラボを発注して「再戦する」と書いた。これはその再戦の記録でもある。
+ちなみに前に書いた[ターミナルをRPGにした話](https://kitepon.dev/blog/post/rpgdev-overlay/)で、このドット絵の差分作りに手こずって、32GBのグラボを発注して「再戦する」と書いた。これはその再戦の記録でもある。
 
-![一枚絵を直し続けるのをやめ、まず設定資料を一枚作って基準にする二段構えの全体像](https://blog.kitepon.dev/post/sprite-forge-release/two-stage.png)
+![一枚絵を直し続けるのをやめ、まず設定資料を一枚作って基準にする二段構えの全体像](https://kitepon.dev/blog/post/sprite-forge-release/two-stage.png)
 *一枚絵を直し続けるのをやめ、まず設定資料を一枚作って基準にする二段構えの全体像*
 
 ---
@@ -47,7 +47,7 @@ published: true
 
 **一段目。全アングル・全表情・全ポーズを、一回の生成でまとめて一枚に描かせる。** バラバラに頼まない。「ターンアラウンドと表情とポーズが並んだ設定資料を、一枚で」と一発で出させる。一枚の絵として同時に描かれるから、その中では互いに整合する。正面と後ろ姿が、ちゃんと同じ髪型・同じ衣装になる。これが「一貫性の基準（アンカー）」になる。
 
-![一発でまとめて描かせた基準シート](https://blog.kitepon.dev/post/sprite-forge-release/master-sheet.png)
+![一発でまとめて描かせた基準シート](https://kitepon.dev/blog/post/sprite-forge-release/master-sheet.png)
 *一発でまとめて描かせた基準シート*
 
 ただ、一枚に詰め込むと、一カットあたりが小さくて粗い。ゲームに使うには解像度が足りない。
@@ -58,7 +58,7 @@ published: true
 
 出来上がりがこれ。上に基準シート、その下に高解像度で描き直したターンアラウンド・表情・アクション・別衣装・ちびキャラ・装備、最後に抽出した配色まで。全部、同じキャラだ。
 
-![各カットを基準シートから描き直した設定資料](https://blog.kitepon.dev/post/sprite-forge-release/character-bible.png)
+![各カットを基準シートから描き直した設定資料](https://kitepon.dev/blog/post/sprite-forge-release/character-bible.png)
 *各カットを基準シートから描き直した設定資料*
 
 水の精霊。表情も、走りも跳躍も、騎士鎧もドレスも、全部同じ一人として並んでる。
@@ -81,7 +81,7 @@ published: true
 
 rpgdevのアセット作りで、細かい痛みを山ほど踏んできた。それを一つずつ、ツールに「絶対ルール（関門）」として焼き込んである。
 
-![出力は透過済みのゲーム用スプライト。四隅がちゃんと抜けていなければ出荷前に弾く](https://blog.kitepon.dev/post/sprite-forge-release/example-output.png)
+![出力は透過済みのゲーム用スプライト。四隅がちゃんと抜けていなければ出荷前に弾く](https://kitepon.dev/blog/post/sprite-forge-release/example-output.png)
 *出力は透過済みのゲーム用スプライト。四隅がちゃんと抜けていなければ出荷前に弾く*
 
 | 踏んできた痛み | 焼き込んだ絶対ルール（関門） |

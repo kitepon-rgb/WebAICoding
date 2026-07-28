@@ -7,13 +7,13 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-![中断したセッションから次のセッションへ、記憶のバトンを手渡しするイメージ](https://blog.kitepon.dev/post/throughline-declare-over-detect/eyecatch.png)
+![中断したセッションから次のセッションへ、記憶のバトンを手渡しするイメージ](https://kitepon.dev/blog/post/throughline-declare-over-detect/eyecatch.png)
 *中断したセッションから次のセッションへ、記憶のバトンを手渡しするイメージ*
 
-[前の記事](https://blog.kitepon.dev/post/throughline-context-diet/)でThroughlineを公開した。コンテキストの大半を占めてるツールI/Oを退避するやつ。
+[前の記事](https://kitepon.dev/blog/post/throughline-context-diet/)でThroughlineを公開した。コンテキストの大半を占めてるツールI/Oを退避するやつ。
 
 あの時点では"動いてた"。自分の環境では。
 
@@ -53,7 +53,7 @@ Claude Codeのhookには `SessionStart` ってイベントがあって、`source
 
 並行ウィンドウもVSCode再起動も、「バトンが置かれてない限り誤爆しない」が原理的に保証される。
 
-![検知（自動）はsource潰れ・並行ウィンドウ・プロセス構造の違いで全部壊れる。宣言（/tl）はバトンがある時だけ継承＝誤爆ゼロ](https://blog.kitepon.dev/post/throughline-declare-over-detect/fig1.png)
+![検知（自動）はsource潰れ・並行ウィンドウ・プロセス構造の違いで全部壊れる。宣言（/tl）はバトンがある時だけ継承＝誤爆ゼロ](https://kitepon.dev/blog/post/throughline-declare-over-detect/fig1.png)
 *検知（自動）はsource潰れ・並行ウィンドウ・プロセス構造の違いで全部壊れる。宣言（/tl）はバトンがある時だけ継承＝誤爆ゼロ*
 
 明示的なのは一見面倒だけど、「勝手に引き継いで迷惑」の方が遥かに困る。誤爆ゼロの方が価値があった。
@@ -87,7 +87,7 @@ Z の挙動が気になる。もしかしたら...
 ...
 ```
 
-![in-flight memo・前のClaudeのthinking・直近20ターンの3段。前者を頭に出すから、読まずに続けられる](https://blog.kitepon.dev/post/throughline-declare-over-detect/fig2.png)
+![in-flight memo・前のClaudeのthinking・直近20ターンの3段。前者を頭に出すから、読まずに続けられる](https://kitepon.dev/blog/post/throughline-declare-over-detect/fig2.png)
 *in-flight memo・前のClaudeのthinking・直近20ターンの3段。前者を頭に出すから、読まずに続けられる*
 
 ## "読む"じゃなく"続ける"
@@ -112,7 +112,7 @@ Z の挙動が気になる。もしかしたら...
 
 Throughline は v0.3.2 でnpmに公開してる。Node.js 22.5+、依存ゼロ、MIT。
 
-![Throughline — Claude CodeのツールI/OをSQLiteに退避するhook。Node.js 22.5+、依存ゼロ、MIT](https://blog.kitepon.dev/post/throughline-declare-over-detect/throughline-og.png)
+![Throughline — Claude CodeのツールI/OをSQLiteに退避するhook。Node.js 22.5+、依存ゼロ、MIT](https://kitepon.dev/blog/post/throughline-declare-over-detect/throughline-og.png)
 *Throughline — Claude CodeのツールI/OをSQLiteに退避するhook。Node.js 22.5+、依存ゼロ、MIT*
 
 @[card](https://github.com/kitepon-rgb/Throughline)

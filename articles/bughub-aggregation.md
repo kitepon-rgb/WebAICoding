@@ -7,14 +7,14 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ユーザーがいるアプリが4本になって、バグ報告を1箇所に集めた。集めて初めて分かったのは、報告の重大度が4本でバラバラの基準で付いていたことだ。基準を揃えて1画面に並べたら、複数のClaudeに渡して報告済みのバグを1日で潰せるようになった。商用アプリを複数持つと運営の手間がここに集中する、という話を書く。
 
-俺が今ユーザーを抱えているアプリは4本ある。音声をリアルタイム翻訳する[LiveTR](https://blog.kitepon.dev/post/livetr-app/)、画面をそのまま日本語にする[OLTranslator](https://blog.kitepon.dev/post/oltranslator-app/)、英語リスニングの[Kikoeru](https://blog.kitepon.dev/post/kikoeru-listening/)、そして自分のサーバーで動く、ギルドのオークションを管理するDiscordボット [AuctionBOT](https://quo-labo.vercel.app/auctionbot)。アプリが増えるほど、開発よりも「ちゃんと動いているか」が気になる。実ユーザーがいるからだ。
+俺が今ユーザーを抱えているアプリは4本ある。音声をリアルタイム翻訳する[LiveTR](https://kitepon.dev/blog/post/livetr-app/)、画面をそのまま日本語にする[OLTranslator](https://kitepon.dev/blog/post/oltranslator-app/)、英語リスニングの[Kikoeru](https://kitepon.dev/blog/post/kikoeru-listening/)、そして自分のサーバーで動く、ギルドのオークションを管理するDiscordボット [AuctionBOT](https://quo-labo.vercel.app/auctionbot)。アプリが増えるほど、開発よりも「ちゃんと動いているか」が気になる。実ユーザーがいるからだ。
 
-![各アプリの管理用read APIをBugHubが約3分ごとに巡回し、署名で重複をまとめて、ダッシュボードと /ai に同じ基準で並べる全体図](https://blog.kitepon.dev/post/bughub/aggregate.png)
+![各アプリの管理用read APIをBugHubが約3分ごとに巡回し、署名で重複をまとめて、ダッシュボードと /ai に同じ基準で並べる全体図](https://kitepon.dev/blog/post/bughub/aggregate.png)
 *各アプリの管理用read APIをBugHubが約3分ごとに巡回し、署名で重複をまとめて、ダッシュボードと /ai に同じ基準で並べる全体図*
 
 ## 観測できるアプリと、できないアプリ
@@ -71,11 +71,11 @@ LiveTR・OLTranslator・AuctionBOTは最初から同じ形に揃えた。Kikoeru
 
 加えて、アプリ別の「解決をどこに打つか」のテーブルと、「新しいアプリを連携するには」の共通仕様も同じページに載せてある。
 
-AIに直させてデプロイまで任せる仕組み自体は[前に書いた](https://blog.kitepon.dev/post/ai-server-management/)。今回その上に足したのは、複数アプリの報告を同じ基準で集約して、1本のURLで渡せるようにした部分だ。別のアプリに対して「これをBugHubに集約できるようにして」と言えば、AIはこのページの共通仕様に従ってアプリ側のAPIを実装する。新しいアプリの統合も、同じ1本のURLを渡すだけで済む。
+AIに直させてデプロイまで任せる仕組み自体は[前に書いた](https://kitepon.dev/blog/post/ai-server-management/)。今回その上に足したのは、複数アプリの報告を同じ基準で集約して、1本のURLで渡せるようにした部分だ。別のアプリに対して「これをBugHubに集約できるようにして」と言えば、AIはこのページの共通仕様に従ってアプリ側のAPIを実装する。新しいアプリの統合も、同じ1本のURLを渡すだけで済む。
 
 解決はBugHubではなくアプリ側に記録する。アプリ側が正で、BugHubはその状態をコピーして表示しているだけだ。BugHub側で消しても次の巡回でアプリ側の状態に上書きされて戻るし、アプリ側で再発を検知すれば自動で「未解決」に戻る。
 
-![同じ /ai のURLを複数のVSCode/Claudeに渡し、それぞれが担当アプリを取得→修正→デプロイ→検証→解決記録まで回す。解決はアプリ側に記録する](https://blog.kitepon.dev/post/bughub/serve.png)
+![同じ /ai のURLを複数のVSCode/Claudeに渡し、それぞれが担当アプリを取得→修正→デプロイ→検証→解決記録まで回す。解決はアプリ側に記録する](https://kitepon.dev/blog/post/bughub/serve.png)
 *同じ /ai のURLを複数のVSCode/Claudeに渡し、それぞれが担当アプリを取得→修正→デプロイ→検証→解決記録まで回す。解決はアプリ側に記録する*
 
 ## 複数のClaudeに渡して、1日で片付けた
@@ -86,6 +86,6 @@ AIに直させてデプロイまで任せる仕組み自体は[前に書いた](
 
 ## 今いちばん手がかかるのはここ
 
-個人で商用アプリを複数持つと、運営の手間がここに集中する。新機能を足す時間より、上がってきた報告を捌く時間のほうが増える。作る速さの話は[前に書いた](https://blog.kitepon.dev/post/build-fast-reach-slow/)が、その続きとして、動かし続ける側にも同じ整理が要る。それが今の状況だ。
+個人で商用アプリを複数持つと、運営の手間がここに集中する。新機能を足す時間より、上がってきた報告を捌く時間のほうが増える。作る速さの話は[前に書いた](https://kitepon.dev/blog/post/build-fast-reach-slow/)が、その続きとして、動かし続ける側にも同じ整理が要る。それが今の状況だ。
 
 今は、4本ぶんの未解決が同じ基準で1画面に並んでいて、URLを1本渡せばAIがそこから直しに行く。ユーザーのときに何となくOKを押していた「品質向上のため情報を送信します」は、開発側ではこういう使われ方をしていた。

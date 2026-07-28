@@ -7,18 +7,18 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ここ一ヶ月ちょっとで、Claude Code 用の補強ツールを 3つ npm に出した。
 
-- [Throughline](https://blog.kitepon.dev/post/throughline-release/) — コンテキストの肥大化を退避する
-- [Caveat](https://blog.kitepon.dev/post/caveat-release/) — 同じ罠を二度踏まないように過去ノートを浮上させる
-- [Spotter](https://blog.kitepon.dev/post/spotter-release/) — ツール呼び忘れを別のClaude が監査する
+- [Throughline](https://kitepon.dev/blog/post/throughline-release/) — コンテキストの肥大化を退避する
+- [Caveat](https://kitepon.dev/blog/post/caveat-release/) — 同じ罠を二度踏まないように過去ノートを浮上させる
+- [Spotter](https://kitepon.dev/blog/post/spotter-release/) — ツール呼び忘れを別のClaude が監査する
 
 それぞれ別々の問題を解いてるんだけど、根っこは同じ。**Claude本体に「気をつけて」って書いて直る問題は、もう全部直してた**。残ってたのは構造的に直らない問題だった。
 
-![Claude本体には触らず、外側からhookで補強する3ツールのイメージ](https://blog.kitepon.dev/post/claude-augment-trilogy/eyecatch.png)
+![Claude本体には触らず、外側からhookで補強する3ツールのイメージ](https://kitepon.dev/blog/post/claude-augment-trilogy/eyecatch.png)
 *Claude本体には触らず、外側からhookで補強する3ツールのイメージ*
 
 ## 「気をつけて」を書き続けた時期
@@ -49,7 +49,7 @@ published: true
 
 こういう問題は、Claudeに「気をつけて」と頼んでも直らない。**Claude自身が直せない問題**だから。
 
-![指示で直る問題（左）と、自覚できないから直らない3問題（右）。右の3つがそのまま3ツールに対応する](https://blog.kitepon.dev/post/claude-augment-trilogy/fig1.png)
+![指示で直る問題（左）と、自覚できないから直らない3問題（右）。右の3つがそのまま3ツールに対応する](https://kitepon.dev/blog/post/claude-augment-trilogy/fig1.png)
 *指示で直る問題（左）と、自覚できないから直らない3問題（右）。右の3つがそのまま3ツールに対応する*
 
 ## 諦めて、外側から補強し始めた
@@ -96,7 +96,7 @@ Claude Code には hook 機構がある。プロンプトを送る前、ツー�
 
 「Claudeに必要な変更」がゼロなのが大事。プロンプトもCLAUDE.mdも、当たり前に書きたいことだけ書けばいい。「気をつけて」を増やさない。
 
-![中央のメインClaudeから3方向にhookが伸びる放射図。引き算・蓄積・足し算をすべて外側から差し込む](https://blog.kitepon.dev/post/claude-augment-trilogy/fig2.png)
+![中央のメインClaudeから3方向にhookが伸びる放射図。引き算・蓄積・足し算をすべて外側から差し込む](https://kitepon.dev/blog/post/claude-augment-trilogy/fig2.png)
 *中央のメインClaudeから3方向にhookが伸びる放射図。引き算・蓄積・足し算をすべて外側から差し込む*
 
 ## まだ補強してない構造的問題

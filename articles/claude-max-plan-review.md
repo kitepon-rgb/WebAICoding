@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -18,7 +18,7 @@ MAXプランにすると「たくさん使える」。それは誰でも知っ�
 
 公式ソースを確認しながら整理する。先に結論を一枚にすると、こういう構図だ。
 
-![Pro と MAX の機能比較。デフォルトモデル・1Mコンテキスト・優先アクセス・Effort MAX・サブエージェント・Research の6項目で、機能の有無ではなく「使い切れるか」が分かれる](https://blog.kitepon.dev/post/max-plan-review/fig1.png)
+![Pro と MAX の機能比較。デフォルトモデル・1Mコンテキスト・優先アクセス・Effort MAX・サブエージェント・Research の6項目で、機能の有無ではなく「使い切れるか」が分かれる](https://kitepon.dev/blog/post/max-plan-review/fig1.png)
 *Pro と MAX の機能比較。デフォルトモデル・1Mコンテキスト・優先アクセス・Effort MAX・サブエージェント・Research の6項目で、機能の有無ではなく「使い切れるか」が分かれる*
 
 ---
@@ -71,7 +71,7 @@ MAXなら何も設定しなくても自動的にOpusが1Mコンテキストに�
 
 パターンが見える。**エージェント系の新機能は、ほぼ全部MAXが先**だ。差は数日のこともあれば、`/rc`のように1ヶ月以上Proに来ていないものもある。
 
-![MAX先行リリースのタイムライン。Memory・Cowork・/rc・Dispatch・Computer Use が MAX に先に来て、Pro へは数日〜1ヶ月以上遅れて降りてくる](https://blog.kitepon.dev/post/max-plan-review/fig2.png)
+![MAX先行リリースのタイムライン。Memory・Cowork・/rc・Dispatch・Computer Use が MAX に先に来て、Pro へは数日〜1ヶ月以上遅れて降りてくる](https://kitepon.dev/blog/post/max-plan-review/fig2.png)
 *MAX先行リリースのタイムライン。Memory・Cowork・/rc・Dispatch・Computer Use が MAX に先に来て、Pro へは数日〜1ヶ月以上遅れて降りてくる*
 
 新機能を早く触りたい人にとって、MAXは「有料ベータテスター」の立ち位置でもある。俺は`/rc`をかなり使っているので、これがMAX先行で助かっている。

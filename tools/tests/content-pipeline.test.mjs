@@ -44,6 +44,11 @@ test("共有manifestは6件の差異を双方向に解決する", () => {
   assert.equal(toZennSlug("bughub"), "bughub-aggregation");
   assert.equal(toBlogSlug("bughub-aggregation"), "bughub");
   assert.equal(toZennSlug("aiterm-converse"), "aiterm-converse");
+  assert.equal(canonicalUrlFor("bughub-aggregation"), "https://kitepon.dev/blog/post/bughub/");
+  assert.equal(
+    canonicalUrlFor("aiterm-converse"),
+    "https://kitepon.dev/blog/post/aiterm-converse/",
+  );
 });
 
 test("Zenn変換は本文だけを変換しコードフェンスを保存する", () => {
@@ -54,12 +59,14 @@ test("Zenn変換は本文だけを変換しコードフェンスを保存する"
     "",
     '[内部]({{< relref "bughub#details" >}})',
     '{{< linkcard url="https://example.com" title="Example" >}}',
+    '{{< linkcard url="https://blog.kitepon.dev/post/legacy/" title="Legacy" >}}',
     "![説明](figure.png)",
   ].join("\n");
   const output = convertBody(input, "source-post");
   assert.match(output, /\{\{< unknown value="kept" >\}\}/);
-  assert.match(output, /https:\/\/blog\.kitepon\.dev\/post\/bughub\/#details/);
+  assert.match(output, /https:\/\/kitepon\.dev\/blog\/post\/bughub\/#details/);
   assert.match(output, /@\[card\]\(https:\/\/example\.com\)/);
+  assert.match(output, /@\[card\]\(https:\/\/kitepon\.dev\/blog\/post\/legacy\/\)/);
   assert.match(output, /source-post\/figure\.png\)\n\*説明\*/);
 });
 
@@ -94,7 +101,7 @@ test("dev.to payloadはcanonical_urlと未解決リンクを保持する", () =>
   const article = {
     title: "English title",
     bodyHtml:
-      '<p>Body</p><p><a href="https://blog.kitepon.dev/post/bughub/#details">BugHub</a></p>',
+      '<p>Body</p><p><a href="https://kitepon.dev/blog/post/bughub/#details">BugHub</a></p>',
   };
   const payload = buildPayload(article, ["ai"], {}, canonicalUrl);
   assert.equal(payload.article.canonical_url, canonicalUrl);

@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -18,14 +18,14 @@ AIコーディングでアプリを作っていると、「何を作るか」は
 
 プログラマーでもないですし、信号処理の専門家でもないです。そういう時にClaudeが頼りになった話です。
 
-![夜の机に置かれた端末に、波形が描かれた学術論文のページが重なって光る——知らない分野の論文を引っ張ってきて、動くコードに変える](https://blog.kitepon.dev/post/claude-research-implementation/eyecatch.png)
+![夜の机に置かれた端末に、波形が描かれた学術論文のページが重なって光る——知らない分野の論文を引っ張ってきて、動くコードに変える](https://kitepon.dev/blog/post/claude-research-implementation/eyecatch.png)
 *夜の机に置かれた端末に、波形が描かれた学術論文のページが重なって光る——知らない分野の論文を引っ張ってきて、動くコードに変える*
 
 ---
 
 ## 問題：音声の男女判定がうまくいかない
 
-[LiveTR](https://blog.kitepon.dev/post/livetr-app/)（リアルタイム音声翻訳アプリ）に、話者の性別に応じて読み上げの声を切り替える機能を入れたかったんです。男性の声なら男性っぽく、女性の声なら女性っぽく。
+[LiveTR](https://kitepon.dev/blog/post/livetr-app/)（リアルタイム音声翻訳アプリ）に、話者の性別に応じて読み上げの声を切り替える機能を入れたかったんです。男性の声なら男性っぽく、女性の声なら女性っぽく。
 
 最初に思いつくのは基本周波数（ピッチ）で判定する方法です。男性は低い、女性は高い。シンプル。
 
@@ -57,7 +57,7 @@ Claudeに調べてもらいました。Researchモード（Claudeが自律的に
 
 F1の中継でテストしてみたら、解説者が興奮しても男性のまま判定されるようになりました。ピッチだけの時とは安定感が全然違います。
 
-![ピッチだけだと興奮の山で判定がひっくり返る（左）。フォルマントとMFCCを足すと、ピッチが跳ねても判定が男性のまま安定する（右）](https://blog.kitepon.dev/post/claude-research-implementation/fig1.png)
+![ピッチだけだと興奮の山で判定がひっくり返る（左）。フォルマントとMFCCを足すと、ピッチが跳ねても判定が男性のまま安定する（右）](https://kitepon.dev/blog/post/claude-research-implementation/fig1.png)
 *ピッチだけだと興奮の山で判定がひっくり返る（左）。フォルマントとMFCCを足すと、ピッチが跳ねても判定が男性のまま安定する（右）*
 
 ---

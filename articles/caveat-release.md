@@ -7,12 +7,12 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 [Caveat](https://github.com/kitepon-rgb/Caveat) っていうClaude Code用の長期記憶レイヤをnpmに公開した。
 
-![同じ落とし穴に二度落ちないための、記憶のレイヤ](https://blog.kitepon.dev/post/caveat-release/eyecatch.png)
+![同じ落とし穴に二度落ちないための、記憶のレイヤ](https://kitepon.dev/blog/post/caveat-release/eyecatch.png)
 *同じ落とし穴に二度落ちないための、記憶のレイヤ*
 
 ## 何をするか
@@ -31,7 +31,7 @@ Caveatは hook で3カ所に仕込まれる。
 | ツールエラー時 | Claudeのツール呼び出しが失敗した瞬間 | バックグラウンドで検索を走らせ、次のターンに既知罠として通知 |
 | セッション終了時 | セッションが閉じる時 | 会話ログから「もがきシグナル」を抽出。新規罠として記録すべきものがあればAIに促す |
 
-![Caveatの3つの発火点。前2つは過去の罠ノートを浮上させ、最後の1つは今日のもがきを新しい罠として記録する](https://blog.kitepon.dev/post/caveat-release/fig1.png)
+![Caveatの3つの発火点。前2つは過去の罠ノートを浮上させ、最後の1つは今日のもがきを新しい罠として記録する](https://kitepon.dev/blog/post/caveat-release/fig1.png)
 *Caveatの3つの発火点。前2つは過去の罠ノートを浮上させ、最後の1つは今日のもがきを新しい罠として記録する*
 
 「もがきシグナル」っていうのは、ツール失敗・同じファイルを何度も編集・Web検索の連発・Bashコマンドの再実行みたいな、**AI自身は自覚してないけど客観的には苦戦してた痕跡**。これを最後にスキャンして、「今日のセッション、ここで詰まってたよね？罠として記録する？」って促す。
@@ -57,7 +57,7 @@ Caveatは hook で3カ所に仕込まれる。
 └── .git/
 ```
 
-![罠の実体はただのmarkdown。visibility・confidence・tags のfrontmatterに Symptom / Cause / Resolution が続く](https://blog.kitepon.dev/post/caveat-release/shot1.png)
+![罠の実体はただのmarkdown。visibility・confidence・tags のfrontmatterに Symptom / Cause / Resolution が続く](https://kitepon.dev/blog/post/caveat-release/shot1.png)
 *罠の実体はただのmarkdown。visibility・confidence・tags のfrontmatterに Symptom / Cause / Resolution が続く*
 
 Obsidianのvaultとしてそのまま開ける。チームで共有したければ普通に `git push` すればいい。中央サーバはない。

@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
@@ -18,7 +18,7 @@ Lineage2Mが2021年にリリースされた頃から、ギルドのボスドロ�
 
 5年間、自分のギルドでずっと動いていた。便利だった。でも、あくまで自分専用だった。
 
-![自分だけが使ってきた道具を、棚に並べて売り物にするイメージ](https://blog.kitepon.dev/post/discord-bot-to-saas/eyecatch.png)
+![自分だけが使ってきた道具を、棚に並べて売り物にするイメージ](https://kitepon.dev/blog/post/discord-bot-to-saas/eyecatch.png)
 *自分だけが使ってきた道具を、棚に並べて売り物にするイメージ*
 
 ---
@@ -49,7 +49,7 @@ Lineage2Mが2021年にリリースされた頃から、ギルドのボスドロ�
 
 ## コードの改修
 
-![左がハードコード塊の自分専用Bot、右がSaaS化したAuctionBOT。中央は856行のserver.jsを8モジュールに分割](https://blog.kitepon.dev/post/discord-bot-to-saas/fig1.png)
+![左がハードコード塊の自分専用Bot、右がSaaS化したAuctionBOT。中央は856行のserver.jsを8モジュールに分割](https://kitepon.dev/blog/post/discord-bot-to-saas/fig1.png)
 *左がハードコード塊の自分専用Bot、右がSaaS化したAuctionBOT。中央は856行のserver.jsを8モジュールに分割*
 
 マルチテナント化、Stripe課金連携、OAuth2認証、Web管理画面、4言語対応。やることリストは長かったが、どれも定型作業だ。パターンは決まっているし、公式ドキュメントもある。ゴールは明確だ。
@@ -84,7 +84,7 @@ Lineage2Mが2021年にリリースされた頃から、ギルドのボスドロ�
 
 ## デプロイ
 
-Botの本番デプロイには、自宅サーバーを使っている。[以前の記事](https://blog.kitepon.dev/post/claude-code-deploy/)で書いた通り、AIにSSHでサーバーを直接触らせるスタイルだ。deploy.shを一発叩けば、ビルドからコンテナ更新まで全部終わる。
+Botの本番デプロイには、自宅サーバーを使っている。[以前の記事](https://kitepon.dev/blog/post/claude-code-deploy/)で書いた通り、AIにSSHでサーバーを直接触らせるスタイルだ。deploy.shを一発叩けば、ビルドからコンテナ更新まで全部終わる。
 
 Web管理画面はVercelにデプロイ。こっちはgit pushだけ。
 

@@ -7,12 +7,12 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 [Throughline](https://github.com/kitepon-rgb/Throughline) っていうClaude Code用のhookプラグインをnpmに公開した。
 
-![Throughline — Claude Codeのコンテキスト消費を約9割削りつつ、判断に必要な記憶はほぼ全部残す](https://blog.kitepon.dev/post/throughline-release/overlay.png)
+![Throughline — Claude Codeのコンテキスト消費を約9割削りつつ、判断に必要な記憶はほぼ全部残す](https://kitepon.dev/blog/post/throughline-release/overlay.png)
 *Throughline — Claude Codeのコンテキスト消費を約9割削りつつ、判断に必要な記憶はほぼ全部残す*
 
 ## 何をするか
@@ -27,7 +27,7 @@ Throughlineは会話を3層に分けて管理する。
 | L1 | L2を要点を欠落させない程度（1/5）に要約したもの | 20ターンより古いターンはL1を注入 |
 | L3 | ツールI/O・システムメッセージ・thinking | 注入せずSQLiteに退避、必要になったらClaude自身が取り出す |
 
-![L1/L2/L3の3層メモリ。L2はそのまま、L1は1/5要約、L3（ツールI/O）だけSQLiteへ退避してコンテキストから抜く](https://blog.kitepon.dev/post/throughline-release/fig1.png)
+![L1/L2/L3の3層メモリ。L2はそのまま、L1は1/5要約、L3（ツールI/O）だけSQLiteへ退避してコンテキストから抜く](https://kitepon.dev/blog/post/throughline-release/fig1.png)
 *L1/L2/L3の3層メモリ。L2はそのまま、L1は1/5要約、L3（ツールI/O）だけSQLiteへ退避してコンテキストから抜く*
 
 ツールI/Oはコンテキストから完全に抜くので、読み終わったgrep結果やBash出力がセッション最後まで居座らない。古い会話は1/5に圧縮されるが要点は残るので、数十ターン前の判断の文脈もちゃんと追える。
@@ -79,7 +79,7 @@ transcriptのJSONLからAPIの実測値（`message.usage`）を読むので、`�
 
 ---
 
-設計の経緯や試行錯誤は [こちらの記事](https://blog.kitepon.dev/post/throughline-declare-over-detect/) に書いた。
+設計の経緯や試行錯誤は [こちらの記事](https://kitepon.dev/blog/post/throughline-declare-over-detect/) に書いた。
 
 @[card](https://github.com/kitepon-rgb/Throughline)
 

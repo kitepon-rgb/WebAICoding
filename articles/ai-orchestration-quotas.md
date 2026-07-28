@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 一番賢いモデルに全部やらせれば、一番いい結果が返ってくる。少し前まではそう思って動かしていた。ただ、それを続けると枠がすぐ尽きて、しかもよくコケる。
@@ -16,7 +16,7 @@ Codex の一番上のモード（Sol Ultra）に重い作業を任せたとき�
 
 だから、一体のモデルに全部を任せるのをやめた。作業を仕分けて、別々の相手に配ることにした。こういう、AIに仕事を配って束ねるやり方を、オーケストレーションと呼ぶらしい。
 
-@[card](https://blog.kitepon.dev/post/codex-max-mode-quota-drain/)
+@[card](https://kitepon.dev/blog/post/codex-max-mode-quota-drain/)
 
 ## まず、作業を3つに仕分ける
 
@@ -42,11 +42,11 @@ Claude、Codex、Composer、Grok。この4つを、aiterm という自作の仕�
 
 金の面でも、ここが大きい。4つとも、月額の契約でログインしたまま動く。使った分だけ払う仕組み（API）を通さない。だから手数の多い作業をいくら投げても、料金が上がり続けることがない。契約している枠の中で、4つを並べて回している。
 
-@[card](https://blog.kitepon.dev/post/aiterm-release/)
+@[card](https://kitepon.dev/blog/post/aiterm-release/)
 
 もう一つ、Oracle という相談窓口を足している。これは ChatGPT の枠で動いていて、Codex の枠とは別の勘定だ。ファイルは書けないが、純粋に考えて意見を返すのは得意だ。設計で迷ったとき、Codex の枠を減らさずに、別のモデルでもう一度確かめられる。
 
-![依頼が着手ゲートを通り、まとめ役が仕分けと配置を決める。手足の作業はClaudeの枠を使わない外部（Codex・Grok）へ先に出し、Oracleは相談だけの窓口として別枠でつながる。結果はまとめ役のゲートで検証してから保存と記録へ戻る](https://blog.kitepon.dev/post/ai-orchestration-quotas/orchestration-map.png)
+![依頼が着手ゲートを通り、まとめ役が仕分けと配置を決める。手足の作業はClaudeの枠を使わない外部（Codex・Grok）へ先に出し、Oracleは相談だけの窓口として別枠でつながる。結果はまとめ役のゲートで検証してから保存と記録へ戻る](https://kitepon.dev/blog/post/ai-orchestration-quotas/orchestration-map.png)
 *依頼が着手ゲートを通り、まとめ役が仕分けと配置を決める。手足の作業はClaudeの枠を使わない外部（Codex・Grok）へ先に出し、Oracleは相談だけの窓口として別枠でつながる。結果はまとめ役のゲートで検証してから保存と記録へ戻る*
 
 ## ルールは、書いただけでは守られなかった

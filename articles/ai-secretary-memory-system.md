@@ -7,18 +7,18 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## 前回のあらすじ
 
-[前回の記事](https://blog.kitepon.dev/post/ai-assistant-personality/)で、AIアシスタントに記憶と人格を持たせて秘書にした話を書いた。名前は BellBot。天気もメールもカレンダーも全部面倒を見てくれる、俺専属のAI秘書。
+[前回の記事](https://kitepon.dev/blog/post/ai-assistant-personality/)で、AIアシスタントに記憶と人格を持たせて秘書にした話を書いた。名前は BellBot。天気もメールもカレンダーも全部面倒を見てくれる、俺専属のAI秘書。
 
-[その次の記事](https://blog.kitepon.dev/post/ai-secretary-token-diet/)ではそいつを動かしたら3日で週次リミットを食らった話を書いた。トークン節約については調べて手を打った。
+[その次の記事](https://kitepon.dev/blog/post/ai-secretary-token-diet/)ではそいつを動かしたら3日で週次リミットを食らった話を書いた。トークン節約については調べて手を打った。
 
 それとは別軸で、ここ5日ほど取り組んでたことがある。**秘書の"脳"と"記憶"をさらに育てる**という話。今回はその記録。結構壮大になった。
 
-![端末の隣で書架が灯る——秘書の脳と記憶を、外側に育てる装置として作り直した](https://blog.kitepon.dev/post/ai-secretary-memory-system/eyecatch.png)
+![端末の隣で書架が灯る——秘書の脳と記憶を、外側に育てる装置として作り直した](https://kitepon.dev/blog/post/ai-secretary-memory-system/eyecatch.png)
 *端末の隣で書架が灯る——秘書の脳と記憶を、外側に育てる装置として作り直した*
 
 ## 脳を換えてみた話
@@ -66,7 +66,7 @@ Karpathy式の骨子はこう:
 
 これ5ステップが綺麗にサイクルを回してる。使うたびに賢くなるパーソナルナレッジベース。1ヶ月も情報を入れ続ければ、Google検索では再現できない、深くリンクされた知識資産ができあがる、というやつ。
 
-![Karpathy式5ステップの円環。各ステップが BellBot の Ingest/Compile/Query/Lint と 5層 bootstrap assembler に対応する](https://blog.kitepon.dev/post/ai-secretary-memory-system/fig1.png)
+![Karpathy式5ステップの円環。各ステップが BellBot の Ingest/Compile/Query/Lint と 5層 bootstrap assembler に対応する](https://kitepon.dev/blog/post/ai-secretary-memory-system/fig1.png)
 *Karpathy式5ステップの円環。各ステップが BellBot の Ingest/Compile/Query/Lint と 5層 bootstrap assembler に対応する*
 
 読みながら俺は気づく。俺が作ってた構造化記憶と、Karpathy式の**土台のところで考えてる問題が同じ**だということに。登録・検索・再構築。言葉は違えど、やろうとしてる方向性は重なってた。
@@ -90,7 +90,7 @@ BellBotには既にエピソード単位の構造化記憶と要約ベースの�
 
 持ってきたのは、重なってない部分。raw と wiki の層分離、概念ページという「育てる単位」の定義、引用付きで答える multi-hop 検索、サイクルを Ingest / Compile / Query / Lint という名前で型にはめる方法論、セッション開始時に文脈を組み立てる 5層 bootstrap assembler。このあたりは自作では持ってなかった角度の話で、**方法論ごと輸入した**感覚が近い。
 
-![自作の登録・検索・再構築は鍛え直し、層分離・概念ページ・引用付きmulti-hop・サイクルの型・5層bootstrapは方法論ごと輸入した](https://blog.kitepon.dev/post/ai-secretary-memory-system/fig2.png)
+![自作の登録・検索・再構築は鍛え直し、層分離・概念ページ・引用付きmulti-hop・サイクルの型・5層bootstrapは方法論ごと輸入した](https://kitepon.dev/blog/post/ai-secretary-memory-system/fig2.png)
 *自作の登録・検索・再構築は鍛え直し、層分離・概念ページ・引用付きmulti-hop・サイクルの型・5層bootstrapは方法論ごと輸入した*
 
 ## 何が強化されたか

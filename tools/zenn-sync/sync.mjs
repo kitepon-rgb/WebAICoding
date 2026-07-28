@@ -13,7 +13,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { BLOG_TO_ZENN_SLUG, toZennSlug } from "../article-manifest.mjs";
 
-const BLOG_BASE = "https://blog.kitepon.dev";
+const BLOG_BASE = "https://kitepon.dev/blog";
 const BANNER =
   ":::message\n" +
   `この記事は [Claude Code 始めました](${BLOG_BASE}/) からの転載です。\n` +
@@ -70,9 +70,13 @@ function relrefToUrl(ref) {
   return anchor ? `${url}#${anchor}` : url;
 }
 
+function normalizeBlogUrl(url) {
+  return url.replace(/^https:\/\/blog\.kitepon\.dev(?=\/|$)/, BLOG_BASE);
+}
+
 function toImageUrl(url, blogSlug) {
   const value = url.trim();
-  if (/^https?:\/\//.test(value)) return value;
+  if (/^https?:\/\//.test(value)) return normalizeBlogUrl(value);
   if (value.startsWith("/")) return `${BLOG_BASE}${value}`;
   return `${BLOG_BASE}/post/${blogSlug}/${value}`;
 }
@@ -115,7 +119,7 @@ function convertPlainBlock(block, blogSlug) {
   out = out.replace(/\{\{<\s*linkcard\s+([\s\S]*?)>\}\}/g, (match, args) => {
     const url = args.match(/url=["']([^"']+)["']/)?.[1];
     if (!url) throw new Error(`linkcardにurlが無い (${blogSlug}): ${match}`);
-    return `@[card](${url})`;
+    return `@[card](${normalizeBlogUrl(url)})`;
   });
   out = out.replace(
     /!\[([^\]]*)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g,

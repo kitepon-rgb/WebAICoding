@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## LiveTRとは
@@ -16,7 +16,7 @@ PCで再生中の動画の英語音声をリアルタイムに認識して、日
 
 YouTube、Twitch、ローカル動画ファイル。英語の音声が流れていれば、ソースは問いません。
 
-![再生中の動画に日本語字幕を重ね、同時に読み上げまで行う——LiveTRのイメージ](https://blog.kitepon.dev/post/livetr-app/eyecatch.png)
+![再生中の動画に日本語字幕を重ね、同時に読み上げまで行う——LiveTRのイメージ](https://kitepon.dev/blog/post/livetr-app/eyecatch.png)
 *再生中の動画に日本語字幕を重ね、同時に読み上げまで行う——LiveTRのイメージ*
 
 ---
@@ -30,10 +30,10 @@ YouTube、Twitch、ローカル動画ファイル。英語の音声が流れて�
 - **自動ダッキング** — 読み上げ中は動画の音量を自動で下げて、聞き取りやすくします
 - **プロセス単位の音声キャプチャ** — 指定したアプリの音声だけを拾います。読み上げ音声を再キャプチャするループも防止しています
 
-![翻訳サービスの設定画面。ローカル翻訳に加え、Google・DeepL・Azure・Amazon もキーを入れるだけで切り替えられる。](https://blog.kitepon.dev/post/livetr-app/settings.png)
+![翻訳サービスの設定画面。ローカル翻訳に加え、Google・DeepL・Azure・Amazon もキーを入れるだけで切り替えられる。](https://kitepon.dev/blog/post/livetr-app/settings.png)
 *翻訳サービスの設定画面。ローカル翻訳に加え、Google・DeepL・Azure・Amazon もキーを入れるだけで切り替えられる。*
 
-![音声キャプチャから文字起こし・翻訳を経て、字幕表示と読み上げの二系統に分岐するLiveTRの処理の流れ](https://blog.kitepon.dev/post/livetr-app/fig1.png)
+![音声キャプチャから文字起こし・翻訳を経て、字幕表示と読み上げの二系統に分岐するLiveTRの処理の流れ](https://kitepon.dev/blog/post/livetr-app/fig1.png)
 *音声キャプチャから文字起こし・翻訳を経て、字幕表示と読み上げの二系統に分岐するLiveTRの処理の流れ*
 
 ---
@@ -70,7 +70,7 @@ OLTranslatorが画面のテキストを翻訳するアプリだったので、�
 
 話者の性別判定にもこだわりました。読み上げの声を話者に合わせたかったので、論文や特許を参考にしながらClaude Codeと一緒にロジックを組みました。AivisSpeechには複数の話者モデルがあるので、男性の声なら男性っぽく、女性の声なら女性っぽく読み上げます。
 
-ただ、この性別判定がかなり厄介だった。ピッチだけで判定すると、F1実況みたいに興奮してピッチが上がる場面で男性が女性判定になる。この問題をどう解決したかは「[自力じゃ無理なロジック、Claudeと論文から組み立てた話](https://blog.kitepon.dev/post/claude-research-implementation/)」で詳しく書いた。
+ただ、この性別判定がかなり厄介だった。ピッチだけで判定すると、F1実況みたいに興奮してピッチが上がる場面で男性が女性判定になる。この問題をどう解決したかは「[自力じゃ無理なロジック、Claudeと論文から組み立てた話](https://kitepon.dev/blog/post/claude-research-implementation/)」で詳しく書いた。
 
 ---
 
@@ -82,8 +82,8 @@ OLTranslatorが画面のテキストを翻訳するアプリだったので、�
 
 ## 関連記事
 
-- [OLTranslator](https://blog.kitepon.dev/post/oltranslator-app/) — 画面テキスト版の翻訳アプリ。OLTranslatorが「文字」、LiveTRが「音声」。同じ翻訳でもアプローチが全然違う
-- [自力じゃ無理なロジック、Claudeと論文から組み立てた話](https://blog.kitepon.dev/post/claude-research-implementation/) — 性別判定ロジックの技術的な深掘り
+- [OLTranslator](https://kitepon.dev/blog/post/oltranslator-app/) — 画面テキスト版の翻訳アプリ。OLTranslatorが「文字」、LiveTRが「音声」。同じ翻訳でもアプローチが全然違う
+- [自力じゃ無理なロジック、Claudeと論文から組み立てた話](https://kitepon.dev/blog/post/claude-research-implementation/) — 性別判定ロジックの技術的な深掘り
 
 ---
 

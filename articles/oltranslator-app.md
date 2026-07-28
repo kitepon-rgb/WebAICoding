@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## OLTranslatorとは
@@ -16,7 +16,7 @@ published: true
 
 翻訳したい範囲をドラッグで選ぶだけで、あとは自動でOCRと翻訳を繰り返します。ゲーム、配信、ドキュメントなど、画面に外国語が映っていれば使えます。
 
-![外国語が映ったウィンドウの上に、元の文字位置へ日本語訳がそのまま重なって表示される。クリックは透過するので操作の邪魔にならない。](https://blog.kitepon.dev/post/oltranslator-app/shot1.png)
+![外国語が映ったウィンドウの上に、元の文字位置へ日本語訳がそのまま重なって表示される。クリックは透過するので操作の邪魔にならない。](https://kitepon.dev/blog/post/oltranslator-app/shot1.png)
 *外国語が映ったウィンドウの上に、元の文字位置へ日本語訳がそのまま重なって表示される。クリックは透過するので操作の邪魔にならない。*
 
 開発はVS Code + GitHub Copilotで、約2週間。設計と方針は自分で決めて、実装はAIに任せるスタイルで作った。
@@ -57,7 +57,7 @@ published: true
 
 例えば、ゲームのUIで左右に並んだ別々のテキストが一つの文として結合されてしまったり、逆に一文が3行に分かれて別々に翻訳されて意味不明になったり。座標の近さだけで判定すると誤結合するし、厳しくすると今度は分断される。この閾値の調整にかなり時間を使いました。
 
-![繋げすぎると隣の別ラベルが混ざり、厳しくすると一文が割れる。同じ文だけを一つに繋ぐ閾値を探すのに一番手間がかかった。](https://blog.kitepon.dev/post/oltranslator-app/fig1.png)
+![繋げすぎると隣の別ラベルが混ざり、厳しくすると一文が割れる。同じ文だけを一つに繋ぐ閾値を探すのに一番手間がかかった。](https://kitepon.dev/blog/post/oltranslator-app/fig1.png)
 *繋げすぎると隣の別ラベルが混ざり、厳しくすると一文が割れる。同じ文だけを一つに繋ぐ閾値を探すのに一番手間がかかった。*
 
 もう一つは、翻訳しなくていいものを翻訳させないこと。数字だけの行、記号、UIのラベル。こういうノイズを翻訳に回すとAPIトークンの無駄だし、結果もおかしくなります。特にオンライン翻訳はリクエストごとにコストがかかるので、ノイズを減らすことが精度にもコストにも直結する。何を翻訳して何をスキップするか、フィルタリングのルール作りが地味に大変でした。
@@ -76,7 +76,7 @@ published: true
 
 ## 関連記事
 
-この後、音声版として[LiveTR](https://blog.kitepon.dev/post/livetr-app/)を作った。こっちはClaude Codeで4日。開発環境の違いによる体感の差は「[Copilot → Cursor → Claude Code for VSC。俺が辿り着くまでの話](https://blog.kitepon.dev/post/ai-coding-tool-journey/)」で書いている。
+この後、音声版として[LiveTR](https://kitepon.dev/blog/post/livetr-app/)を作った。こっちはClaude Codeで4日。開発環境の違いによる体感の差は「[Copilot → Cursor → Claude Code for VSC。俺が辿り着くまでの話](https://kitepon.dev/blog/post/ai-coding-tool-journey/)」で書いている。
 
 ---
 

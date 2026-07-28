@@ -7,12 +7,12 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 [aiterm-mcp](https://github.com/kitepon-rgb/aiterm-mcp) っていうMCPサーバをnpmに公開した。AIにターミナルを「1本の永続セッション」として握らせるためのもの。
 
-![aiterm-mcp ＝ 端末を1本だけ永続で握り、SSHは一度きり、出力は読む前に間引くstdio MCPサーバ。道具は pty_open / pty_send / pty_read など6個だけ](https://blog.kitepon.dev/post/aiterm-release/overlay.png)
+![aiterm-mcp ＝ 端末を1本だけ永続で握り、SSHは一度きり、出力は読む前に間引くstdio MCPサーバ。道具は pty_open / pty_send / pty_read など6個だけ](https://kitepon.dev/blog/post/aiterm-release/overlay.png)
 *aiterm-mcp ＝ 端末を1本だけ永続で握り、SSHは一度きり、出力は読む前に間引くstdio MCPサーバ。道具は pty_open / pty_send / pty_read など6個だけ*
 
 ## AIのターミナル作業は、見えないところでトークンが溶ける
@@ -29,7 +29,7 @@ AIにサーバー作業をさせるとき、たいていは1コマンドずつ�
 
 aitermはここを畳む。端末を**1本だけ**永続で握って、その中でSSHは**一度だけ**張る。10コマンド打とうが、`ssh` を呼ぶのは最初の1回きり。**接続も認証もN回から1回に減る**。`cd` も環境も最初の1回。以降のコマンドは全部、同じ1本のセッションに素のまま乗る。やり直しの一式が、まるごと消える。
 
-![細切れモードはコマンドごとに接続・認証・MOTDをくり返すが、aitermはSSHもcdもsourceも最初の1回きりで済む](https://blog.kitepon.dev/post/aiterm-release/fig1.png)
+![細切れモードはコマンドごとに接続・認証・MOTDをくり返すが、aitermはSSHもcdもsourceも最初の1回きりで済む](https://kitepon.dev/blog/post/aiterm-release/fig1.png)
 *細切れモードはコマンドごとに接続・認証・MOTDをくり返すが、aitermはSSHもcdもsourceも最初の1回きりで済む*
 
 どれくらいか、自分のサーバーで測った。SSHでログインすると、それだけで定型文（システム情報やお知らせ＝MOTD）が **約385トークン**ぶんAIに渡る。1コマンドごとに繋ぎ直す細切れモードだと、これが**毎回**乗る。10コマンドの作業なら、本題に入る前の定型文だけで約3,800トークン。端末を1本握れば、払うのは最初の1回きり。残りはゼロだ。
@@ -58,7 +58,7 @@ aitermはここを畳む。端末を**1本だけ**永続で握って、その中
 | ログ120行（`journalctl`） | 約4,375 tok | 約1,696 tok |
 | `git log`（25件） | 約473 tok | 約338 tok |
 
-![journalctlのログ120行は4,375→1,696 tok(−61%)、固有値だらけのdocker ps -aは2,355→2,218 tok(−6%)と削り幅が分かれる](https://blog.kitepon.dev/post/aiterm-release/fig2.png)
+![journalctlのログ120行は4,375→1,696 tok(−61%)、固有値だらけのdocker ps -aは2,355→2,218 tok(−6%)と削り幅が分かれる](https://kitepon.dev/blog/post/aiterm-release/fig2.png)
 *journalctlのログ120行は4,375→1,696 tok(−61%)、固有値だらけのdocker ps -aは2,355→2,218 tok(−6%)と削り幅が分かれる*
 
 削り具合は中身しだいだ。反復の多いログはごっそり落ちる（120行で−61%）。一方、固有値ばかりの横長な表（コンテナ一覧）は−6%しか縮まない。一律で何%減みたいな魔法じゃなくて、「無駄なところだけ削る」が正直なところ。それでも、再接続の定型文を毎回読まされずに済むぶんと合わせれば、トークンは確実に積もらなくなる。
@@ -75,7 +75,7 @@ aitermはここを畳む。端末を**1本だけ**永続で握って、その中
 
 攻撃者を止めるための仕組みに、作った本人が締め出される。自宅サーバーで実際にやられた。
 
-実は前にも近いことを書いた。[サーバーをAIに任せた記録](https://blog.kitepon.dev/post/ai-server-management-log/)で、監視スクリプトが同時接続の上限を自分で踏んで、自分のSSHを失敗させてた、というのがあった。あのときは「スクリプト」。今度は「AIエージェント」が、コマンドを打つたびに同じ穴に落ちてた。原因は同じ——**接続が増えすぎる**こと。
+実は前にも近いことを書いた。[サーバーをAIに任せた記録](https://kitepon.dev/blog/post/ai-server-management-log/)で、監視スクリプトが同時接続の上限を自分で踏んで、自分のSSHを失敗させてた、というのがあった。あのときは「スクリプト」。今度は「AIエージェント」が、コマンドを打つたびに同じ穴に落ちてた。原因は同じ——**接続が増えすぎる**こと。
 
 端末を1本に畳むと、これも消える。認証は1回、セッションは1本、増殖しない。だから接続レート制限にもBANにも引っかからない。
 

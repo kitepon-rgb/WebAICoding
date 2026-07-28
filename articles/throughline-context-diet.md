@@ -7,17 +7,17 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 MAXプランの週間クォータが3日で溶けた。
 
-![会話履歴の大半を占めるツールI/Oの残骸が、コンテキストウィンドウに居座り続けるイメージ](https://blog.kitepon.dev/post/throughline-context-diet/eyecatch.png)
+![会話履歴の大半を占めるツールI/Oの残骸が、コンテキストウィンドウに居座り続けるイメージ](https://kitepon.dev/blog/post/throughline-context-diet/eyecatch.png)
 *会話履歴の大半を占めるツールI/Oの残骸が、コンテキストウィンドウに居座り続けるイメージ*
 
 ×20のクォータがあるはずなのに、水曜には残量が怪しくなってる。それ自体は「まあそんなもんか」で済ませてたんだけど、ふと気になった。コンテキストウィンドウの中身って、実際どうなってるんだろう。
 
-[前の記事](https://blog.kitepon.dev/post/ai-secretary-token-diet/)ではAI秘書のトークン節約について書いた。CLAUDE.mdを削ったり、MCPツール定義を削ったり。でも今回はAI秘書じゃなくて、Claude Code自体の話。道具のほうが大食いだったとは。
+[前の記事](https://kitepon.dev/blog/post/ai-secretary-token-diet/)ではAI秘書のトークン節約について書いた。CLAUDE.mdを削ったり、MCPツール定義を削ったり。でも今回はAI秘書じゃなくて、Claude Code自体の話。道具のほうが大食いだったとは。
 
 ## きっかけ
 
@@ -84,7 +84,7 @@ Throughlineは会話を3つのレイヤーに分解してSQLiteに保存する�
 
 **L3（Detail）** — ツール入出力、システムメッセージ。SQLiteに退避してコンテキストには一切残さない。必要になったらAIが自分でSQLiteから引っ張ってくる。
 
-![会話本文(L2)はそのまま残し、ツールI/O(L3)はSQLiteに退避。古いターンは一行要約(L1)へ畳む。50ターンで約90%のコンテキスト削減](https://blog.kitepon.dev/post/throughline-context-diet/fig1.png)
+![会話本文(L2)はそのまま残し、ツールI/O(L3)はSQLiteに退避。古いターンは一行要約(L1)へ畳む。50ターンで約90%のコンテキスト削減](https://kitepon.dev/blog/post/throughline-context-diet/fig1.png)
 *会話本文(L2)はそのまま残し、ツールI/O(L3)はSQLiteに退避。古いターンは一行要約(L1)へ畳む。50ターンで約90%のコンテキスト削減*
 
 /clearを打っても大丈夫。SQLiteは消えないから、次のセッション開始時にトランザクション一発で前セッションの記憶を引き継ぐ。PIDを追いかけたり、時間窓で判定する必要はない。決定的に動く。
@@ -134,7 +134,7 @@ ThroughlineはL2を20ターン分保持するから、**短いセッションで
 ▶ Throughline  2ed5039c  ████░░░░░░░░░░░░░░░░  205.1k / 21%  残 794.9k  claude-opus-4-6
 ```
 
-![並行する複数セッションのトークン使用量を、推定でなくmessage.usageの実測値でリアルタイム表示する](https://blog.kitepon.dev/post/throughline-context-diet/fig2.png)
+![並行する複数セッションのトークン使用量を、推定でなくmessage.usageの実測値でリアルタイム表示する](https://kitepon.dev/blog/post/throughline-context-diet/fig2.png)
 *並行する複数セッションのトークン使用量を、推定でなくmessage.usageの実測値でリアルタイム表示する*
 
 transcriptのJSONLからAPIの実測値（`message.usage`）を読み取るので、`文字数÷4`みたいな雑な推定じゃなくて正確な値が出る。1Mコンテキストの検出も自動。
@@ -149,7 +149,7 @@ CLAUDE.mdの最適化やプロンプト短縮は全体の9%に効く対策で、
 
 本来こういう問題はプラットフォーム側が解決すべきなのかもしれない。でも今すぐ困ってたから自分で作った。Node.js 22.5以上、依存ゼロ、MIT。MAX契約があれば動く。
 
-![Throughline — Claude Codeのコンテキスト消費を約90%削る、依存ゼロ・MITのOSS](https://blog.kitepon.dev/post/throughline-context-diet/og-throughline.png)
+![Throughline — Claude Codeのコンテキスト消費を約90%削る、依存ゼロ・MITのOSS](https://kitepon.dev/blog/post/throughline-context-diet/og-throughline.png)
 *Throughline — Claude Codeのコンテキスト消費を約90%削る、依存ゼロ・MITのOSS*
 
 @[card](https://github.com/kitepon-rgb/Throughline)

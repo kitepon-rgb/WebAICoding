@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## 終わりましたと言われて、何も終わっていない
@@ -47,7 +47,7 @@ Claude CodeでもCodexでも、1体に順番にやらせている限り、待ち
 
 コードを変える作業は使い捨ての作業コピー（gitのworktree）の中でやる。元のブランチには触らない。検証が通ったら受け入れて、通らなければ捨てる。コードが変わったら、それ以前に作った工程表と、それ以前にAIへ渡してあった説明は失効させて、新しいバージョンとして作り直す。古い前提で走っているAIが残っていると、そこから壊れるので。
 
-![Latticeが組んだ依存工程図の一部。カードが工程、細い線が依存関係、太い線が最長依存鎖。](https://blog.kitepon.dev/post/lattice-parallel-agents/gantt-graph.png)
+![Latticeが組んだ依存工程図の一部。カードが工程、細い線が依存関係、太い線が最長依存鎖。](https://kitepon.dev/blog/post/lattice-parallel-agents/gantt-graph.png)
 *Latticeが組んだ依存工程図の一部。カードが工程、細い線が依存関係、太い線が最長依存鎖。*
 
 この図は手で描いていない。AIと相談して工程を登録した時点で、依存関係から自動で組み上がる。
@@ -107,7 +107,7 @@ lattice todo done --plan phase-control-live-gantt --task 020 --evidence .lattice
 
 中心にあるのは、作業の説明とコードの構造から影響範囲を見積もって、重ならなければそのまま並べ、リファクタで消せる重なりなら消してから並べて、その計画で複数の開発エージェントに同時にやらせる、という流れになる。実際に出した請求項1は、こう書いてある。
 
-![出願した特許請求の範囲の請求項1。](https://blog.kitepon.dev/post/lattice-parallel-agents/claim1.png)
+![出願した特許請求の範囲の請求項1。](https://kitepon.dev/blog/post/lattice-parallel-agents/claim1.png)
 *出願した特許請求の範囲の請求項1。*
 
 出願にはこの先も書いた。同時に走らせている最中に衝突が出た場合、影響を受けた作業を止めて、止めた範囲について計画を作り直す。実際に変更された場所を観測して、見積もった範囲の外へ出たら実行時の衝突として扱う。ここも実装が入っていて、動かしながら詰めている最中だ。
@@ -127,10 +127,10 @@ lattice todo status --json
 lattice todo gantt serve --port 0
 ```
 
-![全体表示にしたところ。74工程とその依存関係が1枚に入る。](https://blog.kitepon.dev/post/lattice-parallel-agents/gantt-whole.png)
+![全体表示にしたところ。74工程とその依存関係が1枚に入る。](https://kitepon.dev/blog/post/lattice-parallel-agents/gantt-whole.png)
 *全体表示にしたところ。74工程とその依存関係が1枚に入る。*
 
-![画面の右半分。工程の状態の内訳、今すぐ同時に始められる工程数、区切りごとの監査の進み具合が出る。](https://blog.kitepon.dev/post/lattice-parallel-agents/gantt-phases.png)
+![画面の右半分。工程の状態の内訳、今すぐ同時に始められる工程数、区切りごとの監査の進み具合が出る。](https://kitepon.dev/blog/post/lattice-parallel-agents/gantt-phases.png)
 *画面の右半分。工程の状態の内訳、今すぐ同時に始められる工程数、区切りごとの監査の進み具合が出る。*
 
 右半分には、工程の状態の内訳と、区切りごとの監査の進み具合が出る。`locked` が表しているのは監査の順番待ちだ。工程の開始は依存関係だけで決まるので、後ろの区切りに属する工程でも、前提が揃っていれば始まる。複数の区切りが同時に進むこともある。

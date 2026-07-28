@@ -13,7 +13,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import TurndownService from "turndown";
 import { gfm } from "turndown-plugin-gfm";
-import { toZennSlug } from "../../tools/article-manifest.mjs";
+import { toBlogSlug, toZennSlug } from "../../tools/article-manifest.mjs";
 
 const ZENN_USER = "kitepon";
 const DEVTO_API = "https://dev.to/api/articles";
@@ -27,7 +27,7 @@ const ARTICLES_DIR = path.join(REPO_ROOT, "articles");
 const STATE_FILE = path.join(REPO_ROOT, "crossposted-devto.json");
 
 const INTERNAL_LINK_RE =
-  /\]\(https:\/\/(?:kitepon-rgb\.github\.io\/WebAICoding|blog\.kitepon\.dev)\/post\/([a-z0-9-]+)\/(#[^)]+)?\)/g;
+  /\]\(https:\/\/(?:kitepon-rgb\.github\.io\/WebAICoding|blog\.kitepon\.dev|kitepon\.dev\/blog)\/post\/([a-z0-9-]+)\/(#[^)]+)?\)/g;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -120,7 +120,7 @@ export function buildDescription(markdown) {
 }
 
 export function canonicalUrlFor(zennSlug) {
-  return `https://zenn.dev/${ZENN_USER}/articles/${zennSlug}?locale=en`;
+  return `https://kitepon.dev/blog/post/${toBlogSlug(zennSlug)}/`;
 }
 
 export function buildPayload(article, topics, state, canonicalUrl) {

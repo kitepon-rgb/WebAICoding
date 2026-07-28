@@ -7,17 +7,17 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
 
-![深夜の自宅オフィスで、一台だけ灯る端末にログが静かに流れている](https://blog.kitepon.dev/post/ai-server-management/eyecatch.png)
+![深夜の自宅オフィスで、一台だけ灯る端末にログが静かに流れている](https://kitepon.dev/blog/post/ai-server-management/eyecatch.png)
 *深夜の自宅オフィスで、一台だけ灯る端末にログが静かに流れている*
 
-[以前の記事](https://blog.kitepon.dev/post/claude-code-deploy/)で、AIにSSHでサーバーを直接触らせたら楽だったという話を書いた。デプロイスクリプトを作らせて、ビルドからコンテナ更新まで一発で終わるようにした。
+[以前の記事](https://kitepon.dev/blog/post/claude-code-deploy/)で、AIにSSHでサーバーを直接触らせたら楽だったという話を書いた。デプロイスクリプトを作らせて、ビルドからコンテナ更新まで一発で終わるようにした。
 
-その後、[自分専用のBotをSaaS化した](https://blog.kitepon.dev/post/discord-bot-to-saas/)。これも本番は自宅サーバーで動いている。
+その後、[自分専用のBotをSaaS化した](https://kitepon.dev/blog/post/discord-bot-to-saas/)。これも本番は自宅サーバーで動いている。
 
 ここまで来ると、次に思うことは一つだ。**運用も任せたらいいんじゃないか？**
 
@@ -51,7 +51,7 @@ AIをずっと動かすとMAXプランの使用量を食う。だから昼間は
 
 なぜ深夜か。MAXプランの使用量は時間経過で回復する。深夜に使っても自分が起きた頃には回復しているし、使わなければその枠は無駄になるだけだ。有効活用しない手はない。
 
-![昼間は監視スクリプトが60秒ごとにヘルスチェック、深夜4時はAIがセキュリティ・リソース・コンテナ構成を巡回する2モード運用](https://blog.kitepon.dev/post/ai-server-management/fig2.png)
+![昼間は監視スクリプトが60秒ごとにヘルスチェック、深夜4時はAIがセキュリティ・リソース・コンテナ構成を巡回する2モード運用](https://kitepon.dev/blog/post/ai-server-management/fig2.png)
 *昼間は監視スクリプトが60秒ごとにヘルスチェック、深夜4時はAIがセキュリティ・リソース・コンテナ構成を巡回する2モード運用*
 
 ### 監視スクリプトもAIが作る
@@ -66,7 +66,7 @@ AIをずっと動かすとMAXプランの使用量を食う。だから昼間は
 
 異常が検知されてAIが動き出すとき、1つのAIが全部やるわけではない。役割を3層に分けている。
 
-![親=症状検知、子=原因の特定と修正・デプロイ、孫=修正方針の監査、と縦に責務を分けた3層構造](https://blog.kitepon.dev/post/ai-server-management/fig1.png)
+![親=症状検知、子=原因の特定と修正・デプロイ、孫=修正方針の監査、と縦に責務を分けた3層構造](https://kitepon.dev/blog/post/ai-server-management/fig1.png)
 *親=症状検知、子=原因の特定と修正・デプロイ、孫=修正方針の監査、と縦に責務を分けた3層構造*
 
 **親エージェント** — 症状を検知して、どのアプリに問題があるかを特定する。ここで大事なのは、親は**症状だけを渡す**ということだ。「コンテナが落ちた」「HTTPが500を返した」という事実だけ。なぜ落ちたか、どう直すべきかは親が判断しない。

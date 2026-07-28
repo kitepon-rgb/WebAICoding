@@ -26,9 +26,9 @@ node tools/zenn-sync/sync.mjs                   # 全記事の変更分を同期
 
 | 変換 | Hugo | → Zenn |
 |---|---|---|
-| 本文画像 | `![alt](file.png)`（相対） | `![alt](https://blog.kitepon.dev/post/<slug>/file.png)` ＋直下に `*alt*`（figcaption 再現） |
+| 本文画像 | `![alt](file.png)`（相対） | `![alt](https://kitepon.dev/blog/post/<slug>/file.png)` ＋直下に `*alt*`（figcaption 再現） |
 | リンクカード | `{{< linkcard url="X" … >}}` | `@[card](X)` |
-| 内部リンク | `{{< relref "…" >}}` | `https://blog.kitepon.dev/post/<slug>/` |
+| 内部リンク | `{{< relref "…" >}}` | `https://kitepon.dev/blog/post/<slug>/` |
 | 冒頭 | （なし） | 転載バナー `:::message … :::` |
 
 未対応の Hugo ショートコードが残ったら**エラーで停止**する（黙って素通ししない）。

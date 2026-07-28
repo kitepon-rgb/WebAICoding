@@ -7,12 +7,12 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
 
-![乱立するAIコーディングツールの中を、明かりを頼りに進んでいくイメージ](https://blog.kitepon.dev/post/ai-coding-tool-journey/eyecatch.png)
+![乱立するAIコーディングツールの中を、明かりを頼りに進んでいくイメージ](https://kitepon.dev/blog/post/ai-coding-tool-journey/eyecatch.png)
 *乱立するAIコーディングツールの中を、明かりを頼りに進んでいくイメージ*
 
 AIコーディングツールが乱立している。GitHub Copilot、Cursor、Claude Code、Cline、Continue……選択肢が多すぎて、何を使えばいいか分からない。
@@ -22,7 +22,7 @@ AIコーディングツールが乱立している。GitHub Copilot、Cursor、C
 
 同じように迷っている人に向けて、なぜこの構成に落ち着いたのか書いておく。
 
-![Claude Pro → Copilot → Cursor を経て、各ツールの離脱理由とともにClaude Code + MAXへ一本化するまでの遍歴](https://blog.kitepon.dev/post/ai-coding-tool-journey/fig1.png)
+![Claude Pro → Copilot → Cursor を経て、各ツールの離脱理由とともにClaude Code + MAXへ一本化するまでの遍歴](https://kitepon.dev/blog/post/ai-coding-tool-journey/fig1.png)
 *Claude Pro → Copilot → Cursor を経て、各ツールの離脱理由とともにClaude Code + MAXへ一本化するまでの遍歴*
 
 ---
@@ -97,7 +97,7 @@ Claude Codeの存在を改めて見直した時、思った。
 
 ここで冷静に計算した。CopilotとCursorに払っている月額を合わせたら、**もうMAXプランに手が届く金額だった。**
 
-![分散して払っていたCopilotとCursorの月額を合算すると、MAXプラン一本とほぼ同額になる対比図](https://blog.kitepon.dev/post/ai-coding-tool-journey/fig2.png)
+![分散して払っていたCopilotとCursorの月額を合算すると、MAXプラン一本とほぼ同額になる対比図](https://kitepon.dev/blog/post/ai-coding-tool-journey/fig2.png)
 *分散して払っていたCopilotとCursorの月額を合算すると、MAXプラン一本とほぼ同額になる対比図*
 
 ---
@@ -134,11 +134,11 @@ VS Code上でClaude Codeを使うと、プロジェクトルートの`CLAUDE.md`
 
 1つ目は**OLTranslator**。画面上の外国語テキストをOCRで読み取って、日本語訳をオーバーレイ表示するWindowsアプリ。これはVS Code + Copilotで開発して、**完成まで2週間**かかった。
 
-@[card](https://blog.kitepon.dev/post/oltranslator-app)
+@[card](https://kitepon.dev/blog/post/oltranslator-app)
 
 2つ目は**LiveTR**。PCで再生中の動画の英語音声をリアルタイムに認識して、日本語字幕を表示して読み上げまでやるアプリ。こっちはClaude Codeだけで開発して、**4日で完成**した。
 
-@[card](https://blog.kitepon.dev/post/livetr-app)
+@[card](https://kitepon.dev/blog/post/livetr-app)
 
 正直に言うと、2月中旬からAIコーディングを始めて、LiveTRの頃にはだいぶ慣れていたのもある。だから単純に「Claudeだから速かった」とは言い切れない。ただ、Claude Codeでの開発は明らかにスムーズだった。設計を伝えて、任せて、レビューする。このサイクルがストレスなく回った。
 

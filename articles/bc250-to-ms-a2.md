@@ -7,12 +7,12 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## はじめに
 
-![基板むき出しのマイニングボードから、省電力の小型ミニPCへ。選定も引っ越しもClaude任せ](https://blog.kitepon.dev/post/bc250-to-ms-a2/eyecatch.png)
+![基板むき出しのマイニングボードから、省電力の小型ミニPCへ。選定も引っ越しもClaude任せ](https://kitepon.dev/blog/post/bc250-to-ms-a2/eyecatch.png)
 *基板むき出しのマイニングボードから、省電力の小型ミニPCへ。選定も引っ越しもClaude任せ*
 
 俺の自宅鯖、ちょっと前まで **AMD BC-250 + Bazzite** で動かしてた。
@@ -21,8 +21,8 @@ BC-250 ってのは AliExpress で売ってる元マイニングボード。「�
 
 そこに Claude で作ったアプリを順次デプロイしてた話は、過去に書いた:
 
-- [サーバー管理をAIに丸ごと任せてみた話](https://blog.kitepon.dev/post/ai-server-management/)
-- [AIにサーバーを任せて3日間で起きたこと](https://blog.kitepon.dev/post/ai-server-management-log/)
+- [サーバー管理をAIに丸ごと任せてみた話](https://kitepon.dev/blog/post/ai-server-management/)
+- [AIにサーバーを任せて3日間で起きたこと](https://kitepon.dev/blog/post/ai-server-management-log/)
 
 ---
 
@@ -84,7 +84,7 @@ Claudeで作ったアプリがまともに動くようになってきた。な�
 
 …**1 日かからずに引っ越し終わった**。
 
-![旧BC-250(Bazzite/Podman)から新MS-A2(Ubuntu/Docker)へ。OSもランタイムも総取っ替えで、データSSDだけ持ち越す](https://blog.kitepon.dev/post/bc250-to-ms-a2/fig1.png)
+![旧BC-250(Bazzite/Podman)から新MS-A2(Ubuntu/Docker)へ。OSもランタイムも総取っ替えで、データSSDだけ持ち越す](https://kitepon.dev/blog/post/bc250-to-ms-a2/fig1.png)
 *旧BC-250(Bazzite/Podman)から新MS-A2(Ubuntu/Docker)へ。OSもランタイムも総取っ替えで、データSSDだけ持ち越す*
 
 データのバックアップ計画から、新サーバーへの設定反映、コンテナ群の Docker 化対応まで、全部 Claude が立てて実行してくれた。俺は基本的に待ってるだけ。判断が必要な分岐で「これどっちにする？」って聞かれて答えるくらい。
@@ -101,7 +101,7 @@ Claudeで作ったアプリがまともに動くようになってきた。な�
 
 人力だったら逃げ出したくなる作業だけど、こっちは座ってるだけ。**目論見どおりだ**。そもそも MS-A2 を買った理由が「Claudeに任せたら楽だから」だったので、想定の範囲内。
 
-![乗り換え後の構成。MS-A2上の親Codexがコンテナ群を回し、WSL2の子Codexがアプリを直し、Pi 5が見張る](https://blog.kitepon.dev/post/bc250-to-ms-a2/fig2.png)
+![乗り換え後の構成。MS-A2上の親Codexがコンテナ群を回し、WSL2の子Codexがアプリを直し、Pi 5が見張る](https://kitepon.dev/blog/post/bc250-to-ms-a2/fig2.png)
 *乗り換え後の構成。MS-A2上の親Codexがコンテナ群を回し、WSL2の子Codexがアプリを直し、Pi 5が見張る*
 
 ---

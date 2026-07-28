@@ -7,10 +7,10 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-俺は aiterm-mcp という道具を作って npm に公開している。AIに1本の永続ターミナルを握らせて、そこから別のAIまで操作させる仕組みで、経緯は[公開したときの記事](https://blog.kitepon.dev/post/aiterm-release/)と[AI同士を会話させた記事](https://blog.kitepon.dev/post/aiterm-converse/)に書いた。
+俺は aiterm-mcp という道具を作って npm に公開している。AIに1本の永続ターミナルを握らせて、そこから別のAIまで操作させる仕組みで、経緯は[公開したときの記事](https://kitepon.dev/blog/post/aiterm-release/)と[AI同士を会話させた記事](https://kitepon.dev/blog/post/aiterm-converse/)に書いた。
 
 これが最近、俺の開発環境の中心になってきた。いまの俺の環境は、Fable 5（Claudeの新しい最上位モデル）が全体の指揮をとって、Codex や Grok に作業を振る構成になっていて、その指示は全部 aiterm を通っている。英語で紹介ポストを出したら海外からも返事が付くようになって、起動前の環境検証を評価してくれる人や、「AIがAIを動かす部分より、ターミナル1本を維持できる方が効く」と言う人がいた。日本語圏にも、実際に使って設定の注意点を共有してくれる人が出てきた。
 
@@ -20,7 +20,7 @@ published: true
 
 それで、Fable 5 に相談してみることにした。伝えたのは「ブラッシュアップして」程度の一言で、どこを見ろとも何を直せとも言っていない。我ながら雑な相談だと思う。
 
-![相談は一言。監査を組んだのは、書き溜めた決まりごと（今回の流れ）](https://blog.kitepon.dev/post/ai-audit-blind-layer/fig-consult-flow.png)
+![相談は一言。監査を組んだのは、書き溜めた決まりごと（今回の流れ）](https://kitepon.dev/blog/post/ai-audit-blind-layer/fig-consult-flow.png)
 *相談は一言。監査を組んだのは、書き溜めた決まりごと（今回の流れ）*
 
 ## 戻ってきたら終わっていた
@@ -51,7 +51,7 @@ aiterm は「AIがしゃべり終わったか」を、画面の出力が0.5秒�
 
 手元のMacだとテストは全部通る。これを見つけたのは GitHub の CI（コードを更新するたびに複数のOSで自動テストを回す仕組み）だった。CI の macOS 実行機はかなり遅い。問題のテストは、待ち時間0.6秒に対して判定に使う静止時間が0.5秒で、余裕が100ミリ秒しかない。遅い実行機ではこの余裕が足りなくなって、macOS のジョブが毎回確実に失敗した。ここで初めてバグの存在が分かった。
 
-![v0.12.0 リリース時のCIの実際の画面。Linux と Windows は全部通り、macOS の node 18 が失敗、残る2つの macOS ジョブは自動打ち切りになっている](https://blog.kitepon.dev/post/ai-audit-blind-layer/ci-macos-fail.png)
+![v0.12.0 リリース時のCIの実際の画面。Linux と Windows は全部通り、macOS の node 18 が失敗、残る2つの macOS ジョブは自動打ち切りになっている](https://kitepon.dev/blog/post/ai-audit-blind-layer/ci-macos-fail.png)
 *v0.12.0 リリース時のCIの実際の画面。Linux と Windows は全部通り、macOS の node 18 が失敗、残る2つの macOS ジョブは自動打ち切りになっている*
 
 面白いのは、監査も惜しいところまで行っていたことだ。取りこぼしを見る係は「時間に依存する危ういテスト」という問題の種類には気づいていて、実際に別のテストを指摘していた。そちらは余裕が5倍あったので「問題なし」と判定されて、これは正解だった。本物の方は指摘されないままだった。コードを読むだけだと、余裕1.2倍のテストも5倍のテストも、同じ「通っているテスト」に見えるらしい。
@@ -72,7 +72,7 @@ Grok の画面ログを「全部読む」モードで取ったら、73,176文字
 
 結果を並べるとこうなる。
 
-![誰が何を見つけたか（AIの監査／複数OSのCI／実際に動かす確認）](https://blog.kitepon.dev/post/ai-audit-blind-layer/fig-who-found-what.png)
+![誰が何を見つけたか（AIの監査／複数OSのCI／実際に動かす確認）](https://kitepon.dev/blog/post/ai-audit-blind-layer/fig-who-found-what.png)
 *誰が何を見つけたか（AIの監査／複数OSのCI／実際に動かす確認）*
 
 雑な一言でここまで回ったのは、数ヶ月かけて書き溜めた決まりごとを Fable 5 が読んで動いたからだ。名指しできなかった「粗」は7件の実体になって、一日で消えた。反証の工程は、危ない思い込み10件を実装前に止めてくれた。そして一番厄介なバグは、CIを先に張っておく・直したら動かして確かめる、という昔の自分が決めておいたルールが見つけた。

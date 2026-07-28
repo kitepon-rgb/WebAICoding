@@ -7,10 +7,10 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-![人間がターミナルを使う一方で、AIがコンピューターの内部へ構造化された接続を伸ばしている](https://blog.kitepon.dev/post/learning-shell-and-terminal-with-aishell/eyecatch.png)
+![人間がターミナルを使う一方で、AIがコンピューターの内部へ構造化された接続を伸ばしている](https://kitepon.dev/blog/post/learning-shell-and-terminal-with-aishell/eyecatch.png)
 *人間がターミナルを使う一方で、AIがコンピューターの内部へ構造化された接続を伸ばしている*
 
 > なあ、AIならシェルもターミナルもいらなくね？
@@ -27,7 +27,7 @@ AIShellの開発は、俺がAIにそう話しかけたところから始まっ�
 
 細かな仕組みを省いて図にすると、こんな関係になる。
 
-![ターミナルは文字の入出力を受け持ち、シェルがコマンドを解釈してOSへ処理を頼む](https://blog.kitepon.dev/post/learning-shell-and-terminal-with-aishell/fig1.png)
+![ターミナルは文字の入出力を受け持ち、シェルがコマンドを解釈してOSへ処理を頼む](https://kitepon.dev/blog/post/learning-shell-and-terminal-with-aishell/fig1.png)
 *ターミナルは文字の入出力を受け持ち、シェルがコマンドを解釈してOSへ処理を頼む*
 
 ターミナルが文字の入出力を受け持ち、その中でシェルが動く。どちらも、人間がコンピューターへ指示を出し、結果を理解するために作られている。
@@ -62,7 +62,7 @@ Git、検索プログラム、コンパイラ、テストなどは、すでに�
 
 AIから見ると、経路はこうなる。
 
-![通常のAIはシェル用コマンドと人間向けテキストを使い、AIShellは構造化した指示と必要な情報をやり取りする](https://blog.kitepon.dev/post/learning-shell-and-terminal-with-aishell/fig2.png)
+![通常のAIはシェル用コマンドと人間向けテキストを使い、AIShellは構造化した指示と必要な情報をやり取りする](https://kitepon.dev/blog/post/learning-shell-and-terminal-with-aishell/fig2.png)
 *通常のAIはシェル用コマンドと人間向けテキストを使い、AIShellは構造化した指示と必要な情報をやり取りする*
 
 開発中、AIShellがOSへ直接送る命令と、OSから返ってくる情報を見る機会があった。普段ターミナルで見るコマンドと出力とは形式が異なり、AIShellとOSが直接やり取りする情報が並んでいた。

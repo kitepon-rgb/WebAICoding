@@ -7,16 +7,16 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-[aiterm-mcp](https://blog.kitepon.dev/post/aiterm-release/) を「AIに永続ターミナルを1本握らせてトークンを削る」道具として公開した。けど使ってるうちに、永続ターミナルの本当のうまみは別のところにあると気づいた。**対話型のコマンドが、そのまま回せる**ことだ。
+[aiterm-mcp](https://kitepon.dev/blog/post/aiterm-release/) を「AIに永続ターミナルを1本握らせてトークンを削る」道具として公開した。けど使ってるうちに、永続ターミナルの本当のうまみは別のところにあると気づいた。**対話型のコマンドが、そのまま回せる**ことだ。
 
 対話型が回せるってことは、親のClaudeが中で `codex` を起動して、そのまま喋らせられるってことだ。Claude が Codex CLI を握れる。これが地味に効く。
 
 ちょうど [rpgdev](https://github.com/kitepon-rgb/rpgdev)（AIの作業を画面の隅でRPGに変換するやつ）を作ってて、曲も、勇者とモンスターの絵も、効果音も、背景も、エフェクトも要った。ロジックはClaudeで書きつつ、こういう創作まわりだけCodexに投げたい。Claudeが映像や音に強くないのは昔から知ってる話で、そこは素直に別の手へ回したい。
 
-![rpgdevの実オーバーレイ。勇者・精霊・モンスター・ダンジョン背景・クエストログ『Build the API』が画面の隅で動く。この絵も曲も効果音も、創作まわりはCodexに投げて出てきた。](https://blog.kitepon.dev/post/claude-drives-codex/overlay.png)
+![rpgdevの実オーバーレイ。勇者・精霊・モンスター・ダンジョン背景・クエストログ『Build the API』が画面の隅で動く。この絵も曲も効果音も、創作まわりはCodexに投げて出てきた。](https://kitepon.dev/blog/post/claude-drives-codex/overlay.png)
 *rpgdevの実オーバーレイ。勇者・精霊・モンスター・ダンジョン背景・クエストログ『Build the API』が画面の隅で動く。この絵も曲も効果音も、創作まわりはCodexに投げて出てきた。*
 
 引っかかるのはそこじゃない。ロジックを書いてる裏でCodexに絵を作らせて、それを同じプロジェクトに組み込もうとすると、普通にコンフリクトする。同じファイルを2人で触るからだ。うーん面倒だな——その程度の地味な引っかかりが、aitermでCodexを子分にしたら消えた。
@@ -35,7 +35,7 @@ published: true
 
 親のClaudeが aiterm でターミナルを握って、その中で Codex を起動する。あとは親が「この曲を作れ」「この敵の絵を描け」と投げて、Codex がアセットだけ作って返す。親はそれを受け取って、本筋（ゲームのロジック）を進める。
 
-![並走（横並び）は同じリポジトリを2AIが奪い合ってコミットが枝分かれする。親子（縦積み）は親ClaudeがaitermでCodexを握り、順番を直列に捌くから衝突しない。](https://blog.kitepon.dev/post/claude-drives-codex/fig1.png)
+![並走（横並び）は同じリポジトリを2AIが奪い合ってコミットが枝分かれする。親子（縦積み）は親ClaudeがaitermでCodexを握り、順番を直列に捌くから衝突しない。](https://kitepon.dev/blog/post/claude-drives-codex/fig1.png)
 *並走（横並び）は同じリポジトリを2AIが奪い合ってコミットが枝分かれする。親子（縦積み）は親ClaudeがaitermでCodexを握り、順番を直列に捌くから衝突しない。*
 
 ポイントは、順番を親が全部握ってるところだ。横並びだと2人が勝手に同じファイルへ突っ込むけど、親子なら親が「次はお前」「次は俺」と直列に捌く。誰がいつどこを触るかが一本道になるから、そもそもぶつかりようがない。
@@ -52,7 +52,7 @@ published: true
 
 rpgdev の曲も、勇者とモンスターのグラフィックも、効果音も、背景も、各種エフェクトも——全部この流れで出てきた。どのファイルが誰の担当か、俺は一度も仕切ってない。
 
-![『この敵の絵を描け』で返ってきたボススプライト。ひび割れた黒曜石の体に溶岩脈が走るMagma Golem。透過背景でそのままゲームに乗る。](https://blog.kitepon.dev/post/claude-drives-codex/boss.png)
+![『この敵の絵を描け』で返ってきたボススプライト。ひび割れた黒曜石の体に溶岩脈が走るMagma Golem。透過背景でそのままゲームに乗る。](https://kitepon.dev/blog/post/claude-drives-codex/boss.png)
 *『この敵の絵を描け』で返ってきたボススプライト。ひび割れた黒曜石の体に溶岩脈が走るMagma Golem。透過背景でそのままゲームに乗る。*
 
 ## 親と子は、握った方で決まる

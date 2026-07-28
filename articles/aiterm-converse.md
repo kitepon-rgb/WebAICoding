@@ -7,14 +7,14 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-[aiterm-mcp](https://github.com/kitepon-rgb/aiterm-mcp) は、自宅サーバをいじる手間を消すために作った。Claude Code から一つずつコマンドを打つと、サーバへの接続がそのたびに切れて、つなぎ直すたびに認証をやり直すことになる。つなぎっぱなしの一本を握れれば、それが要らなくなる。[そのための道具だ](https://blog.kitepon.dev/post/aiterm-release/)。
+[aiterm-mcp](https://github.com/kitepon-rgb/aiterm-mcp) は、自宅サーバをいじる手間を消すために作った。Claude Code から一つずつコマンドを打つと、サーバへの接続がそのたびに切れて、つなぎ直すたびに認証をやり直すことになる。つなぎっぱなしの一本を握れれば、それが要らなくなる。[そのための道具だ](https://kitepon.dev/blog/post/aiterm-release/)。
 
 今この道具をいちばん使っているのは、Claude に別の AI——Codex や Grok や Composer——を動かしてもらうときだ。相手が動いているところを Claude が読んで、その場で次を伝える。それを繰り返して、一つの作業を一緒に進めていく。
 
-![Claude が握る1本の端末の中で Codex を起動し、画面を読んでは次を送る。この読む↔送るの往復が会話。Grok・Composer も同じやり方で起動できる](https://blog.kitepon.dev/post/aiterm-converse/converse.png)
+![Claude が握る1本の端末の中で Codex を起動し、画面を読んでは次を送る。この読む↔送るの往復が会話。Grok・Composer も同じやり方で起動できる](https://kitepon.dev/blog/post/aiterm-converse/converse.png)
 *Claude が握る1本の端末の中で Codex を起動し、画面を読んでは次を送る。この読む↔送るの往復が会話。Grok・Composer も同じやり方で起動できる*
 
 ## どう動くか

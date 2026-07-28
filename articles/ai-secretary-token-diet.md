@@ -7,14 +7,14 @@ published: true
 ---
 
 :::message
-この記事は [Claude Code 始めました](https://blog.kitepon.dev/) からの転載です。
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
 ## やらかした
 
-[前回の記事](https://blog.kitepon.dev/post/ai-assistant-personality/)で、AIアシスタントに記憶と人格を持たせて秘書にした話を書いた。俺専属のAI秘書ができて、よし本格運用だ、と意気込んだ。
+[前回の記事](https://kitepon.dev/blog/post/ai-assistant-personality/)で、AIアシスタントに記憶と人格を持たせて秘書にした話を書いた。俺専属のAI秘書ができて、よし本格運用だ、と意気込んだ。
 
-![夜の机で一台の端末だけが珊瑚色に灯り、傍らにベルが置かれた編集的イラスト。本格運用した秘書が3日で週次リミットを溶かした夜のイメージ](https://blog.kitepon.dev/post/ai-secretary-token-diet/eyecatch.png)
+![夜の机で一台の端末だけが珊瑚色に灯り、傍らにベルが置かれた編集的イラスト。本格運用した秘書が3日で週次リミットを溶かした夜のイメージ](https://kitepon.dev/blog/post/ai-secretary-token-diet/eyecatch.png)
 *夜の机で一台の端末だけが珊瑚色に灯り、傍らにベルが置かれた編集的イラスト。本格運用した秘書が3日で週次リミットを溶かした夜のイメージ*
 
 3日で週次リミットに到達した。
@@ -43,7 +43,7 @@ ClaudeのMAXプラン、x20の上限。普段ガッツリ開発してても週�
 
 トークン節約の本質は、**人間向けのフォーマットをAI向けに削ってから渡す**こと。そして**AI向けに吐かせた出力をさらに圧縮する**こと。3つのツールは、それぞれこの前提を別の角度から解決してた。
 
-![git statusの人間向け出力（案内文・罫線・空白だらけ）を、RTK通過後にbranchとmodifiedの2行へ削った対比図。下段にECC＝余計なことをしない／RTK＝入力を削る／Caveman＝出力を削るの3軸](https://blog.kitepon.dev/post/ai-secretary-token-diet/fig1.png)
+![git statusの人間向け出力（案内文・罫線・空白だらけ）を、RTK通過後にbranchとmodifiedの2行へ削った対比図。下段にECC＝余計なことをしない／RTK＝入力を削る／Caveman＝出力を削るの3軸](https://kitepon.dev/blog/post/ai-secretary-token-diet/fig1.png)
 *git statusの人間向け出力（案内文・罫線・空白だらけ）を、RTK通過後にbranchとmodifiedの2行へ削った対比図。下段にECC＝余計なことをしない／RTK＝入力を削る／Caveman＝出力を削るの3軸*
 
 ### ECC — 凄い人がうまいことやってくれるやつ
