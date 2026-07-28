@@ -1,15 +1,13 @@
 # syntax=docker/dockerfile:1.7
 
 # ブログを kitepon.dev/blog/ の静的配信物として焼く。
-# baseURL は hugo.toml を書き換えず build 引数で渡す。GitHub Pages 側の
-# blog.kitepon.dev を壊さずに、新しい配信面を並行して立てるため。
+# baseURL は hugo.toml を正本とする。
 # hugo_extended は glibc ビルドで musl では動かない（C++ シンボルの relocation で落ちる）。
 # CI と同じ extended バイナリを使うため builder は glibc 系にする。
 # 最終 image は nginx:alpine のままなので、配信物のサイズには影響しない。
 FROM debian:bookworm-slim AS builder
 
 ARG HUGO_VERSION=0.164.0
-ARG BLOG_BASE_URL=https://kitepon.dev/blog/
 
 # 実行中の arch から解決する。buildx の TARGETARCH に依存しないので、
 # BuildKit の無い環境でも同じ Dockerfile がそのまま通る。
@@ -30,7 +28,7 @@ WORKDIR /src
 COPY . .
 
 # 生成物は /blog 配下へ出す。nginx の root と Caddy が渡す path を一致させる。
-RUN hugo --minify --baseURL "${BLOG_BASE_URL}" --destination /out/blog
+RUN hugo --minify --destination /out/blog
 
 FROM nginx:1.29-alpine
 

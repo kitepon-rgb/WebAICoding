@@ -355,7 +355,7 @@ test("現行コンテンツとカバー寸法がpreflightを通る", () => {
   );
 });
 
-test("workflowは予約push後にPOSTし、deploy前に検査する", () => {
+test("workflowは予約push後にPOSTし、Hugo build前に検査する", () => {
   const crosspost = fs.readFileSync(
     path.join(repoRoot, ".github/workflows/crosspost-devto.yml"),
     "utf8",
@@ -365,9 +365,12 @@ test("workflowは予約push後にPOSTし、deploy前に検査する", () => {
     crosspost.indexOf("Persist reservation before external POST") <
       crosspost.indexOf("Send newly reserved article"),
   );
-  const deploy = fs.readFileSync(path.join(repoRoot, ".github/workflows/deploy.yml"), "utf8");
-  assert.ok(deploy.indexOf("Validate content") < deploy.indexOf("name: Build"));
-  assert.ok(deploy.indexOf("Check Zenn synchronization") < deploy.indexOf("name: Build"));
+  const validate = fs.readFileSync(
+    path.join(repoRoot, ".github/workflows/validate.yml"),
+    "utf8",
+  );
+  assert.ok(validate.indexOf("Validate content") < validate.indexOf("name: Build"));
+  assert.ok(validate.indexOf("Check Zenn synchronization") < validate.indexOf("name: Build"));
 });
 
 test("生成HTMLからOGP寸法を検査する", () => {

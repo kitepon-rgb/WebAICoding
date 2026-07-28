@@ -4,17 +4,17 @@
 
 # WebAICoding
 
-[![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml)
+[![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/validate.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/validate.yml)
 [![license](https://img.shields.io/github/license/kitepon-rgb/WebAICoding?color=blue)](LICENSE)
 [![Hugo](https://img.shields.io/badge/built%20with-Hugo-ff4088?logo=hugo&logoColor=white)](https://gohugo.io/)
-[![GitHub Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-222?logo=github)](https://kitepon-rgb.github.io/WebAICoding/)
+[![Live](https://img.shields.io/badge/live-kitepon.dev%2Fblog-0b5fff)](https://kitepon.dev/blog/)
 
 [English](README.md) · **日本語**
 
 > **Claude MAX ユーザーが、AI コーディングを実際に使いながら学んだことを記録する技術ブログ。**
-> プログラマーではない人間が、趣味の AI コーディングで実際にハマったこと・うまくいったこと・失敗したことを、Copilot → Cursor → Claude Code と渡り歩きながらそのまま書き残している。このリポジトリはそのソース — GitHub Pages へ自動デプロイされる Hugo 静的サイト。
+> プログラマーではない人間が、趣味の AI コーディングで実際にハマったこと・うまくいったこと・失敗したことを、Copilot → Cursor → Claude Code と渡り歩きながらそのまま書き残している。このリポジトリは、`kitepon.dev`のコンテンツとして配信する Hugo サイトのソース。
 
-**ライブサイト → https://blog.kitepon.dev/**
+**ライブサイト → https://kitepon.dev/blog/**
 
 ## これは何
 
@@ -24,7 +24,7 @@
 - メモリシステム、トークン節約、サーバー管理、自作アプリのリリースなど、実運用ベースの記事
 - 実際に毎日使ってみないと出てこない、ハマりどころ・うまくいったこと・失敗の正直な記録
 
-記事は `content/post/` 以下に Markdown で置いてあり、`main` ブランチへの push で GitHub Actions が Hugo でビルドして GitHub Pages へ自動デプロイします。
+記事は `content/post/` 以下に Markdown で置いてあり、`main` ブランチへの push で GitHub Actions がcontent pipelineとHugo本番buildを検査します。本番は`kitepon.dev`のCaddy配下にある専用nginx containerから配信します。
 
 ## 技術構成
 
@@ -32,20 +32,20 @@
 | --- | --- |
 | 静的サイトジェネレーター | [Hugo](https://gohugo.io/)（extended） |
 | テーマ | 自前（`layouts/` + `assets/` に内蔵。外部テーマ不使用） |
-| ホスティング | GitHub Pages |
-| デプロイ | GitHub Actions（`.github/workflows/deploy.yml`） |
+| ホスティング | Caddyの`/blog*` routing配下にある非root nginx container |
+| 検証 | GitHub Actions（`.github/workflows/validate.yml`） |
+| 本番image | multi-stage [Dockerfile](Dockerfile) |
 | 言語 | 日本語 |
 
 ## デプロイの流れ
 
 ```mermaid
 flowchart LR
-    A["記事を書く<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>(deploy.yml)"]
-    B --> C["Setup Hugo<br/>extended"]
-    C --> D["hugo --minify<br/>→ public/"]
-    D --> E["upload-pages-artifact"]
-    E --> F["deploy-pages"]
-    F --> G(["GitHub Pages<br/>blog.kitepon.dev"])
+    A["記事を書く<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>validate.yml"]
+    B --> C["content検査<br/>Hugo本番build"]
+    C -->|検証済みmain commit| D["Docker multi-stage build<br/>Hugo → nginx"]
+    D --> E["Caddy /blog* routing"]
+    E --> F(["kitepon.dev/blog/"])
 ```
 
 `draft: false` の記事だけが本番に公開されます。
@@ -97,7 +97,8 @@ node generate-cover.js "タイトル1行目" "タイトル2行目" "../../conten
 
 デザイン仕様や詳細は [tools/cover/README.md](tools/cover/README.md) を参照。
 
-`draft: false` の記事だけが本番に公開されます。`main` に push すると自動でデプロイされます。
+`draft: false` にしてから公開します。`main` へのpushは検証を起動し、本番公開は
+検証済みmain commitから専用blog containerを更新します。
 
 ## ディレクトリ構成
 

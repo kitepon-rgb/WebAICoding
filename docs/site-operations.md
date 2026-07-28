@@ -5,9 +5,12 @@
 ## サイト構成
 
 - サイト名: 「Claude Code 始めました」
-- URL: `https://blog.kitepon.dev/`
-- SSG: Hugo extended 0.164.0（`.github/workflows/deploy.yml`と同じ版を使う）
-- ホスティング: GitHub Pages
+- URL: `https://kitepon.dev/blog/`
+- 旧URL: `https://blog.kitepon.dev/`（Cloudflareで新URLへ301）
+- SSG: Hugo extended 0.164.0（`Dockerfile`と`.github/workflows/validate.yml`で同じ版を使う）
+- ホスティング: 非root nginx container。Caddyが`/blog*`をcontainerの8080へrouteする
+- 本番build: `Dockerfile`で`/out/blog`へ生成し、nginxのdocument rootへcopyする
+- healthcheck: `/healthz`
 - テーマ: `layouts/`と`assets/`にある自前テーマ
 - 記事: `content/post/<slug>/index.md`のPage Bundle
 - CSS: `assets/css/main.css`をHugo Pipesでfingerprintして配信

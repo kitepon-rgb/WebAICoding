@@ -4,7 +4,7 @@
 
 ## Project
 
-「Claude Code 始めました」— Claude MAXユーザーの実体験を中心にした日本語技術ブログ。Hugo + GitHub Pagesで構築し、記事相談、記事生成、公開までを一つの制作工程として扱う。
+「Claude Code 始めました」— Claude MAXユーザーの実体験を中心にした日本語技術ブログ。Hugoで生成し、非root nginx containerをCaddyの`/blog*` path routingで配信する。記事相談、記事生成、公開までを一つの制作工程として扱う。
 
 ## 記事相談 — 会話が主役
 
@@ -46,7 +46,9 @@ hugo server -D
 hugo --minify
 ```
 
-自前テーマは `layouts/` と `assets/` にある。mainへのpushで`.github/workflows/deploy.yml`がGitHub Pagesへ公開する。
+自前テーマは `layouts/` と `assets/` にある。mainへのpushでは
+`.github/workflows/validate.yml`がcontent pipelineとHugo buildを検査する。本番は
+`Dockerfile`で生成した非root nginx containerを`https://kitepon.dev/blog/`へ配信する。
 
 ## 公開の安全境界
 

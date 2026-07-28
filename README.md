@@ -4,17 +4,17 @@
 
 # WebAICoding
 
-[![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/deploy.yml)
+[![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/validate.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/validate.yml)
 [![license](https://img.shields.io/github/license/kitepon-rgb/WebAICoding?color=blue)](LICENSE)
 [![Hugo](https://img.shields.io/badge/built%20with-Hugo-ff4088?logo=hugo&logoColor=white)](https://gohugo.io/)
-[![GitHub Pages](https://img.shields.io/badge/hosted%20on-GitHub%20Pages-222?logo=github)](https://kitepon-rgb.github.io/WebAICoding/)
+[![Live](https://img.shields.io/badge/live-kitepon.dev%2Fblog-0b5fff)](https://kitepon.dev/blog/)
 
 **English** · [日本語](README.ja.md)
 
 > **A hands-on Japanese tech blog about everyday AI coding with Claude Code.**
-> A non-programmer hobbyist writes down what actually worked, what broke, and what they learned while building software with AI — Copilot to Cursor to Claude Code. This repo is the source: a Hugo static site that auto-deploys to GitHub Pages.
+> A non-programmer hobbyist writes down what actually worked, what broke, and what they learned while building software with AI — Copilot to Cursor to Claude Code. This repo is the source of the Hugo site served as part of `kitepon.dev`.
 
-**Live site → https://blog.kitepon.dev/**
+**Live site → https://kitepon.dev/blog/**
 
 ## What it is
 
@@ -24,7 +24,7 @@ The blog is written by someone who is **not** a programmer and codes purely as a
 - Practical write-ups: memory systems, token diets, home-server management, and shipping self-made apps
 - Honest accounts of the traps, wins, and failures — the kind of detail you only get from actually using the tools daily
 
-Articles live as Markdown under `content/post/`. Every push to `main` triggers GitHub Actions, which builds the site with Hugo and deploys it to GitHub Pages.
+Articles live as Markdown under `content/post/`. Every push to `main` triggers GitHub Actions, which validates the content pipeline and the Hugo production build. Production is served by a dedicated nginx container behind the `kitepon.dev` Caddy edge.
 
 ## Tech stack
 
@@ -32,20 +32,20 @@ Articles live as Markdown under `content/post/`. Every push to `main` triggers G
 | --- | --- |
 | Static site generator | [Hugo](https://gohugo.io/) (extended) |
 | Theme | Custom, hand-built (lives in `layouts/` + `assets/`; no external theme) |
-| Hosting | GitHub Pages |
-| Deploy | GitHub Actions (`.github/workflows/deploy.yml`) |
+| Hosting | Non-root nginx container behind Caddy `/blog*` routing |
+| Validation | GitHub Actions (`.github/workflows/validate.yml`) |
+| Production image | Multi-stage [Dockerfile](Dockerfile) |
 | Content language | Japanese |
 
 ## How it deploys
 
 ```mermaid
 flowchart LR
-    A["Write Markdown<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>(deploy.yml)"]
-    B --> C["Setup Hugo<br/>extended"]
-    C --> D["hugo --minify<br/>→ public/"]
-    D --> E["upload-pages-artifact"]
-    E --> F["deploy-pages"]
-    F --> G(["GitHub Pages<br/>blog.kitepon.dev"])
+    A["Write Markdown<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>validate.yml"]
+    B --> C["Content checks<br/>Hugo production build"]
+    C -->|validated main commit| D["Docker multi-stage build<br/>Hugo → nginx"]
+    D --> E["Caddy /blog* routing"]
+    E --> F(["kitepon.dev/blog/"])
 ```
 
 Only articles with `draft: false` are published.
@@ -97,7 +97,8 @@ node generate-cover.js "Title line 1" "Title line 2" "../../content/post/your-sl
 
 See [tools/cover/README.md](tools/cover/README.md) for the design spec and details.
 
-Set `draft: false` to publish. Pushing to `main` deploys automatically.
+Set `draft: false` before publication. Pushing to `main` runs validation; production
+publishing updates the dedicated blog container from a validated main commit.
 
 ## Layout
 

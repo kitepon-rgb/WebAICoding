@@ -3,7 +3,8 @@
 ## Purpose
 
 WebAICoding is the source repository for the Japanese Hugo blog "Claude Code 始めました".
-The live site is published at <https://blog.kitepon.dev/>.
+The live site is published at <https://kitepon.dev/blog/>.
+The legacy `blog.kitepon.dev` hostname permanently redirects to the live path.
 
 ## Canonical Entry Points
 
@@ -26,12 +27,12 @@ The live site is published at <https://blog.kitepon.dev/>.
 - `static/`: Static assets such as favicons and OG images.
 - `tools/cover/`: Playwright-based cover image generator.
 - `tools/zenn-sync/`: Blog-to-Zenn synchronization tool.
-- `.github/workflows/`: GitHub Actions for Pages deploy and dev.to crossposting.
+- `.github/workflows/`: GitHub Actions for content validation and dev.to crossposting.
 - `.agents/skills/`: Shared project skills used by supported agents.
 
 ## Verification
 
-Use the same production build command as the deploy workflow:
+Use the same content gates as the validation workflow:
 
 ```bash
 node tools/validate-content.mjs

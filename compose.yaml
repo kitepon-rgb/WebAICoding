@@ -4,8 +4,6 @@ services:
   blog:
     build:
       context: .
-      args:
-        BLOG_BASE_URL: ${KITEPON_BLOG_BASE_URL:-https://kitepon.dev/blog/}
     image: kitepon-blog:${KITEPON_BLOG_TAG:-local}
     container_name: kitepon-blog
     restart: unless-stopped

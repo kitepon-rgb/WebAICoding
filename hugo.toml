@@ -1,4 +1,4 @@
-baseURL = 'https://blog.kitepon.dev/'
+baseURL = 'https://kitepon.dev/blog/'
 locale = 'ja-JP'
 defaultContentLanguage = 'ja'
 hasCJKLanguage = true
