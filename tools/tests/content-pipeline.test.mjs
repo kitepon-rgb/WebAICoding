@@ -23,6 +23,7 @@ import {
 } from "../validate-content.mjs";
 import {
   buildPayload,
+  canonicalRefreshTargets,
   canonicalMatches,
   canonicalUrlFor,
   findArticle,
@@ -34,6 +35,7 @@ import {
   selectTarget,
   unresolvedTargets,
   validateState,
+  zennTranslationUrlFor,
 } from "../../.github/scripts/crosspost-devto.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -48,6 +50,10 @@ test("共有manifestは6件の差異を双方向に解決する", () => {
   assert.equal(
     canonicalUrlFor("aiterm-converse"),
     "https://kitepon.dev/blog/post/aiterm-converse/",
+  );
+  assert.equal(
+    zennTranslationUrlFor("bughub-aggregation"),
+    "https://zenn.dev/kitepon/articles/bughub-aggregation?locale=en",
   );
 });
 
@@ -130,6 +136,56 @@ test("遠隔照合はcanonical_urlの完全一致だけを採用する", () => {
   assert.throws(
     () => requireSingleCanonicalMatch([matches[0], matches[0]], "source-article"),
     /遠隔一致が2件/,
+  );
+});
+
+test("既存dev.to記事のcanonical更新対象をIDとURLで厳格に照合する", () => {
+  const state = {
+    "bughub-aggregation": { id: 1, url: "https://dev.to/quolu/bughub", pending: [] },
+    "aiterm-converse": { id: 2, url: "https://dev.to/quolu/aiterm", pending: [] },
+  };
+  const targets = canonicalRefreshTargets(state, [
+    {
+      id: 1,
+      url: "https://dev.to/quolu/bughub",
+      canonical_url: "https://zenn.dev/kitepon/articles/bughub-aggregation?locale=en",
+    },
+    {
+      id: 2,
+      url: "https://dev.to/quolu/aiterm",
+      canonical_url: "https://kitepon.dev/blog/post/aiterm-converse/",
+    },
+  ]);
+  assert.deepEqual(
+    targets.map(({ zennSlug, expectedCanonicalUrl, needsUpdate }) => ({
+      zennSlug,
+      expectedCanonicalUrl,
+      needsUpdate,
+    })),
+    [
+      {
+        zennSlug: "aiterm-converse",
+        expectedCanonicalUrl: "https://kitepon.dev/blog/post/aiterm-converse/",
+        needsUpdate: false,
+      },
+      {
+        zennSlug: "bughub-aggregation",
+        expectedCanonicalUrl: "https://kitepon.dev/blog/post/bughub/",
+        needsUpdate: true,
+      },
+    ],
+  );
+  assert.throws(
+    () => canonicalRefreshTargets(state, [{ id: 1, url: "https://dev.to/quolu/bughub" }]),
+    /遠隔記事が見つからない/,
+  );
+  assert.throws(
+    () =>
+      canonicalRefreshTargets(state, [
+        { id: 1, url: "https://dev.to/quolu/wrong" },
+        { id: 2, url: "https://dev.to/quolu/aiterm" },
+      ]),
+    /遠隔URLが台帳と不一致/,
   );
 });
 
@@ -320,7 +376,7 @@ test("workflowは再公開した日に新規転載を行わない", () => {
   assert.match(crosspost, /--republish/);
   assert.match(
     crosspost,
-    /if: github\.event\.inputs\.hide_slugs == '' && steps\.republish\.outputs\.republished != 'true'/,
+    /if: inputs\.refresh_canonical != true && github\.event\.inputs\.hide_slugs == '' && steps\.republish\.outputs\.republished != 'true'/,
   );
   assert.ok(crosspost.indexOf("--republish") < crosspost.indexOf("--prepare"));
 });
@@ -372,6 +428,11 @@ test("workflowは予約push後にPOSTし、Hugo build前に検査する", () => 
     crosspost.indexOf("Persist reservation before external POST") <
       crosspost.indexOf("Send newly reserved article"),
   );
+  assert.ok(
+    crosspost.indexOf("Check canonical refresh targets") <
+      crosspost.indexOf("Refresh existing canonical URLs"),
+  );
+  assert.match(crosspost, /inputs\.refresh_canonical != true/);
   const validate = fs.readFileSync(
     path.join(repoRoot, ".github/workflows/validate.yml"),
     "utf8",

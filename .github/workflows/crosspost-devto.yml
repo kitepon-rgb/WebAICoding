@@ -16,6 +16,11 @@ on:
         description: "下書きへ戻すZenn slug（カンマ区切り）。空なら通常の転載処理"
         required: false
         default: ""
+      refresh_canonical:
+        description: "既存dev.to記事のcanonical_urlをブログ正本へ一括更新する"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write # crossposted-devto.json のコミットに必要
@@ -46,15 +51,40 @@ jobs:
           node tools/validate-content.mjs
           node tools/zenn-sync/sync.mjs --check
 
+      - name: Check canonical refresh targets
+        if: inputs.refresh_canonical == true
+        run: node .github/scripts/crosspost-devto.mjs --check-canonical
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+
+      - name: Refresh existing canonical URLs
+        if: inputs.refresh_canonical == true
+        run: node .github/scripts/crosspost-devto.mjs --refresh-canonical
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+
+      - name: Persist refreshed canonical state
+        if: inputs.refresh_canonical == true
+        run: |
+          if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add crossposted-devto.json
+            git commit -m "chore: refresh dev.to canonical URLs"
+            git push
+          else
+            echo "No state change."
+          fi
+
       - name: Hide over-posted articles
-        if: github.event.inputs.hide_slugs != ''
+        if: inputs.refresh_canonical != true && github.event.inputs.hide_slugs != ''
         run: node .github/scripts/crosspost-devto.mjs --hide
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
           HIDE_SLUGS: ${{ github.event.inputs.hide_slugs }}
 
       - name: Persist hidden state
-        if: github.event.inputs.hide_slugs != ''
+        if: inputs.refresh_canonical != true && github.event.inputs.hide_slugs != ''
         run: |
           if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
             git config user.name "github-actions[bot]"
@@ -68,13 +98,13 @@ jobs:
 
       - name: Republish one hidden article
         id: republish
-        if: github.event.inputs.hide_slugs == ''
+        if: inputs.refresh_canonical != true && github.event.inputs.hide_slugs == ''
         run: node .github/scripts/crosspost-devto.mjs --republish
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Persist republished state
-        if: steps.republish.outputs.republished == 'true'
+        if: inputs.refresh_canonical != true && steps.republish.outputs.republished == 'true'
         run: |
           if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
             git config user.name "github-actions[bot]"
@@ -88,13 +118,13 @@ jobs:
 
       - name: Prepare reservation or recover previous posting
         id: prepare
-        if: github.event.inputs.hide_slugs == '' && steps.republish.outputs.republished != 'true'
+        if: inputs.refresh_canonical != true && github.event.inputs.hide_slugs == '' && steps.republish.outputs.republished != 'true'
         run: node .github/scripts/crosspost-devto.mjs --prepare
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Persist reservation before external POST
-        if: github.event.inputs.hide_slugs == '' && steps.republish.outputs.republished != 'true'
+        if: inputs.refresh_canonical != true && github.event.inputs.hide_slugs == '' && steps.republish.outputs.republished != 'true'
         run: |
           if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
             git config user.name "github-actions[bot]"
@@ -107,19 +137,19 @@ jobs:
           fi
 
       - name: Send newly reserved article
-        if: steps.prepare.outputs.created == 'true'
+        if: inputs.refresh_canonical != true && steps.prepare.outputs.created == 'true'
         run: node .github/scripts/crosspost-devto.mjs --send-new
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Fix one resolvable internal link set
-        if: github.event.inputs.hide_slugs == ''
+        if: inputs.refresh_canonical != true && github.event.inputs.hide_slugs == ''
         run: node .github/scripts/crosspost-devto.mjs --fix-links
         env:
           DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
 
       - name: Persist finalized crosspost state
-        if: github.event.inputs.hide_slugs == ''
+        if: inputs.refresh_canonical != true && github.event.inputs.hide_slugs == ''
         run: |
           if [ -n "$(git status --porcelain crossposted-devto.json)" ]; then
             git config user.name "github-actions[bot]"

@@ -119,6 +119,10 @@ export function buildDescription(markdown) {
   return "";
 }
 
+export function zennTranslationUrlFor(zennSlug) {
+  return `https://zenn.dev/${ZENN_USER}/articles/${zennSlug}?locale=en`;
+}
+
 export function canonicalUrlFor(zennSlug) {
   return `https://kitepon.dev/blog/post/${toBlogSlug(zennSlug)}/`;
 }
@@ -282,7 +286,7 @@ export function listLocalCandidates() {
 }
 
 async function fetchTranslatedArticle(zennSlug) {
-  const url = canonicalUrlFor(zennSlug);
+  const url = zennTranslationUrlFor(zennSlug);
   const response = await fetch(url, { headers: { "User-Agent": UA } });
   if (!response.ok) {
     const error = new Error(`Zenn HTTP ${response.status}`);
@@ -359,6 +363,90 @@ export async function fetchMyArticles(apiKey) {
     if (!Array.isArray(batch)) throw new Error("dev.to記事一覧が配列ではない");
     all.push(...batch);
     if (batch.length < perPage) return all;
+  }
+}
+
+export function canonicalRefreshTargets(state, remoteArticles) {
+  if (!Array.isArray(remoteArticles)) throw new Error("dev.to記事一覧が配列ではない");
+  const remoteById = new Map();
+  for (const article of remoteArticles) {
+    if (!Number.isInteger(article?.id)) throw new Error("dev.to記事一覧にidが無い");
+    if (remoteById.has(article.id)) throw new Error(`dev.to記事一覧のidが重複: ${article.id}`);
+    remoteById.set(article.id, article);
+  }
+
+  return Object.keys(state)
+    .sort()
+    .map((zennSlug) => {
+      const entry = state[zennSlug];
+      if (entry?.status === "posting") {
+        throw new Error(`posting予約があるためcanonical更新を行わない: ${zennSlug}`);
+      }
+      if (!Number.isInteger(entry?.id) || typeof entry?.url !== "string") {
+        throw new Error(`published台帳entryが不正: ${zennSlug}`);
+      }
+      const remote = remoteById.get(entry.id);
+      if (!remote) throw new Error(`dev.to遠隔記事が見つからない: ${zennSlug} id=${entry.id}`);
+      if (typeof remote.url === "string" && remote.url !== entry.url) {
+        throw new Error(`dev.to遠隔URLが台帳と不一致: ${zennSlug}`);
+      }
+      const expectedCanonicalUrl = canonicalUrlFor(zennSlug);
+      return {
+        zennSlug,
+        id: entry.id,
+        url: entry.url,
+        currentCanonicalUrl: remote.canonical_url || null,
+        expectedCanonicalUrl,
+        needsUpdate: remote.canonical_url !== expectedCanonicalUrl,
+      };
+    });
+}
+
+async function prepareCanonicalRefresh(apiKey) {
+  const candidates = listLocalCandidates();
+  const state = loadState(candidates);
+  if (validateState(state, candidates)) {
+    throw new Error("posting予約があるためcanonical更新を行わない");
+  }
+  const targets = canonicalRefreshTargets(state, await fetchMyArticles(apiKey));
+  const changes = targets.filter((target) => target.needsUpdate);
+  console.log(
+    `Canonical refresh plan: targets=${targets.length} changes=${changes.length} ` +
+      `already=${targets.length - changes.length}`,
+  );
+  return { state, targets, changes };
+}
+
+async function checkCanonicalRefresh(apiKey) {
+  await prepareCanonicalRefresh(apiKey);
+}
+
+async function refreshCanonicalUrls(apiKey) {
+  const { state, targets, changes } = await prepareCanonicalRefresh(apiKey);
+  let stateChanged = false;
+  for (const target of targets.filter((item) => !item.needsUpdate)) {
+    if (state[target.zennSlug].canonicalUrl !== target.expectedCanonicalUrl) {
+      state[target.zennSlug].canonicalUrl = target.expectedCanonicalUrl;
+      stateChanged = true;
+    }
+  }
+  if (stateChanged) saveState(state);
+
+  for (let index = 0; index < changes.length; index += 1) {
+    const target = changes[index];
+    if (index > 0) await sleep(WRITE_GAP_MS);
+    const updated = await devtoRequest(
+      "PUT",
+      `${DEVTO_API}/${target.id}`,
+      { article: { canonical_url: target.expectedCanonicalUrl } },
+      apiKey,
+    );
+    if (updated?.id !== target.id || updated?.canonical_url !== target.expectedCanonicalUrl) {
+      throw new Error(`dev.to canonical更新応答が不正: ${target.zennSlug}`);
+    }
+    state[target.zennSlug].canonicalUrl = target.expectedCanonicalUrl;
+    saveState(state);
+    console.log(`Updated canonical: ${target.zennSlug} -> ${target.expectedCanonicalUrl}`);
   }
 }
 
@@ -595,7 +683,15 @@ async function fixupOne(apiKey) {
 
 export async function main(argv = process.argv.slice(2)) {
   const mode = argv[0];
-  const modes = ["--prepare", "--send-new", "--fix-links", "--hide", "--republish"];
+  const modes = [
+    "--prepare",
+    "--send-new",
+    "--fix-links",
+    "--hide",
+    "--republish",
+    "--check-canonical",
+    "--refresh-canonical",
+  ];
   if (!modes.includes(mode) || argv.length !== 1) {
     throw new Error(`使い方: ${modes.join(" | ")}`);
   }
@@ -606,6 +702,8 @@ export async function main(argv = process.argv.slice(2)) {
   if (mode === "--fix-links") await fixupOne(apiKey);
   if (mode === "--hide") await hideArticles(apiKey);
   if (mode === "--republish") await republishOne(apiKey);
+  if (mode === "--check-canonical") await checkCanonicalRefresh(apiKey);
+  if (mode === "--refresh-canonical") await refreshCanonicalUrls(apiKey);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
