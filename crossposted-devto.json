@@ -203,8 +203,7 @@
     "url": "https://dev.to/quolu/how-i-made-an-ai-that-cant-draw-the-same-character-create-anime-model-sheets-19cn",
     "id": 4230190,
     "canonicalUrl": "https://kitepon.dev/blog/post/sprite-forge-release/",
-    "pending": [],
-    "hidden": true
+    "pending": []
   },
   "throughline-context-diet": {
     "url": "https://dev.to/quolu/87-of-my-context-was-garbage-how-i-optimized-claude-code-token-usage-534k",
