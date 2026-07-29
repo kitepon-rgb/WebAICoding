@@ -20,7 +20,7 @@
     <div class="thumb">{{ with .Resources.GetMatch .Params.cover.image }}<img src="{{ .RelPermalink }}" alt="">{{ end }}</div>
     <div class="body">
       <div class="label">● LATEST{{ with index .Params.tags 0 }} — {{ . }}{{ end }}</div>
-      <h3><a href="{{ .RelPermalink }}" style="color:inherit;text-decoration:none">{{ .Title }}</a></h3>
+      <h2><a href="{{ .RelPermalink }}" style="color:inherit;text-decoration:none">{{ .Title }}</a></h2>
       <p>{{ .Description | plainify | truncate 120 }}</p>
       <a class="read" href="{{ .RelPermalink }}">記事を読む →</a>
       <div class="fmeta">{{ .Date.Format "2006.01.02" }}{{ range first 3 .Params.tags }} #{{ . }}{{ end }}</div>
@@ -36,7 +36,7 @@
         <a class="card rv a{{ mod $i 5 }}" href="{{ $p.RelPermalink }}">
           <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">{{ with $p.File }}{{ .ContentBaseName }}{{ else }}{{ $p.Title }}{{ end }}.md</span></div>
           {{ $cov := $p.Resources.GetMatch $p.Params.cover.image }}<div class="thumb{{ if not $cov }} noimg{{ end }}">{{ with $cov }}<picture>{{ with $p.Resources.GetMatch "cover-sm.png" }}<source media="(max-width:600px)" srcset="{{ .RelPermalink }}">{{ end }}<img src="{{ $cov.RelPermalink }}" alt="" loading="lazy"></picture>{{ else }}<span>{{ with $p.File }}{{ .ContentBaseName }}{{ end }}.md</span>{{ end }}</div>
-          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">{{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
+          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">{{ . }}</div>{{ end }}<h3>{{ $p.Title }}</h3><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
         </a>
       {{ end }}
     </div>
@@ -50,7 +50,7 @@
         <a class="card a{{ mod $i 5 }}" href="{{ $p.RelPermalink }}">
           <div class="chrome"><span class="lights"><i></i><i></i><i></i></span><span class="fname">{{ with $p.File }}{{ .ContentBaseName }}{{ else }}{{ $p.Title }}{{ end }}.md</span></div>
           {{ $cov := $p.Resources.GetMatch $p.Params.cover.image }}<div class="thumb{{ if not $cov }} noimg{{ end }}">{{ with $cov }}<picture>{{ with $p.Resources.GetMatch "cover-sm.png" }}<source media="(max-width:600px)" srcset="{{ .RelPermalink }}">{{ end }}<img src="{{ $cov.RelPermalink }}" alt="" loading="lazy"></picture>{{ else }}<span>{{ with $p.File }}{{ .ContentBaseName }}{{ end }}.md</span>{{ end }}</div>
-          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">{{ . }}</div>{{ end }}<h4>{{ $p.Title }}</h4><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
+          <div class="c-body">{{ with index $p.Params.tags 0 }}<div class="cat">{{ . }}</div>{{ end }}<h2>{{ $p.Title }}</h2><time>{{ $p.Date.Format "2006.01.02" }}</time></div>
         </a>
       {{ end }}
     </div>

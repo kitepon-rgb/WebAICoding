@@ -156,6 +156,16 @@ export function renderedOgDimensions(html, label) {
   return { width: Number(width), height: Number(height) };
 }
 
+export function renderedHeadingJumps(html) {
+  const levels = [...html.matchAll(/<h([1-6])(?:\s[^>]*)?>/gi)].map((match) =>
+    Number(match[1]),
+  );
+  return levels
+    .slice(1)
+    .map((level, index) => ({ from: levels[index], to: level }))
+    .filter(({ from, to }) => to > from + 1);
+}
+
 export function validateContent({ rendered = false, now = new Date() } = {}) {
   const errors = [];
   const posts = fs
@@ -240,6 +250,9 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
       } catch (error) {
         errors.push(error.message);
       }
+      if (renderedHeadingJumps(fs.readFileSync(home, "utf8")).length) {
+        errors.push("ブログトップの見出し階層が飛んでいる");
+      }
     }
 
     const postList = path.join(REPO_ROOT, "public", "post", "index.html");
@@ -247,6 +260,9 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
       errors.push("公開HTMLが無い: public/post/index.html");
     } else {
       const html = fs.readFileSync(postList, "utf8");
+      if (renderedHeadingJumps(html).length) {
+        errors.push("記事一覧の見出し階層が飛んでいる");
+      }
       for (const [label, pattern] of [
         ["ブランド名を含むtitle", /<title>記事一覧｜kitepon\.dev Blog<\/title>/],
         ["一覧のh1", /<h1>記事一覧<\/h1>/],

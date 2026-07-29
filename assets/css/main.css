@@ -56,7 +56,7 @@ a{color:inherit}
 .featured .label{font-family:var(--mono);font-size:.74rem;color:var(--coral);letter-spacing:.08em;margin-bottom:1rem}
 .featured .thumb{border-radius:12px;overflow:hidden;aspect-ratio:25/10;box-shadow:0 26px 60px -28px rgba(0,0,0,.7);border:1px solid #3a2c20}
 .featured .thumb img{width:100%;height:100%;object-fit:cover}
-.featured h3{font-family:var(--serif);font-weight:700;font-size:1.9rem;line-height:1.32;color:var(--cream-on-dark);margin-bottom:1rem}
+.featured h2{font-family:var(--serif);font-weight:700;font-size:1.9rem;line-height:1.32;color:var(--cream-on-dark);margin-bottom:1rem}
 .featured p{font-family:var(--sans);color:#bda88f;font-size:.96rem;margin-bottom:1.3rem;line-height:1.8}
 .featured .read{font-family:var(--mono);font-size:.82rem;color:var(--coral);text-decoration:none;display:inline-flex;gap:.5rem;transition:gap .2s}
 .featured .read:hover{gap:.9rem}
@@ -89,7 +89,7 @@ a{color:inherit}
 .c-body{padding:1rem 1.1rem 1.2rem;display:flex;flex-direction:column;flex:1}
 .c-body .cat{font-family:var(--mono);font-size:.7rem;color:var(--accent,var(--coral));margin-bottom:.5rem}
 .c-body .cat::before{content:"";display:inline-block;width:6px;height:6px;border-radius:1px;background:var(--accent,var(--coral));margin-right:.45rem;vertical-align:middle}
-.c-body h4{font-family:var(--serif);font-weight:600;font-size:1.12rem;line-height:1.5;margin-bottom:1rem}
+.c-body :is(h2,h3){font-family:var(--serif);font-weight:600;font-size:1.12rem;line-height:1.5;margin-bottom:1rem}
 .c-body time{margin-top:auto;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft)}
 
 /* pagination */
@@ -187,7 +187,7 @@ footer.site .root-link{color:#e8d9c6;font-weight:700}
 /* ===== responsive ===== */
 @media(max-width:880px){
   .featured{grid-template-columns:1fr;gap:1.3rem;padding:2rem 0}
-  .featured h3{font-size:1.5rem}
+  .featured h2{font-size:1.5rem}
   .grid{grid-template-columns:1fr 1fr;gap:1.1rem}
 }
 @media(max-width:600px){
@@ -207,7 +207,7 @@ footer.site .root-link{color:#e8d9c6;font-weight:700}
   .card .thumb{flex:0 0 116px;width:116px;align-self:stretch}/* カード内側いっぱいに伸ばす＝上下中央・余白なし（border分のズレを解消） */
   .c-body{padding:.55rem .9rem;flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0;overflow:hidden}
   .c-body .cat{margin-bottom:.3rem}
-  .c-body h4{font-size:1rem;line-height:1.45;margin-bottom:.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .c-body :is(h2,h3){font-size:1rem;line-height:1.45;margin-bottom:.5rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .post .prose{font-size:1.02rem}
   .prose>p:first-of-type::first-letter{font-size:2.6em}
   .pnav{grid-template-columns:1fr}.pnav a.next{text-align:left}

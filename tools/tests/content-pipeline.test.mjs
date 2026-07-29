@@ -15,6 +15,7 @@ import {
 } from "../zenn-sync/sync.mjs";
 import {
   parseHugoFrontmatter,
+  renderedHeadingJumps,
   pngDimensions,
   renderedOgDimensions,
   validateContent,
@@ -452,4 +453,12 @@ test("生成HTMLからOGP寸法を検査する", () => {
   const html = '<meta property="og:image:width" content="1250"><meta property="og:image:height" content="500">';
   assert.deepEqual(renderedOgDimensions(html, "fixture"), { width: 1250, height: 500 });
   assert.throws(() => renderedOgDimensions("<html></html>", "fixture"), /OGP画像寸法が無い/);
+});
+
+test("生成HTMLの見出し階層の飛びを検出する", () => {
+  assert.deepEqual(renderedHeadingJumps("<h1>A</h1><h2>B</h2><h3>C</h3>"), []);
+  assert.deepEqual(renderedHeadingJumps("<h1>A</h1><h3>C</h3><h2>B</h2><h4>D</h4>"), [
+    { from: 1, to: 3 },
+    { from: 2, to: 4 },
+  ]);
 });
