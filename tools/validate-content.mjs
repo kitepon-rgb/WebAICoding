@@ -241,6 +241,25 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
         errors.push(error.message);
       }
     }
+
+    const notFound = path.join(REPO_ROOT, "public", "404.html");
+    if (!fs.existsSync(notFound)) {
+      errors.push("公開HTMLが無い: public/404.html");
+    } else {
+      const html = fs.readFileSync(notFound, "utf8");
+      for (const [label, pattern] of [
+        ["404見出し", /このページは[\s\S]*見つかりませんでした/],
+        [
+          "404 noindex",
+          /<meta(?=[^>]*name=robots)(?=[^>]*content="noindex, follow")[^>]*>/,
+        ],
+        ["記事一覧への復帰", /href=["']?\/blog\/["']?/],
+        ["kitepon.devへの復帰", /href=["']?https:\/\/kitepon\.dev\/["']?/],
+        ["共通wordmark", /brand\/kitepon-dev-primary\.png/],
+      ]) {
+        if (!pattern.test(html)) errors.push(`404に${label}が無い`);
+      }
+    }
   }
 
   if (errors.length) {

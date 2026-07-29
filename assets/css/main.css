@@ -153,6 +153,21 @@ a{color:inherit}
 .pnav .t{font-family:var(--serif);font-weight:600;font-size:.95rem;line-height:1.45}
 .pnav a.next{text-align:right}
 
+/* ===== 404 ===== */
+.not-found{min-height:calc(100vh - 200px);padding-top:clamp(4rem,10vw,7rem);padding-bottom:clamp(4rem,10vw,7rem)}
+.not-found-code{display:flex;align-items:center;gap:.55rem;margin-bottom:2.5rem;font-family:var(--mono);font-size:.78rem;font-weight:700;letter-spacing:.08em;color:var(--coral-deep)}
+.not-found-code span{color:var(--coral);font-size:1rem}
+.not-found-kicker{margin-bottom:1rem;font-family:var(--mono);font-size:.78rem;font-weight:700;letter-spacing:.14em;color:var(--coral-deep)}
+.not-found h1{max-width:54rem;margin-bottom:1.5rem;font-family:var(--serif);font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.18;letter-spacing:-.02em}
+.not-found-lead{max-width:42rem;color:var(--ink-soft);font-size:1.08rem;line-height:2}
+.not-found-english{max-width:42rem;margin-top:2rem;padding:1.35rem 1.5rem;border:1px solid var(--line);border-left:4px solid var(--coral);background:var(--paper-2)}
+.not-found-english strong{display:block;margin-bottom:.45rem;font-family:var(--mono);font-size:.88rem}
+.not-found-english p{color:var(--ink-soft);line-height:1.8}
+.not-found-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem 1.6rem;margin-top:2rem;font-family:var(--mono);font-size:.82rem;font-weight:700}
+.not-found-actions a{padding:.75rem 0;color:var(--coral-deep);text-decoration:none}
+.not-found-actions a.primary{padding:.75rem 1rem;background:var(--espresso);color:var(--cream-on-dark)}
+.not-found-actions a:hover{color:var(--coral)}
+
 /* footer */
 footer.site{margin-top:4.5rem;background:var(--espresso);color:#bda88f;border-top:1px solid #3a2c20}
 footer.site .wrap{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:.76rem;padding:2.4rem 1.6rem 3rem}
@@ -195,6 +210,9 @@ footer.site .root-link{color:#e8d9c6;font-weight:700}
   .post .prose{font-size:1.02rem}
   .prose>p:first-of-type::first-letter{font-size:2.6em}
   .pnav{grid-template-columns:1fr}.pnav a.next{text-align:left}
+  .not-found{padding-top:3.2rem;padding-bottom:3.5rem}
+  .not-found h1{font-size:2.35rem}
+  .not-found-lead{font-size:.98rem}
 }
 
 /* ===== 記事レール広告（PC・幅160px 縦バナー「旗」／studio /serve の生HTMLをJSが差込） =====

@@ -1,0 +1,23 @@
+{{ define "main" }}
+{{- $root := site.Params.rootSiteUrl | default "https://kitepon.dev/" -}}
+<main class="not-found wrap">
+  <p class="not-found-code"><span aria-hidden="true">$</span> status 404</p>
+  <p class="not-found-kicker">LOST &amp; FOUND</p>
+  <h1>このページは<br>見つかりませんでした。</h1>
+  <p class="not-found-lead">
+    URLが変わったか、記事が公開を終えた可能性があります。
+    記事一覧やkitepon.devから、目的の内容を探してみてください。
+  </p>
+  <div class="not-found-english" lang="en">
+    <strong>We couldn&apos;t find this page.</strong>
+    <p>
+      The URL may have changed, or the article may no longer be available.
+      Continue from the article index or kitepon.dev.
+    </p>
+  </div>
+  <nav class="not-found-actions" aria-label="404からの復帰">
+    <a class="primary" href="{{ "" | relURL }}">記事一覧へ戻る <span aria-hidden="true">→</span></a>
+    <a href="{{ $root }}">kitepon.devへ戻る <span aria-hidden="true">→</span></a>
+  </nav>
+</main>
+{{ end }}
