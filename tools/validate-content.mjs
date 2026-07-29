@@ -252,6 +252,7 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
         ["一覧のh1", /<h1>記事一覧<\/h1>/],
         ["一覧のcanonical", /<link rel=canonical href=https:\/\/kitepon\.dev\/blog\/post\/>/],
         ["一覧のOG種別", /<meta property=["']?og:type["']? content=["']?website["']?>/],
+        ["cache-bust済み共有画像", /<meta property=["']?og:image["']? content=["']?https:\/\/kitepon\.dev\/blog\/og-card-brand\.png["']?>/],
         ["共有画像alt", /<meta property=["']?og:image:alt["']? content="kitepon\.dev Blog — AIコーディングと個人開発の実践記録">/],
       ]) {
         if (!pattern.test(html)) errors.push(`記事一覧に${label}が無い`);

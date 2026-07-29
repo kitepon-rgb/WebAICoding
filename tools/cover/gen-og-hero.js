@@ -18,7 +18,7 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
-const out = path.resolve(__dirname, '..', '..', 'static', 'og-card.png');
+const out = path.resolve(__dirname, '..', '..', 'static', 'og-card-brand.png');
 const wordmark = fs
   .readFileSync(path.resolve(__dirname, '..', '..', 'static', 'brand', 'kitepon-dev-primary.png'))
   .toString('base64');
@@ -64,5 +64,5 @@ const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
   await page.waitForTimeout(300);
   await page.screenshot({ path: out });
   await browser.close();
-  console.log(`og-card.png generated: ${out} (1200x630)`);
+  console.log(`${path.basename(out)} generated: ${out} (1200x630)`);
 })();
