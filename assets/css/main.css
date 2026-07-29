@@ -197,7 +197,8 @@ footer.site .root-link{color:#e8d9c6;font-weight:700}
   .hero .kicker{font-size:.72rem}
   .hero p.lead{font-size:.95rem;line-height:2;letter-spacing:.01em}
   .hero .pills{margin-top:1.6rem}
-  .pills{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.4rem}
+  .pills{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:.4rem;scrollbar-width:none}
+  .pills::-webkit-scrollbar{display:none}
   .pill{flex:0 0 auto}
   .bar nav a:not(:last-child){display:none}
   .grid{grid-template-columns:1fr;gap:.9rem}
