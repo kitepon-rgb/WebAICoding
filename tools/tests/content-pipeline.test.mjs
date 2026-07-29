@@ -426,6 +426,10 @@ test("Aboutのプロフィール画像は配信base pathに依存しない", () 
   assert.ok(fs.existsSync(path.join(repoRoot, "static/avatar.svg")));
   assert.match(about, /kitepon\.devを運営するクオ/);
   assert.match(about, /Claude CodeやCodex/);
+  assert.match(
+    about,
+    /description: "kitepon\.devを運営するクオと、AIコーディング・個人開発の実践を記録するこのブログについて。"/,
+  );
   assert.match(about, /https:\/\/kitepon\.dev\/#systems/);
   assert.match(about, /https:\/\/kitepon\.dev\/#products/);
   assert.doesNotMatch(about, /VS Code \+ Claude Code \+ MAXプラン/);

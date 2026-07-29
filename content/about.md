@@ -1,6 +1,7 @@
 ---
 title: "About"
 date: 2026-03-27
+description: "kitepon.devを運営するクオと、AIコーディング・個人開発の実践を記録するこのブログについて。"
 ---
 
 <img src="../avatar.svg" alt="クオ" style="width: 120px; border-radius: 50%; margin-bottom: 1em;">
