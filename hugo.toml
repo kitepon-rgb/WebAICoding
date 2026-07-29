@@ -2,11 +2,11 @@ baseURL = 'https://kitepon.dev/blog/'
 locale = 'ja-JP'
 defaultContentLanguage = 'ja'
 hasCJKLanguage = true
-title = 'Claude Code 始めました'
+title = 'kitepon.dev Blog'
 timeZone = 'Asia/Tokyo'
 
 [params]
-  description = 'Claude MAXユーザーが、実際の開発で使いながら掴んだことを記録していくシリーズ。「使ってるけど実は知らなかった」層に向けた、現場の記録。'
+  description = 'kitepon.devを運営するクオが、AIコーディングと個人開発の実践で得た知見を記録するブログ。'
   author = 'クオ'
   twitter = 'QLyun35332'
   mainSections = ['post']

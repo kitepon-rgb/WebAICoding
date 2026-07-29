@@ -242,6 +242,21 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
       }
     }
 
+    const postList = path.join(REPO_ROOT, "public", "post", "index.html");
+    if (!fs.existsSync(postList)) {
+      errors.push("公開HTMLが無い: public/post/index.html");
+    } else {
+      const html = fs.readFileSync(postList, "utf8");
+      for (const [label, pattern] of [
+        ["ブランド名を含むtitle", /<title>記事一覧｜kitepon\.dev Blog<\/title>/],
+        ["一覧のh1", /<h1>記事一覧<\/h1>/],
+        ["一覧のcanonical", /<link rel=canonical href=https:\/\/kitepon\.dev\/blog\/post\/>/],
+        ["一覧のOG種別", /<meta property=["']?og:type["']? content=["']?website["']?>/],
+      ]) {
+        if (!pattern.test(html)) errors.push(`記事一覧に${label}が無い`);
+      }
+    }
+
     const notFound = path.join(REPO_ROOT, "public", "404.html");
     if (!fs.existsSync(notFound)) {
       errors.push("公開HTMLが無い: public/404.html");

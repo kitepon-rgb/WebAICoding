@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {{- $isHome := .IsHome -}}
 {{- $is404 := eq .Kind "404" -}}
+{{- $isArticle := eq .Kind "page" -}}
 <title>{{ if $is404 }}ページが見つかりません｜{{ site.Title }}{{ else if $isHome }}{{ site.Title }}{{ else }}{{ .Title }}｜{{ site.Title }}{{ end }}</title>
 {{- $desc := cond $is404 "お探しのページは移動または削除された可能性があります。記事一覧やkitepon.devから目的の内容を探せます。" (or .Description .Summary site.Params.description) -}}
 <meta name="description" content="{{ $desc | plainify | truncate 150 }}">
@@ -15,7 +16,7 @@
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:title" content="{{ if $is404 }}ページが見つかりません{{ else if $isHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
 <meta property="og:description" content="{{ $desc | plainify | truncate 150 }}">
-<meta property="og:type" content="{{ if or $isHome $is404 }}website{{ else }}article{{ end }}">
+<meta property="og:type" content="{{ if $isArticle }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
 {{- $og := "" -}}
 {{- $ogWidth := 1200 -}}

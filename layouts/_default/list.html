@@ -43,7 +43,7 @@
   </main>
 {{ else }}
   <main class="wrap">
-    <div class="sec-head" style="margin-top:3.5rem"><span class="n">{{ if eq .Kind "term" }}tag{{ else }}section{{ end }}</span><h2>{{ if .Title }}{{ .Title }}{{ else }}記事一覧{{ end }}</h2></div>
+    <header class="sec-head" style="margin-top:3.5rem"><span class="n">{{ if eq .Kind "term" }}tag{{ else }}section{{ end }}</span><h1>{{ if .Title }}{{ .Title }}{{ else }}記事一覧{{ end }}</h1></header>
     <div class="grid">
       {{ range $i, $p := .Pages.ByDate.Reverse }}
         {{ $c := index (slice "--c0" "--c1" "--c2" "--c3" "--c4") (mod $i 5) }}
