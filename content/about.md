@@ -3,7 +3,7 @@ title: "About"
 date: 2026-03-27
 ---
 
-<img src="/WebAICoding/avatar.svg" alt="クオ" style="width: 120px; border-radius: 50%; margin-bottom: 1em;">
+<img src="../avatar.svg" alt="クオ" style="width: 120px; border-radius: 50%; margin-bottom: 1em;">
 
 ## クオ
 

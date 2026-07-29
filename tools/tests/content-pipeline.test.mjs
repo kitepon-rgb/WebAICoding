@@ -418,6 +418,13 @@ test("現行コンテンツとカバー寸法がpreflightを通る", () => {
   );
 });
 
+test("Aboutのプロフィール画像は配信base pathに依存しない", () => {
+  const about = fs.readFileSync(path.join(repoRoot, "content/about.md"), "utf8");
+  assert.match(about, /<img src="\.\.\/avatar\.svg" alt="クオ"/);
+  assert.doesNotMatch(about, /\/WebAICoding\//);
+  assert.ok(fs.existsSync(path.join(repoRoot, "static/avatar.svg")));
+});
+
 test("workflowは予約push後にPOSTし、Hugo build前に検査する", () => {
   const crosspost = fs.readFileSync(
     path.join(repoRoot, ".github/workflows/crosspost-devto.yml"),
