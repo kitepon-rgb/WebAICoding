@@ -424,6 +424,11 @@ test("Aboutのプロフィール画像は配信base pathに依存しない", () 
   assert.match(about, /<img src="\.\.\/avatar\.svg" alt="クオ"/);
   assert.doesNotMatch(about, /\/WebAICoding\//);
   assert.ok(fs.existsSync(path.join(repoRoot, "static/avatar.svg")));
+  assert.match(about, /kitepon\.devを運営するクオ/);
+  assert.match(about, /Claude CodeやCodex/);
+  assert.match(about, /https:\/\/kitepon\.dev\/#systems/);
+  assert.match(about, /https:\/\/kitepon\.dev\/#products/);
+  assert.doesNotMatch(about, /VS Code \+ Claude Code \+ MAXプラン/);
 });
 
 test("workflowは予約push後にPOSTし、Hugo build前に検査する", () => {
