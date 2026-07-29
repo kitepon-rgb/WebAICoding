@@ -15,9 +15,13 @@
  * --coral-deep #b04e2c / --ink #2a201a、見出し Noto Serif JP 700・kicker JetBrains Mono）。
  */
 const { chromium } = require('playwright');
+const fs = require('fs');
 const path = require('path');
 
 const out = path.resolve(__dirname, '..', '..', 'static', 'og-card.png');
+const wordmark = fs
+  .readFileSync(path.resolve(__dirname, '..', '..', 'static', 'brand', 'kitepon-dev-primary.png'))
+  .toString('base64');
 
 const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -29,6 +33,10 @@ const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
     display:flex;flex-direction:column;justify-content:center;padding:0 86px}
   #og::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E")}
+  .brand{position:absolute;top:48px;left:86px;z-index:1;display:flex;align-items:center;gap:19px}
+  .brand img{display:block;width:190px;height:57px;object-fit:contain}
+  .brand span{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:24px;color:#68564b;
+    letter-spacing:.08em;padding-left:20px;border-left:1px solid rgba(104,86,75,.34)}
   .inner{position:relative;z-index:1}
   .kicker{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:31px;color:#b04e2c;
     letter-spacing:.04em;margin-bottom:30px;display:flex;align-items:center;gap:13px}
@@ -40,6 +48,7 @@ const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
     background:linear-gradient(90deg,#d97757,rgba(217,119,87,0))}
 </style></head>
 <body>
+<div class="brand"><img src="data:image/png;base64,${wordmark}" alt=""><span>Blog</span></div>
 <div id="og"><div class="inner">
   <div class="kicker">$ ~/claude-code-hajimemashita <span class="cursor"></span></div>
   <h1>設計は自分、<br>実装は<em>Claude</em>。</h1>
