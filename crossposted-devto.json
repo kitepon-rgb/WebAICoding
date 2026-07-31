@@ -56,8 +56,7 @@
     "url": "https://dev.to/quolu/ai-to-ai-conversations-the-interactive-terminal-powered-by-aiterm-mcp-2i6l",
     "id": 4230199,
     "canonicalUrl": "https://kitepon.dev/blog/post/aiterm-converse/",
-    "pending": [],
-    "hidden": true
+    "pending": []
   },
   "aiterm-release": {
     "url": "https://dev.to/quolu/released-aiterm-mcp-on-npm-an-mcp-server-to-reduce-token-usage-by-providing-ai-with-a-persistent-a5n",
