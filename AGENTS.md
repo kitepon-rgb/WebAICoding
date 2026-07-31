@@ -91,6 +91,8 @@ hugo --minify
 - 標準eventで表せない特殊操作だけ、実装前にevent名、意味、allowlist属性、非発火条件を`docs/site-operations.md`へ追加する。
 - 個人情報、入力値、任意query、fragment、認証情報をeventへ含めない。
 - 新規route、記事、CTAを追加した時は`node tools/validate-content.mjs --rendered`で計測coverageを検査する。
+- 本番公開後はRootSitePromotionの`npm run test:quality`でblog sitemap掲載pageと記事内linkを確認し、
+  blog URL起点の失敗はこのprojectが修正する。
 - 計測しない公開ページは、理由と期限を`docs/site-operations.md`へ明記した例外だけを許す。
 
 ## 報告
