@@ -41,6 +41,12 @@ scrollや滞在は注意・到達の代理指標であり、理解や満足と�
 宣言的`data-kitepon-*`属性と共通契約を先に追加する。生成HTMLのcoverageは
 `node tools/validate-content.mjs --rendered`が検査する。
 
+クオ本人と開発時のブラウザ確認は、`https://kitepon.dev/analytics-optout/`で設定する
+`kitepon_analytics_optout=1` cookieによりGoatCounterとCloudflare Web Analyticsの両方から除外する。
+共通adapterはGoatCounterより先に読み、cookieがある時は`no_onload`を設定してpage view・eventを送らない。
+本番目視や自動ブラウザ検査では先に除外設定を行う。過去の集計は個人識別情報を持たないため、
+推測で遡及控除しない。
+
 ## カバー画像
 
 生成器は`tools/cover/generate-cover.js`、詳細は`tools/cover/README.md`を正本とする。

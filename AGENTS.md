@@ -93,6 +93,8 @@ hugo --minify
 - 新規route、記事、CTAを追加した時は`node tools/validate-content.mjs --rendered`で計測coverageを検査する。
 - 本番公開後はRootSitePromotionの`npm run test:quality`でblog sitemap掲載pageと記事内linkを確認し、
   blog URL起点の失敗はこのprojectが修正する。
+- 本番をブラウザで目視・自動検査する端末は、先に`https://kitepon.dev/analytics-optout/`を開き、
+  `kitepon_analytics_optout=1` cookieを設定する。通常利用者の行動へ戻す検査だけを明示的な例外とする。
 - 計測しない公開ページは、理由と期限を`docs/site-operations.md`へ明記した例外だけを許す。
 
 ## 報告

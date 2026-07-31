@@ -182,6 +182,11 @@ function validateAnalyticsCoverage(html, label, expectedPageType, errors) {
   ]) {
     if (!pattern.test(html)) errors.push(`${label}に${name}が無い`);
   }
+  const adapter = html.search(/src=(?:["']\/analytics\/v1\.js["']|\/analytics\/v1\.js)(?:\s|>)/);
+  const counter = html.search(/data-goatcounter=/);
+  if (adapter >= 0 && counter >= 0 && adapter > counter) {
+    errors.push(`${label}でopt-out判定がGoatCounterより後にある`);
+  }
 }
 
 export function validateContent({ rendered = false, now = new Date() } = {}) {
