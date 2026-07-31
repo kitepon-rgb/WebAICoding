@@ -16,8 +16,8 @@
     </p>
   </div>
   <nav class="not-found-actions" aria-label="404からの復帰">
-    <a class="primary" href="{{ "" | relURL }}">記事一覧へ戻る <span aria-hidden="true">→</span></a>
-    <a href="{{ $root }}">kitepon.devへ戻る <span aria-hidden="true">→</span></a>
+    <a class="primary" href="{{ "" | relURL }}" data-kitepon-event="not_found_recovery" data-kitepon-placement="blog-not-found-actions">記事一覧へ戻る <span aria-hidden="true">→</span></a>
+    <a href="{{ $root }}" data-kitepon-event="not_found_recovery" data-kitepon-placement="blog-not-found-actions">kitepon.devへ戻る <span aria-hidden="true">→</span></a>
   </nav>
 </main>
 {{ end }}

@@ -29,6 +29,18 @@
 
 フォントは見出しがNoto Serif JP、本文がZen Kaku Gothic New、コードがJetBrains Mono。
 
+## サイト全体計測
+
+ブログは`kitepon.dev`配下の一つのcontent groupとして扱う。`layouts/_default/baseof.html`が全ページへ
+`page_type`、`content_group=blog`、`language=ja`、`content_id`、配信commitを付ける。GoatCounterはpage view、
+referrer、campaignを集計し、`/analytics/v1.js`はルートサイトが所有する共通event adapterとして、
+engaged view、content complete、内部・外部遷移、404復帰等を同じ契約で送る。
+
+scrollや滞在は注意・到達の代理指標であり、理解や満足とは呼ばない。任意query、fragment、入力値、
+メールアドレス、秘密、error stackは送らない。記事固有templateからGoatCounterを直接呼ばず、特殊eventは
+宣言的`data-kitepon-*`属性と共通契約を先に追加する。生成HTMLのcoverageは
+`node tools/validate-content.mjs --rendered`が検査する。
+
 ## カバー画像
 
 生成器は`tools/cover/generate-cover.js`、詳細は`tools/cover/README.md`を正本とする。

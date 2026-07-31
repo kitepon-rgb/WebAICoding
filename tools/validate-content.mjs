@@ -166,6 +166,24 @@ export function renderedHeadingJumps(html) {
     .filter(({ from, to }) => to > from + 1);
 }
 
+function validateAnalyticsCoverage(html, label, expectedPageType, errors) {
+  for (const [name, pattern] of [
+    ["共通page分類", /data-kitepon-page=(?:["']v1["']|v1)(?:\s|>)/],
+    [
+      "page type",
+      new RegExp(`data-page-type=(?:["']${expectedPageType}["']|${expectedPageType})(?:\\s|>)`),
+    ],
+    ["content group", /data-content-group=(?:["']blog["']|blog)(?:\s|>)/],
+    [
+      "GoatCounter",
+      /data-goatcounter=(?:["']https:\/\/claudecode-blog\.goatcounter\.com\/count["']|https:\/\/claudecode-blog\.goatcounter\.com\/count)(?:\s|>)/,
+    ],
+    ["共通event adapter", /src=(?:["']\/analytics\/v1\.js["']|\/analytics\/v1\.js)(?:\s|>)/],
+  ]) {
+    if (!pattern.test(html)) errors.push(`${label}に${name}が無い`);
+  }
+}
+
 export function validateContent({ rendered = false, now = new Date() } = {}) {
   const errors = [];
   const posts = fs
@@ -204,6 +222,12 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
             if (og.width !== 1250 || og.height !== 500) {
               errors.push(`記事OGP寸法が不正: ${slug} ${og.width}x${og.height}`);
             }
+            validateAnalyticsCoverage(
+              fs.readFileSync(html, "utf8"),
+              `public/post/${slug}/index.html`,
+              "article",
+              errors,
+            );
           } catch (error) {
             errors.push(error.message);
           }
@@ -243,10 +267,12 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
       errors.push("公開HTMLが無い: public/index.html");
     } else {
       try {
-        const og = renderedOgDimensions(fs.readFileSync(home, "utf8"), "public/index.html");
+        const homeHtml = fs.readFileSync(home, "utf8");
+        const og = renderedOgDimensions(homeHtml, "public/index.html");
         if (og.width !== 1200 || og.height !== 630) {
           errors.push(`既定OGP寸法が不正: ${og.width}x${og.height}`);
         }
+        validateAnalyticsCoverage(homeHtml, "public/index.html", "blog_index", errors);
       } catch (error) {
         errors.push(error.message);
       }
@@ -291,6 +317,10 @@ export function validateContent({ rendered = false, now = new Date() } = {}) {
         ["共通wordmark", /brand\/kitepon-dev-primary\.png/],
       ]) {
         if (!pattern.test(html)) errors.push(`404に${label}が無い`);
+      }
+      validateAnalyticsCoverage(html, "public/404.html", "not_found", errors);
+      if (!/data-kitepon-event=(?:["']not_found_recovery["']|not_found_recovery)(?:\s|>)/.test(html)) {
+        errors.push("404に復帰eventが無い");
       }
     }
   }

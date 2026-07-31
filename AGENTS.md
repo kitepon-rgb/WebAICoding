@@ -83,6 +83,16 @@ hugo --minify
 - `.claude/`、`.codex/`の端末固有設定をコミットしない。
 - 旧`data/self_ads.yaml`、`data/gear_ads.yaml`は配信に使わない。広告追加はAd Studioで承認する。
 
+## 公開ページの計測
+
+- 新しい公開ページは`layouts/_default/baseof.html`を通し、共通page分類とevent adapterを受け取る。
+- `page_type`、`content_group`、`language`、`content_id`はHugoのpage contextから与える。
+- CTAは`data-kitepon-event`等の宣言的属性だけを使い、個別templateからanalytics providerを直接呼ばない。
+- 標準eventで表せない特殊操作だけ、実装前にevent名、意味、allowlist属性、非発火条件を`docs/site-operations.md`へ追加する。
+- 個人情報、入力値、任意query、fragment、認証情報をeventへ含めない。
+- 新規route、記事、CTAを追加した時は`node tools/validate-content.mjs --rendered`で計測coverageを検査する。
+- 計測しない公開ページは、理由と期限を`docs/site-operations.md`へ明記した例外だけを許す。
+
 ## 報告
 
 項目ごとに、実施／スキップと理由、変更ファイル、検証結果を報告する。できなかったことを成功扱いしない。

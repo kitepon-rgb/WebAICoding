@@ -36,6 +36,17 @@
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 </head>
 <body>
+{{- $pageType := "blog_index" -}}
+{{- if $is404 }}{{ $pageType = "not_found" }}{{ else if and $isArticle (eq .Section "post") }}{{ $pageType = "article" }}{{ else if $isArticle }}{{ $pageType = "about" }}{{ end -}}
+{{- $contentID := .RelPermalink -}}
+{{- if $isHome }}{{ $contentID = "blog-index" }}{{ else if $is404 }}{{ $contentID = "blog-not-found" }}{{ end -}}
+<span hidden aria-hidden="true"
+  data-kitepon-page="v1"
+  data-page-type="{{ $pageType }}"
+  data-content-group="blog"
+  data-language="ja"
+  data-content-id="{{ $contentID }}"
+  data-release="{{ site.Params.release | default "unknown" }}"></span>
 {{- /* ヘッダーとフッターはルートサイトと共通の要素構成にする。ブログは kitepon.dev の
        コンテンツの一つなので、wordmark からブランドへ戻れるようにする。記事本文の
        見た目（paper / coral のパレット）は読み心地なので変えない。
@@ -70,5 +81,6 @@
 </div></footer>
 
 <script data-goatcounter="https://claudecode-blog.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script defer src="/analytics/v1.js"></script>
 </body>
 </html>

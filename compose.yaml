@@ -4,6 +4,8 @@ services:
   blog:
     build:
       context: .
+      args:
+        KITEPON_RELEASE: ${KITEPON_BLOG_TAG:-unknown}
     image: kitepon-blog:${KITEPON_BLOG_TAG:-local}
     container_name: kitepon-blog
     restart: unless-stopped

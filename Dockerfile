@@ -8,6 +8,8 @@
 FROM debian:bookworm-slim AS builder
 
 ARG HUGO_VERSION=0.164.0
+ARG KITEPON_RELEASE=unknown
+ENV HUGO_PARAMS_RELEASE=${KITEPON_RELEASE}
 
 # 実行中の arch から解決する。buildx の TARGETARCH に依存しないので、
 # BuildKit の無い環境でも同じ Dockerfile がそのまま通る。
