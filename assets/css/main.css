@@ -11,7 +11,7 @@
   --rail-w:160px; --rail-img:280px; --flag-skew:16px; --flag-inset:4px;
   --post-w:44rem; /* .post の max-width と一致＝ガター幅計算の基準。変えたら .post も連動 */
   --rail-bottom:1.25rem; /* 旗をウィンドウ下端またはフッター上端から浮かせる隙間 */
-  --rail-footer-offset:0px; /* viewport下端からフッター上端までの退避距離。ad-rail.html が更新する */
+  --rail-footer-offset:6.875rem; /* 初期表示から確保するフッター1個分。ad-rail.html が実高へ補正する */
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -219,13 +219,13 @@ footer.site .root-link{color:#e8d9c6;font-weight:700}
 
 /* ===== 記事レール広告（PC・幅160px 縦バナー「旗」／studio /serve の生HTMLをJSが差込） =====
    本文カラム(.post 704px中央寄せ)は触らず、レールを viewport基準の position:fixed で各ガター(本文の左右余白)へ配置。
-   通常は下端固定、フッターが画面へ入った時だけviewport下端からフッター上端までの距離分を持ち上げる（詳細は下記）。
+   初期表示からフッター1個分だけ上へ置き、スクロール中も同じ高さに固定する（詳細は下記）。
    既定は非表示。viewport ≥1100px でのみ出現（1366pxノートでも左右に出る）。
    既存メディアは全て max-width(560/600/880) ＝ この min-width:1100 と交差しないので衝突なし。 */
 .kp-rail{display:none}
 @media(min-width:1100px){
   /* レール＝viewport基準の position:fixed。各ガター(本文 --post-w の左右の空き)を箱にして、中で旗を
-     左右中央(justify-content:center)＋下端固定。フッター表示中は --rail-footer-offset 分だけ上へ退避する。
+     左右中央(justify-content:center)＋下端固定。常に --rail-footer-offset 分だけ上へ配置する。
      幅は calc((100% - var(--post-w))/2)＝fixedの 100% は ICB(=clientWidth・縦スクロールバー除外)に解決＝
      .post の margin:auto と同基準なので左右ガターが完全対称（100vw/50vw はSB込みで右がズレるので使わない）。 */
   .kp-rail{display:flex;justify-content:center;align-items:flex-end;position:fixed;bottom:calc(var(--rail-bottom) + var(--rail-footer-offset));width:calc((100% - var(--post-w)) / 2);z-index:3;pointer-events:none}

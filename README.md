@@ -32,7 +32,7 @@ Articles live as Markdown under `content/post/`. Every push to `main` triggers G
 | --- | --- |
 | Static site generator | [Hugo](https://gohugo.io/) (extended) |
 | Theme | Custom, hand-built (lives in `layouts/` + `assets/`; no external theme) |
-| Desktop promotion | Self-owned Ad Studio rails in article gutters; fixed while reading and lifted above the footer |
+| Desktop promotion | Self-owned Ad Studio rails in article gutters; fixed one footer-height above the viewport bottom from first paint |
 | Hosting | Non-root nginx container behind Caddy `/blog*` routing |
 | Validation | GitHub Actions (`.github/workflows/validate.yml`) |
 | Production image | Multi-stage [Dockerfile](Dockerfile) |

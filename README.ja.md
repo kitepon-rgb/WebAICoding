@@ -32,7 +32,7 @@
 | --- | --- |
 | 静的サイトジェネレーター | [Hugo](https://gohugo.io/)（extended） |
 | テーマ | 自前（`layouts/` + `assets/` に内蔵。外部テーマ不使用） |
-| PC記事プロモーション | 記事の左右ガターに自作Ad Studioレールを固定表示し、フッター表示中はその上へ退避 |
+| PC記事プロモーション | 記事の左右ガターに自作Ad Studioレールを、初期表示からフッター1個分だけ上へ固定表示 |
 | ホスティング | Caddyの`/blog*` routing配下にある非root nginx container |
 | 検証 | GitHub Actions（`.github/workflows/validate.yml`） |
 | 本番image | multi-stage [Dockerfile](Dockerfile) |

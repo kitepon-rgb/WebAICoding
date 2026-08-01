@@ -19,8 +19,7 @@
       var footerTicking=false;
       function syncFooterOffset(){
         footerTicking=false;
-        var rect=footer.getBoundingClientRect();
-        var offset=Math.max(0,window.innerHeight-rect.top);
+        var offset=Math.max(0,footer.getBoundingClientRect().height);
         root.style.setProperty('--rail-footer-offset',offset+'px');
       }
       function queueFooterOffset(){
@@ -29,7 +28,6 @@
         window.requestAnimationFrame(syncFooterOffset);
       }
       syncFooterOffset();
-      window.addEventListener('scroll',queueFooterOffset,{passive:true});
       window.addEventListener('resize',queueFooterOffset);
     }
     var base='https://studio.kitepon.dev';

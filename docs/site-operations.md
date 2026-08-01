@@ -136,7 +136,7 @@ PC記事ページの左右ガターに、自作プロダクトを一つずつ表
 フッター退避の設計判断は[ADR 0003](adr/0003-keep-fixed-ad-rails-above-footer.md)を参照する。
 
 - 表示幅: viewport 1100px以上
-- 配置: `position:fixed`、左右ガター中央。通常はviewport下端基準、フッター表示中はviewport下端からフッター上端までの距離分だけ上へ退避する
+- 配置: `position:fixed`、左右ガター中央。初期表示からフッター1個分だけ上へ置き、スクロール中も同じ高さに固定する
 - ローダ: `layouts/partials/ad-rail.html`
 - 配信: `https://studio.kitepon.dev/serve`
 - 左を取得し、左の`data-kp-id`を`exclude`へ渡して右を取得する
@@ -148,7 +148,7 @@ CSS変数:
 - `--rail-w: 160px`
 - `--post-w: 44rem`
 - `--rail-bottom: 1.25rem`
-- `--rail-footer-offset: 0px`（実行時にviewport下端からフッター上端までの距離へ更新）
+- `--rail-footer-offset: 6.875rem`（初期値。DOM構築後とresize時に実際のフッター高へ補正）
 - `--rail-img: 280px`
 - `--flag-skew: 16px`
 - `--flag-inset: 4px`
