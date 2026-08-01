@@ -32,6 +32,7 @@
 | --- | --- |
 | 静的サイトジェネレーター | [Hugo](https://gohugo.io/)（extended） |
 | テーマ | 自前（`layouts/` + `assets/` に内蔵。外部テーマ不使用） |
+| PC記事プロモーション | 記事の左右ガターに自作Ad Studioレールを固定表示し、フッター表示中はその上へ退避 |
 | ホスティング | Caddyの`/blog*` routing配下にある非root nginx container |
 | 検証 | GitHub Actions（`.github/workflows/validate.yml`） |
 | 本番image | multi-stage [Dockerfile](Dockerfile) |
@@ -43,9 +44,10 @@
 flowchart LR
     A["記事を書く<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>validate.yml"]
     B --> C["content検査<br/>Hugo本番build"]
-    C -->|検証済みmain commit| D["Docker multi-stage build<br/>Hugo → nginx"]
-    D --> E["Caddy /blog* routing"]
-    E --> F(["kitepon.dev/blog/"])
+    C -->|greenのmain commit| D["本番更新<br/>mainをfast-forward + SHA tag"]
+    D --> E["Docker multi-stage build<br/>Hugo → nginx"]
+    E --> F["Caddy /blog* routing"]
+    F --> G(["kitepon.dev/blog/"])
 ```
 
 `draft: false` の記事だけが本番に公開されます。
@@ -97,8 +99,9 @@ node generate-cover.js "タイトル1行目" "タイトル2行目" "../../conten
 
 デザイン仕様や詳細は [tools/cover/README.md](tools/cover/README.md) を参照。
 
-`draft: false` にしてから公開します。`main` へのpushは検証を起動し、本番公開は
-検証済みmain commitから専用blog containerを更新します。
+`draft: false` にしてから公開します。`main` へのpushは検証だけを起動し、それ自体では
+デプロイしません。検証成功後に本番環境で対象commitへfast-forwardし、そのSHAをimage tagにして
+専用blog containerをbuild・更新します。
 
 ## ディレクトリ構成
 

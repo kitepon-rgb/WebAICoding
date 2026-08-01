@@ -22,8 +22,8 @@ The legacy `blog.kitepon.dev` hostname permanently redirects to the live path.
 
 - `content/`: Hugo content, including article page bundles under `content/post/`.
 - `articles/`: Zenn crosspost Markdown generated from blog posts.
-- `layouts/`: Custom Hugo theme templates and shortcodes.
-- `assets/css/`: Fingerprinted site CSS.
+- `layouts/`: Custom Hugo theme templates and shortcodes. `layouts/partials/ad-rail.html` loads the desktop article promotion rails and tracks the distance from the viewport bottom to the footer top.
+- `assets/css/`: Fingerprinted site CSS. The rail position combines the normal bottom gap with the runtime footer offset.
 - `static/`: Static assets such as favicons and OG images.
 - `tools/cover/`: Playwright-based cover image generator.
 - `tools/zenn-sync/`: Blog-to-Zenn synchronization tool.

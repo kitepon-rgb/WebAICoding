@@ -13,6 +13,25 @@
   /* DOM構築後に走らせる（このscriptは左レール直後＝右の<aside>はまだ無いので querySelectorAll が取りこぼす） */
   function run(){
     if(window.innerWidth<1100)return; /* レールはPC幅のみ（CSSと一致）→モバイルでは取りに行かない */
+    var footer=document.querySelector('footer.site');
+    if(footer){
+      var root=document.documentElement;
+      var footerTicking=false;
+      function syncFooterOffset(){
+        footerTicking=false;
+        var rect=footer.getBoundingClientRect();
+        var offset=Math.max(0,window.innerHeight-rect.top);
+        root.style.setProperty('--rail-footer-offset',offset+'px');
+      }
+      function queueFooterOffset(){
+        if(footerTicking)return;
+        footerTicking=true;
+        window.requestAnimationFrame(syncFooterOffset);
+      }
+      syncFooterOffset();
+      window.addEventListener('scroll',queueFooterOffset,{passive:true});
+      window.addEventListener('resize',queueFooterOffset);
+    }
     var base='https://studio.kitepon.dev';
     var rails={};
     document.querySelectorAll('[data-kp-serve]').forEach(function(el){ rails[el.getAttribute('data-kp-serve')]=el; });

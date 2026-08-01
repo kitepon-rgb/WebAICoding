@@ -32,6 +32,7 @@ Articles live as Markdown under `content/post/`. Every push to `main` triggers G
 | --- | --- |
 | Static site generator | [Hugo](https://gohugo.io/) (extended) |
 | Theme | Custom, hand-built (lives in `layouts/` + `assets/`; no external theme) |
+| Desktop promotion | Self-owned Ad Studio rails in article gutters; fixed while reading and lifted above the footer |
 | Hosting | Non-root nginx container behind Caddy `/blog*` routing |
 | Validation | GitHub Actions (`.github/workflows/validate.yml`) |
 | Production image | Multi-stage [Dockerfile](Dockerfile) |
@@ -43,9 +44,10 @@ Articles live as Markdown under `content/post/`. Every push to `main` triggers G
 flowchart LR
     A["Write Markdown<br/>content/post/&lt;slug&gt;/index.md"] -->|git push main| B["GitHub Actions<br/>validate.yml"]
     B --> C["Content checks<br/>Hugo production build"]
-    C -->|validated main commit| D["Docker multi-stage build<br/>Hugo → nginx"]
-    D --> E["Caddy /blog* routing"]
-    E --> F(["kitepon.dev/blog/"])
+    C -->|green main commit| D["Production update<br/>fast-forward main + SHA tag"]
+    D --> E["Docker multi-stage build<br/>Hugo → nginx"]
+    E --> F["Caddy /blog* routing"]
+    F --> G(["kitepon.dev/blog/"])
 ```
 
 Only articles with `draft: false` are published.
@@ -97,8 +99,9 @@ node generate-cover.js "Title line 1" "Title line 2" "../../content/post/your-sl
 
 See [tools/cover/README.md](tools/cover/README.md) for the design spec and details.
 
-Set `draft: false` before publication. Pushing to `main` runs validation; production
-publishing updates the dedicated blog container from a validated main commit.
+Set `draft: false` before publication. Pushing to `main` runs validation but does not by
+itself deploy. After validation passes, the production operator fast-forwards the validated
+commit and rebuilds the dedicated blog container with that commit SHA as its image tag.
 
 ## Layout
 

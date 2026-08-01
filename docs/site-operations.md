@@ -19,6 +19,45 @@
 
 旧`themes/paper`のgitlinkと`.gitmodules`は残っているが、現在のテンプレート実装は利用していない。撤去は基準構成の変更になるため、オーナー承認を得た別作業で行う。
 
+## 本番更新
+
+`main`の検査対象pathへのpushは`.github/workflows/validate.yml`の検証だけを起動し、自動デプロイはしない。
+本番は検証成功後、運用側で次の順序を守って更新する。
+
+1. 本番repoがcleanな`main`であることを確認し、`git pull --ff-only`で対象commitを取得する
+2. 対象commitが`origin/main`の祖先であることを確認する
+3. commit SHAを`KITEPON_BLOG_TAG`へ渡して`blog` serviceをbuildする
+4. 同じtagで`blog` serviceを再作成し、containerが`healthy`になるまで確認する
+5. `/healthz`、blog index、変更対象ページをLANと公開URLの順でsmokeする
+
+imageは`kitepon-blog:<commit SHA>`で追跡し、`latest`だけを本番反映の根拠にしない。
+本番ホストでは次の形で実行する。
+
+```bash
+cd /home/kite/Developer/WebAICoding
+git pull --ff-only origin main
+blog_release_sha="$(git rev-parse HEAD)"
+git merge-base --is-ancestor "$blog_release_sha" origin/main
+sudo -n env KITEPON_BLOG_TAG="$blog_release_sha" docker compose build blog
+sudo -n env KITEPON_BLOG_TAG="$blog_release_sha" docker compose up -d blog
+sudo -n docker inspect --format '{{.Config.Image}} {{.State.Health.Status}}' kitepon-blog
+```
+
+更新前に直前tagを記録する。
+
+```bash
+blog_previous_image="$(sudo -n docker inspect --format '{{.Config.Image}}' kitepon-blog)"
+blog_previous_sha="${blog_previous_image#kitepon-blog:}"
+sudo -n docker image inspect "kitepon-blog:$blog_previous_sha"
+```
+
+rollback時は記録した値を使い、次の形で再作成して同じhealth／公開smokeを行う。
+
+```bash
+sudo -n env KITEPON_BLOG_TAG="$blog_previous_sha" docker compose up -d --no-build blog
+sudo -n docker inspect --format '{{.Config.Image}} {{.State.Health.Status}}' kitepon-blog
+```
+
 ## レイアウト
 
 - `layouts/_default/baseof.html`: head、上部バー、フッター、GoatCounter
@@ -94,9 +133,10 @@ Cloudflareは実レスポンスのキャッシュに関与している。DNS onl
 ## 記事レール広告
 
 PC記事ページの左右ガターに、自作プロダクトを一つずつ表示する。左右で同じ製品を出さない。
+フッター退避の設計判断は[ADR 0003](adr/0003-keep-fixed-ad-rails-above-footer.md)を参照する。
 
 - 表示幅: viewport 1100px以上
-- 配置: `position:fixed`、左右ガター中央、viewport下端基準
+- 配置: `position:fixed`、左右ガター中央。通常はviewport下端基準、フッター表示中はviewport下端からフッター上端までの距離分だけ上へ退避する
 - ローダ: `layouts/partials/ad-rail.html`
 - 配信: `https://studio.kitepon.dev/serve`
 - 左を取得し、左の`data-kp-id`を`exclude`へ渡して右を取得する
@@ -108,6 +148,7 @@ CSS変数:
 - `--rail-w: 160px`
 - `--post-w: 44rem`
 - `--rail-bottom: 1.25rem`
+- `--rail-footer-offset: 0px`（実行時にviewport下端からフッター上端までの距離へ更新）
 - `--rail-img: 280px`
 - `--flag-skew: 16px`
 - `--flag-inset: 4px`
