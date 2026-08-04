@@ -156,11 +156,11 @@
     "pending": []
   },
   "knowhow-outlasts-model": {
-    "status": "posting",
-    "sourceKey": "knowhow-outlasts-model",
+    "status": "published",
+    "url": "https://dev.to/quolu/as-ai-gets-smarter-my-craft-becomes-outdated-so-i-thought-and-i-checked-1e95",
+    "id": 4306838,
     "canonicalUrl": "https://kitepon.dev/blog/post/knowhow-outlasts-model/",
-    "reservationToken": "30865232767:1",
-    "reservedAt": "2026-08-04T00:20:20.605Z"
+    "pending": []
   },
   "livetr-complete-sentence": {
     "status": "published",
