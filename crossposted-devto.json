@@ -162,6 +162,13 @@
     "canonicalUrl": "https://kitepon.dev/blog/post/knowhow-outlasts-model/",
     "pending": []
   },
+  "learning-shell-and-terminal-with-aishell": {
+    "status": "posting",
+    "sourceKey": "learning-shell-and-terminal-with-aishell",
+    "canonicalUrl": "https://kitepon.dev/blog/post/learning-shell-and-terminal-with-aishell/",
+    "reservationToken": "30962941227:1",
+    "reservedAt": "2026-08-05T00:20:29.132Z"
+  },
   "livetr-complete-sentence": {
     "status": "published",
     "url": "https://dev.to/quolu/only-complete-sentences-should-be-translated-but-a-single-counter-betrayed-that-design-1kcl",
