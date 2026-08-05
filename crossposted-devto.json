@@ -163,11 +163,11 @@
     "pending": []
   },
   "learning-shell-and-terminal-with-aishell": {
-    "status": "posting",
-    "sourceKey": "learning-shell-and-terminal-with-aishell",
+    "status": "published",
+    "url": "https://dev.to/quolu/learning-about-shell-and-terminal-while-developing-33d0",
+    "id": 4316496,
     "canonicalUrl": "https://kitepon.dev/blog/post/learning-shell-and-terminal-with-aishell/",
-    "reservationToken": "30962941227:1",
-    "reservedAt": "2026-08-05T00:20:29.132Z"
+    "pending": []
   },
   "livetr-complete-sentence": {
     "status": "published",
