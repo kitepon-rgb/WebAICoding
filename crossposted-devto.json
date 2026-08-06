@@ -50,11 +50,11 @@
     "canonicalUrl": "https://kitepon.dev/blog/post/ai-server-management-log/"
   },
   "aishell-build-all-proposed-tools": {
-    "status": "posting",
-    "sourceKey": "aishell-build-all-proposed-tools",
+    "status": "published",
+    "url": "https://dev.to/quolu/built-all-tools-proposed-by-ai-and-measured-again-2h4",
+    "id": 4326925,
     "canonicalUrl": "https://kitepon.dev/blog/post/aishell-build-all-proposed-tools/",
-    "reservationToken": "31062303060:1",
-    "reservedAt": "2026-08-06T01:17:40.358Z"
+    "pending": []
   },
   "aiterm-converse": {
     "status": "published",
