@@ -169,6 +169,13 @@
     "canonicalUrl": "https://kitepon.dev/blog/post/knowhow-outlasts-model/",
     "pending": []
   },
+  "lattice-parallel-agents": {
+    "status": "posting",
+    "sourceKey": "lattice-parallel-agents",
+    "canonicalUrl": "https://kitepon.dev/blog/post/lattice-parallel-agents/",
+    "reservationToken": "31139746175:1",
+    "reservedAt": "2026-08-07T01:58:57.474Z"
+  },
   "learning-shell-and-terminal-with-aishell": {
     "status": "published",
     "url": "https://dev.to/quolu/learning-about-shell-and-terminal-while-developing-33d0",
