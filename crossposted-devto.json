@@ -170,11 +170,11 @@
     "pending": []
   },
   "lattice-parallel-agents": {
-    "status": "posting",
-    "sourceKey": "lattice-parallel-agents",
+    "status": "published",
+    "url": "https://dev.to/quolu/how-running-ai-in-parallel-made-ai-stop-lying-8i2",
+    "id": 4336098,
     "canonicalUrl": "https://kitepon.dev/blog/post/lattice-parallel-agents/",
-    "reservationToken": "31139746175:1",
-    "reservedAt": "2026-08-07T01:58:57.474Z"
+    "pending": []
   },
   "learning-shell-and-terminal-with-aishell": {
     "status": "published",
