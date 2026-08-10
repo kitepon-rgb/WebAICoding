@@ -118,6 +118,13 @@
     "pending": [],
     "canonicalUrl": "https://kitepon.dev/blog/post/claude-code-deploy/"
   },
+  "claude-drives-codex": {
+    "status": "posting",
+    "sourceKey": "claude-drives-codex",
+    "canonicalUrl": "https://kitepon.dev/blog/post/claude-drives-codex/",
+    "reservationToken": "31345355359:1",
+    "reservedAt": "2026-08-10T00:47:00.860Z"
+  },
   "claude-max-plan-review": {
     "url": "https://dev.to/quolu/what-exactly-changes-with-the-claude-max-plan-4kgb",
     "id": 3729013,
