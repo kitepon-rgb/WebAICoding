@@ -119,11 +119,11 @@
     "canonicalUrl": "https://kitepon.dev/blog/post/claude-code-deploy/"
   },
   "claude-drives-codex": {
-    "status": "posting",
-    "sourceKey": "claude-drives-codex",
+    "status": "published",
+    "url": "https://dev.to/quolu/how-i-made-claude-control-an-interactive-command-and-turned-codex-cli-into-its-underling-3dia",
+    "id": 4355879,
     "canonicalUrl": "https://kitepon.dev/blog/post/claude-drives-codex/",
-    "reservationToken": "31345355359:1",
-    "reservedAt": "2026-08-10T00:47:00.860Z"
+    "pending": []
   },
   "claude-max-plan-review": {
     "url": "https://dev.to/quolu/what-exactly-changes-with-the-claude-max-plan-4kgb",
