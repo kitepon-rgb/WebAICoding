@@ -40,5 +40,6 @@
   "ai-orchestration-quotas": "オーケストレーションを組んでみた",
   "learning-shell-and-terminal-with-aishell": "AIにシェルはいらない？",
   "aishell-build-all-proposed-tools": "全部作って、測り直した",
-  "lattice-parallel-agents": "AIが嘘をつかなくなった"
+  "lattice-parallel-agents": "AIが嘘をつかなくなった",
+  "what-is-ci": "CIって何？"
 }

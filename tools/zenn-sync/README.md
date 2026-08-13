@@ -34,7 +34,7 @@ node tools/zenn-sync/sync.mjs                   # 全記事の変更分を同期
 未対応の Hugo ショートコードが残ったら**エラーで停止**する（黙って素通ししない）。
 Hugo 記事に対応する Zenn ファイルが無い／Zenn 側に孤児がある場合も停止する。
 
-## スラッグ6本の差異
+## スラッグ7本の差異
 
 初期記事はブログ slug と Zenn ファイル名が異なる。`tools/article-manifest.mjs`に定義し、Zenn同期とdev.to転載が共有する。
 
@@ -45,6 +45,7 @@ max-plan-review               → claude-max-plan-review
 claude-research-implementation → claude-research-from-papers
 livetr-app                    → livetr-realtime-translator
 bughub                        → bughub-aggregation
+what-is-ci                    → what-is-continuous-integration
 ```
 
 ## 新記事を足すとき

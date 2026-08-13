@@ -6,6 +6,7 @@ export const BLOG_TO_ZENN_SLUG = Object.freeze({
   "max-plan-review": "claude-max-plan-review",
   "claude-research-implementation": "claude-research-from-papers",
   "livetr-app": "livetr-realtime-translator",
+  "what-is-ci": "what-is-continuous-integration",
   bughub: "bughub-aggregation",
 });
 
