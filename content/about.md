@@ -28,5 +28,5 @@ kitepon.devは、気づいた面白いを、AI開発の仕組みと暮らしや�
 Claude CodeやCodexを含むAIコーディングと個人開発を、実際に使い、作り、運営しながら記録するブログ。うまくいったことだけでなく、判断、失敗、踏んだ罠、その後どう直したかまで実体験ベースで書く。
 
 - [kitepon.dev](https://kitepon.dev/)
-- [GitHub](https://github.com/kitepon-rgb)
+- [GitHub](https://github.com/quolu)
 - X: [@QLyun35332](https://x.com/QLyun35332)

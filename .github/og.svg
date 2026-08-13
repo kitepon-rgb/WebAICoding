@@ -22,7 +22,7 @@
       <text x="0" y="174" fill="#f8fafc" font-family="Inter, 'Noto Sans JP', 'DejaVu Sans', ui-sans-serif, system-ui, sans-serif" font-size="74" font-weight="800">AI coding</text>
       <rect x="0" y="222" width="560" height="6" rx="3" fill="url(#ln)"/>
       <text x="0" y="288" fill="#cbd5e1" font-family="Inter, 'Noto Sans JP', 'DejaVu Sans', ui-sans-serif, system-ui, sans-serif" font-size="29">Hands-on Japanese tech blog · Hugo · kitepon.dev/blog</text>
-      <text x="0" y="348" fill="#64748b" font-family="Inter, 'Noto Sans JP', 'DejaVu Sans', ui-sans-serif, system-ui, sans-serif" font-size="24">github.com/kitepon-rgb/WebAICoding</text>
+      <text x="0" y="348" fill="#64748b" font-family="Inter, 'Noto Sans JP', 'DejaVu Sans', ui-sans-serif, system-ui, sans-serif" font-size="24">github.com/quolu/WebAICoding</text>
     </g>
   </g>
 </svg>

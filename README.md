@@ -4,8 +4,8 @@
 
 # WebAICoding
 
-[![CI](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/validate.yml/badge.svg)](https://github.com/kitepon-rgb/WebAICoding/actions/workflows/validate.yml)
-[![license](https://img.shields.io/github/license/kitepon-rgb/WebAICoding?color=blue)](LICENSE)
+[![CI](https://github.com/quolu/WebAICoding/actions/workflows/validate.yml/badge.svg)](https://github.com/quolu/WebAICoding/actions/workflows/validate.yml)
+[![license](https://img.shields.io/github/license/quolu/WebAICoding?color=blue)](LICENSE)
 [![Hugo](https://img.shields.io/badge/built%20with-Hugo-ff4088?logo=hugo&logoColor=white)](https://gohugo.io/)
 [![Live](https://img.shields.io/badge/live-kitepon.dev%2Fblog-0b5fff)](https://kitepon.dev/blog/)
 
@@ -58,7 +58,7 @@ You need **Hugo extended** ([installation guide](https://gohugo.io/installation/
 
 ```bash
 # Clone (no theme submodule needed — the theme lives in this repo)
-git clone https://github.com/kitepon-rgb/WebAICoding.git
+git clone https://github.com/quolu/WebAICoding.git
 cd WebAICoding
 
 # Start the dev server (http://localhost:1313/)

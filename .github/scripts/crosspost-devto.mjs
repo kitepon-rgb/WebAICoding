@@ -17,7 +17,7 @@ import { toBlogSlug, toZennSlug } from "../../tools/article-manifest.mjs";
 
 const ZENN_USER = "kitepon";
 const DEVTO_API = "https://dev.to/api/articles";
-const UA = "WebAICoding dev.to crosspost (+https://github.com/kitepon-rgb/WebAICoding)";
+const UA = "WebAICoding dev.to crosspost (+https://github.com/quolu/WebAICoding)";
 const WRITE_GAP_MS = 5000;
 const ZENN_FETCH_GAP_MS = 1000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
