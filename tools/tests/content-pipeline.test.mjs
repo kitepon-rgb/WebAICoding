@@ -42,10 +42,12 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "../..");
 
-test("共有manifestは6件の差異を双方向に解決する", () => {
-  assert.equal(Object.keys(BLOG_TO_ZENN_SLUG).length, 6);
+test("共有manifestは7件の差異を双方向に解決する", () => {
+  assert.equal(Object.keys(BLOG_TO_ZENN_SLUG).length, 7);
   assert.equal(toZennSlug("bughub"), "bughub-aggregation");
   assert.equal(toBlogSlug("bughub-aggregation"), "bughub");
+  assert.equal(toZennSlug("what-is-ci"), "what-is-continuous-integration");
+  assert.equal(toBlogSlug("what-is-continuous-integration"), "what-is-ci");
   assert.equal(toZennSlug("aiterm-converse"), "aiterm-converse");
   assert.equal(canonicalUrlFor("bughub-aggregation"), "https://kitepon.dev/blog/post/bughub/");
   assert.equal(
@@ -403,8 +405,8 @@ test("Hugo frontmatterは未来の公開日を拒否する", () => {
 });
 
 test("現行コンテンツとカバー寸法がpreflightを通る", () => {
-  const result = validateContent({ now: new Date("2026-07-27T23:59:59+09:00") });
-  assert.deepEqual(result, { posts: 41, zenn: 41, mobile: 41 });
+  const result = validateContent({ now: new Date("2026-08-13T23:59:59+09:00") });
+  assert.deepEqual(result, { posts: 42, zenn: 42, mobile: 42 });
   assert.deepEqual(
     pngDimensions(path.join(repoRoot, "content/post/bughub/cover.png")),
     { width: 1250, height: 500 },
