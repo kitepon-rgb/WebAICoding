@@ -4,8 +4,8 @@
 
 # WebAICoding
 
-[![CI](https://github.com/quolu/WebAICoding/actions/workflows/validate.yml/badge.svg)](https://github.com/quolu/WebAICoding/actions/workflows/validate.yml)
-[![license](https://img.shields.io/github/license/quolu/WebAICoding?color=blue)](LICENSE)
+[![CI](https://github.com/kitepon/WebAICoding/actions/workflows/validate.yml/badge.svg)](https://github.com/kitepon/WebAICoding/actions/workflows/validate.yml)
+[![license](https://img.shields.io/github/license/kitepon/WebAICoding?color=blue)](LICENSE)
 [![Hugo](https://img.shields.io/badge/built%20with-Hugo-ff4088?logo=hugo&logoColor=white)](https://gohugo.io/)
 [![Live](https://img.shields.io/badge/live-kitepon.dev%2Fblog-0b5fff)](https://kitepon.dev/blog/)
 
@@ -58,7 +58,7 @@ Hugo extended が必要です（[インストール手順](https://gohugo.io/ins
 
 ```bash
 # クローン（テーマ submodule は不要 — テーマはこのリポジトリ内）
-git clone https://github.com/quolu/WebAICoding.git
+git clone https://github.com/kitepon/WebAICoding.git
 cd WebAICoding
 
 # 開発サーバーを起動（http://localhost:1313/）
