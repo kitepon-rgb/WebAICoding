@@ -10,7 +10,7 @@ published: true
 この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-[Caveat](https://github.com/kitepon-rgb/Caveat) っていうClaude Code用の長期記憶レイヤをnpmに公開した。
+[Caveat](https://github.com/kitepon/Caveat) っていうClaude Code用の長期記憶レイヤをnpmに公開した。
 
 ![同じ落とし穴に二度落ちないための、記憶のレイヤ](https://kitepon.dev/blog/post/caveat-release/eyecatch.png)
 *同じ落とし穴に二度落ちないための、記憶のレイヤ*
@@ -117,6 +117,6 @@ caveat pull
 
 v0.11.1、203 tests passing。個人と小規模チームが想定ユースケース。
 
-@[card](https://github.com/kitepon-rgb/Caveat)
+@[card](https://github.com/kitepon/Caveat)
 
 MIT。バグ報告・PRも歓迎。

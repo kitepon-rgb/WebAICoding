@@ -72,7 +72,7 @@ MemGPTやLangChainのSummaryBufferMemoryは、**古いものから要約する**
 - 会話本文（人間が書いたこと、AIが答えたこと）→ 残す
 - ツール入出力（ファイル内容、コマンド結果）→ 退避する
 
-この発想で作ったのが[Throughline](https://github.com/kitepon-rgb/Throughline)だ。
+この発想で作ったのが[Throughline](https://github.com/kitepon/Throughline)だ。
 
 ## 3層モデル
 
@@ -152,7 +152,7 @@ CLAUDE.mdの最適化やプロンプト短縮は全体の9%に効く対策で、
 ![Throughline — Claude Codeのコンテキスト消費を約90%削る、依存ゼロ・MITのOSS](https://kitepon.dev/blog/post/throughline-context-diet/og-throughline.png)
 *Throughline — Claude Codeのコンテキスト消費を約90%削る、依存ゼロ・MITのOSS*
 
-@[card](https://github.com/kitepon-rgb/Throughline)
+@[card](https://github.com/kitepon/Throughline)
 
 @[card](https://www.npmjs.com/package/throughline)
 

@@ -120,4 +120,4 @@ Articles are illustrated with in-text figures, diagrams, app screenshots, tables
 
 ## License
 
-[MIT License](LICENSE) — © 2026 kitepon-rgb
+[MIT License](LICENSE) — © 2026 kitepon.dev

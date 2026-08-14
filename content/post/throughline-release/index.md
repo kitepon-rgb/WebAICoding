@@ -8,7 +8,7 @@ cover:
   image: "cover.png"
 ---
 
-[Throughline](https://github.com/kitepon-rgb/Throughline) っていうClaude Code用のhookプラグインをnpmに公開した。
+[Throughline](https://github.com/kitepon/Throughline) っていうClaude Code用のhookプラグインをnpmに公開した。
 
 ![Throughline — Claude Codeのコンテキスト消費を約9割削りつつ、判断に必要な記憶はほぼ全部残す](overlay.png)
 
@@ -77,6 +77,6 @@ transcriptのJSONLからAPIの実測値（`message.usage`）を読むので、`�
 
 設計の経緯や試行錯誤は [こちらの記事]({{< relref "throughline-declare-over-detect" >}}) に書いた。
 
-{{< linkcard url="https://github.com/kitepon-rgb/Throughline" title="kitepon-rgb/Throughline" desc="Claude CodeのツールI/OをSQLiteに退避し、会話本文だけ残すhook。L1/L2/L3の3層メモリ・トークンモニタ同梱。依存ゼロ・MIT。" site="GitHub" image="og-throughline.png" >}}
+{{< linkcard url="https://github.com/kitepon/Throughline" title="kitepon/Throughline" desc="Claude CodeのツールI/OをSQLiteに退避し、会話本文だけ残すhook。L1/L2/L3の3層メモリ・トークンモニタ同梱。依存ゼロ・MIT。" site="GitHub" image="og-throughline.png" >}}
 
 MIT。バグ報告・PRも歓迎です。

@@ -110,8 +110,8 @@ Claude に「気をつけて」と書いて直る問題は、もう全部直し�
 
 1ヶ月で3つ作ってみて、補強の型は見えた気がする。3つとも MIT で npm に出してるので、同じ構造的問題で困ってる人がいたら、気が向いたら覗いてみてください。
 
-{{< linkcard url="https://github.com/kitepon-rgb/Throughline" title="Throughline — コンテキストの肥大化を退避する" desc="ツール入出力をSQLiteに退避してコンテキストから抜くhook。Claudeが必要なら自分で取り出せる。" site="GitHub" image="og-throughline.png" >}}
+{{< linkcard url="https://github.com/kitepon/Throughline" title="Throughline — コンテキストの肥大化を退避する" desc="ツール入出力をSQLiteに退避してコンテキストから抜くhook。Claudeが必要なら自分で取り出せる。" site="GitHub" image="og-throughline.png" >}}
 
-{{< linkcard url="https://github.com/kitepon-rgb/Caveat" title="Caveat — 同じ罠を二度踏まないための長期記憶レイヤ" desc="過去に書き留めた罠ノートを、似た場面でhook経由で自動浮上させる。" site="GitHub" image="og-caveat.png" >}}
+{{< linkcard url="https://github.com/kitepon/Caveat" title="Caveat — 同じ罠を二度踏まないための長期記憶レイヤ" desc="過去に書き留めた罠ノートを、似た場面でhook経由で自動浮上させる。" site="GitHub" image="og-caveat.png" >}}
 
-{{< linkcard url="https://github.com/kitepon-rgb/Spotter" title="Spotter — ツール呼び忘れを別のClaudeが監査する" desc="ツールカタログを把握した別のClaude(Haiku 4.5)を並走させ、呼び忘れたらhookで指摘。" site="GitHub" image="og-spotter.png" >}}
+{{< linkcard url="https://github.com/kitepon/Spotter" title="Spotter — ツール呼び忘れを別のClaudeが監査する" desc="ツールカタログを把握した別のClaude(Haiku 4.5)を並走させ、呼び忘れたらhookで指摘。" site="GitHub" image="og-spotter.png" >}}

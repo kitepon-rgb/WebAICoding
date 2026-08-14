@@ -50,7 +50,7 @@ AIはやりたいことをシェルの書式へ変換する。実行結果は人
 
 作ったものには、そのままAIShellと名前を付けた。Apple Silicon MacとmacOS 15以降で動くSwift製のアプリで、AIとはMCPを使って接続する。
 
-{{< linkcard url="https://github.com/kitepon-rgb/aishell" title="AIShell" desc="macOSの状態を直接扱い、AI開発に必要な情報と操作を返すSwift製MCPサーバー" site="GitHub" >}}
+{{< linkcard url="https://github.com/kitepon/aishell" title="AIShell" desc="macOSの状態を直接扱い、AI開発に必要な情報と操作を返すSwift製MCPサーバー" site="GitHub" >}}
 
 AIShellは、AIから受け取った要求をシェル用の文字列へまとめない。実行するプログラム、引数、作業フォルダを分けて受け取り、macOSの機能を使って直接起動する。ファイル操作もmacOSの機能で扱う。
 

@@ -8,7 +8,7 @@ cover:
   image: "cover.png"
 ---
 
-[aiterm-mcp](https://github.com/kitepon-rgb/aiterm-mcp) っていうMCPサーバをnpmに公開した。AIにターミナルを「1本の永続セッション」として握らせるためのもの。
+[aiterm-mcp](https://github.com/kitepon/aiterm-mcp) っていうMCPサーバをnpmに公開した。AIにターミナルを「1本の永続セッション」として握らせるためのもの。
 
 ![aiterm-mcp ＝ 端末を1本だけ永続で握り、SSHは一度きり、出力は読む前に間引くstdio MCPサーバ。道具は pty_open / pty_send / pty_read など6個だけ](overlay.png)
 
@@ -122,7 +122,7 @@ Claude Codeを再起動して `/mcp` でつながってれば完了。Claudeで�
 
 v0.4.0、MIT、provenance付きでnpm公開済み。
 
-{{< linkcard url="https://github.com/kitepon-rgb/aiterm-mcp" title="aiterm-mcp" desc="AIに「1本の永続ターミナル」を握らせ、SSHは一度きり・出力は読む前に間引くstdio MCPサーバ。tmuxベースでツールは6個。" site="GitHub" image="overlay.png" >}}
+{{< linkcard url="https://github.com/kitepon/aiterm-mcp" title="aiterm-mcp" desc="AIに「1本の永続ターミナル」を握らせ、SSHは一度きり・出力は読む前に間引くstdio MCPサーバ。tmuxベースでツールは6個。" site="GitHub" image="overlay.png" >}}
 
 {{< linkcard url="https://www.npmjs.com/package/aiterm-mcp" title="aiterm-mcp - npm" desc="npx -y aiterm-mcp で起動。Claude / Codex などMCPクライアントなら何でも。v0.4.0、MIT、provenance付き。" site="npm" >}}
 

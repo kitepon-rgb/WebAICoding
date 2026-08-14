@@ -50,7 +50,7 @@ cover:
 
 ## 何が起きてたか
 
-実セッションのログを掘ったら、74個のうち51個が [Throughline](https://github.com/kitepon-rgb/Throughline) (自分の別ツール) 由来だった。
+実セッションのログを掘ったら、74個のうち51個が [Throughline](https://github.com/kitepon/Throughline) (自分の別ツール) 由来だった。
 
 Throughlineは内部で `claude -p` を呼ぶ。`claude -p` を呼ぶと SessionStart hook が走る。SessionStart hook で Spotter の daemon が立つ。Spotter の daemon は監査のために `claude -p` を呼ぶ。**…無限再帰じゃないけど、再帰的増殖**。
 
@@ -126,6 +126,6 @@ Spotter は同じ作者が作った [Throughline]({{< relref "throughline-releas
 - Claude Code 2.0+
 - Claude Maxプラン（`claude -p` でHaiku 4.5を起動するため）
 
-{{< linkcard url="https://github.com/kitepon-rgb/Spotter" title="kitepon-rgb/Spotter" desc="ツールの呼び忘れを別Claude (Haiku 4.5) に並走監査させる Claude Code 用 hook。npm: claude-spotter / MIT。" site="GitHub" image="spotter-og.png" >}}
+{{< linkcard url="https://github.com/kitepon/Spotter" title="kitepon/Spotter" desc="ツールの呼び忘れを別Claude (Haiku 4.5) に並走監査させる Claude Code 用 hook。npm: claude-spotter / MIT。" site="GitHub" image="spotter-og.png" >}}
 
 MIT。同じ問題で困ってる人がいたら、気が向いたら覗いてみてください。

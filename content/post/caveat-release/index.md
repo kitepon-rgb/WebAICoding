@@ -8,7 +8,7 @@ cover:
   image: "cover.png"
 ---
 
-[Caveat](https://github.com/kitepon-rgb/Caveat) っていうClaude Code用の長期記憶レイヤをnpmに公開した。
+[Caveat](https://github.com/kitepon/Caveat) っていうClaude Code用の長期記憶レイヤをnpmに公開した。
 
 ![同じ落とし穴に二度落ちないための、記憶のレイヤ](eyecatch.png)
 
@@ -112,6 +112,6 @@ caveat pull
 
 v0.11.1、203 tests passing。個人と小規模チームが想定ユースケース。
 
-{{< linkcard url="https://github.com/kitepon-rgb/Caveat" title="kitepon-rgb/Caveat" desc="Stop rediscovering the same trap. — Claude Code 用の長期記憶レイヤ。markdown-in-git をソースに、3つのhook発火点で関連する罠を自動で浮上させる。" site="GitHub" image="og-github.png" >}}
+{{< linkcard url="https://github.com/kitepon/Caveat" title="kitepon/Caveat" desc="Stop rediscovering the same trap. — Claude Code 用の長期記憶レイヤ。markdown-in-git をソースに、3つのhook発火点で関連する罠を自動で浮上させる。" site="GitHub" image="og-github.png" >}}
 
 MIT。バグ報告・PRも歓迎。

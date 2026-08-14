@@ -10,7 +10,7 @@ published: true
 この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-[Throughline](https://github.com/kitepon-rgb/Throughline) っていうClaude Code用のhookプラグインをnpmに公開した。
+[Throughline](https://github.com/kitepon/Throughline) っていうClaude Code用のhookプラグインをnpmに公開した。
 
 ![Throughline — Claude Codeのコンテキスト消費を約9割削りつつ、判断に必要な記憶はほぼ全部残す](https://kitepon.dev/blog/post/throughline-release/overlay.png)
 *Throughline — Claude Codeのコンテキスト消費を約9割削りつつ、判断に必要な記憶はほぼ全部残す*
@@ -81,6 +81,6 @@ transcriptのJSONLからAPIの実測値（`message.usage`）を読むので、`�
 
 設計の経緯や試行錯誤は [こちらの記事](https://kitepon.dev/blog/post/throughline-declare-over-detect/) に書いた。
 
-@[card](https://github.com/kitepon-rgb/Throughline)
+@[card](https://github.com/kitepon/Throughline)
 
 MIT。バグ報告・PRも歓迎です。

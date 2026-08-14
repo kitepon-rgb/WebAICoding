@@ -23,7 +23,7 @@ published: true
 
 Claudeは最初、数個だけ実装して様子を見る案を勧めてきた。俺はほぼ趣味の個人開発者で、本業の裏でAIを回しているだけだから、開発した結果のリスクを考える必要がない。全部作ることにした。
 
-@[card](https://github.com/kitepon-rgb/aishell)
+@[card](https://github.com/kitepon/aishell)
 
 ## いまのAIShellの機能
 

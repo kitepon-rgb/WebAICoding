@@ -115,8 +115,8 @@ Claude に「気をつけて」と書いて直る問題は、もう全部直し�
 
 1ヶ月で3つ作ってみて、補強の型は見えた気がする。3つとも MIT で npm に出してるので、同じ構造的問題で困ってる人がいたら、気が向いたら覗いてみてください。
 
-@[card](https://github.com/kitepon-rgb/Throughline)
+@[card](https://github.com/kitepon/Throughline)
 
-@[card](https://github.com/kitepon-rgb/Caveat)
+@[card](https://github.com/kitepon/Caveat)
 
-@[card](https://github.com/kitepon-rgb/Spotter)
+@[card](https://github.com/kitepon/Spotter)

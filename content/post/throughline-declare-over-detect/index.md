@@ -109,7 +109,7 @@ Throughline は v0.3.2 でnpmに公開してる。Node.js 22.5+、依存ゼロ�
 
 ![Throughline — Claude CodeのツールI/OをSQLiteに退避するhook。Node.js 22.5+、依存ゼロ、MIT](throughline-og.png)
 
-{{< linkcard url="https://github.com/kitepon-rgb/Throughline" title="kitepon-rgb/Throughline" desc="Claude CodeのツールI/OをSQLiteに退避し、/tlで次セッションへ記憶のバトンを渡すhook。Node.js 22.5+、依存ゼロ、MIT。" site="GitHub" image="throughline-og.png" >}}
+{{< linkcard url="https://github.com/kitepon/Throughline" title="kitepon/Throughline" desc="Claude CodeのツールI/OをSQLiteに退避し、/tlで次セッションへ記憶のバトンを渡すhook。Node.js 22.5+、依存ゼロ、MIT。" site="GitHub" image="throughline-og.png" >}}
 
 ```bash
 npm install -g throughline

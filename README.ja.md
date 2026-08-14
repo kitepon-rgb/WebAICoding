@@ -120,4 +120,4 @@ tools/cover/    カバー画像ジェネレータ（Playwright → 1250×500 PNG
 
 ## ライセンス
 
-[MIT License](LICENSE) — © 2026 kitepon-rgb
+[MIT License](LICENSE) — © 2026 kitepon.dev

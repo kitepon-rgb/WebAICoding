@@ -42,7 +42,7 @@ items:
   - name: "sprite-forge"
     category: mcp
     image: "/store/sprite-forge-v1.png"
-    url: "https://github.com/kitepon-rgb/sprite-forge-mcp"
+    url: "https://github.com/kitepon/sprite-forge-mcp"
     blurb: "<b>同じキャラを描ける</b>AIスプライト工房"
     badge: "GitHub"
     accent: 3
@@ -53,7 +53,7 @@ items:
   - name: "rpgdev"
     category: tool
     image: "/store/rpgdev-v1.png"
-    url: "https://github.com/kitepon-rgb/rpgdev"
+    url: "https://github.com/kitepon/rpgdev"
     blurb: "AIの作業を<b>RPG化</b>するターミナルオーバーレイ"
     badge: "GitHub"
     accent: 4
@@ -65,7 +65,7 @@ items:
     category: tool
     image: "/store/throughline-v1.png"
     pos: "left top"   # 横長OGグラフィックはタイトル(左上)を見せる
-    url: "https://github.com/kitepon-rgb/Throughline"
+    url: "https://github.com/kitepon/Throughline"
     blurb: "Claude CodeのI/Oを<b>SQLiteへ退避</b>するhook"
     badge: "GitHub"
     accent: 0
@@ -89,7 +89,7 @@ items:
     category: tool
     image: "/store/caveat-v1.png"
     pos: "center top"   # 横長のターミナル窓ショット＝上側を見せる
-    url: "https://github.com/kitepon-rgb/Caveat"
+    url: "https://github.com/kitepon/Caveat"
     blurb: "<b>同じ罠を二度踏まない</b>長期記憶レイヤ"
     badge: "GitHub"
     accent: 2
@@ -101,7 +101,7 @@ items:
     category: tool
     image: "/store/spotter-v1.png"
     pos: "left top"   # 横長OGグラフィックはタイトル(左上)を見せる
-    url: "https://github.com/kitepon-rgb/Spotter"
+    url: "https://github.com/kitepon/Spotter"
     blurb: "Claudeのツール呼び忘れを<b>別Claudeが監査</b>"
     badge: "GitHub"
     accent: 3

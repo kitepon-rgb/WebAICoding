@@ -100,8 +100,8 @@ AIがサブの作業役（サブエージェント）を立てると、精霊が
 
 そんなわけで、rpgdev。AIが働いてる横で、小さな冒険が勝手に進む。敵を倒しても何ももらえないし、城まで辿り着いても何も起きない。完全に無意味だ。
 
-リポジトリは [github.com/kitepon-rgb/rpgdev](https://github.com/kitepon-rgb/rpgdev)。`npm install -g rpgdev` で入る。今はMac専用だけど、WindowsとWSL2への対応も進めてる。
+リポジトリは [github.com/kitepon/rpgdev](https://github.com/kitepon/rpgdev)。`npm install -g rpgdev` で入る。今はMac専用だけど、WindowsとWSL2への対応も進めてる。
 
-{{< linkcard url="https://github.com/kitepon-rgb/rpgdev" title="kitepon-rgb/rpgdev" desc="AIがコードを書いている間、Mac画面の隅で小さなRPGが勝手に進むターミナルオーバーレイ。npm で配布。" site="GitHub" image="rpgdev-og.png" >}}
+{{< linkcard url="https://github.com/kitepon/rpgdev" title="kitepon/rpgdev" desc="AIがコードを書いている間、Mac画面の隅で小さなRPGが勝手に進むターミナルオーバーレイ。npm で配布。" site="GitHub" image="rpgdev-og.png" >}}
 
 くだらない。でも、コードを書いてる横で勇者が勝手に戦ってるのは、思ったより悪くない。使ってみてくれ（笑）。

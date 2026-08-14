@@ -10,7 +10,7 @@ published: true
 この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
 :::
 
-[aiterm-mcp](https://github.com/kitepon-rgb/aiterm-mcp) っていうMCPサーバをnpmに公開した。AIにターミナルを「1本の永続セッション」として握らせるためのもの。
+[aiterm-mcp](https://github.com/kitepon/aiterm-mcp) っていうMCPサーバをnpmに公開した。AIにターミナルを「1本の永続セッション」として握らせるためのもの。
 
 ![aiterm-mcp ＝ 端末を1本だけ永続で握り、SSHは一度きり、出力は読む前に間引くstdio MCPサーバ。道具は pty_open / pty_send / pty_read など6個だけ](https://kitepon.dev/blog/post/aiterm-release/overlay.png)
 *aiterm-mcp ＝ 端末を1本だけ永続で握り、SSHは一度きり、出力は読む前に間引くstdio MCPサーバ。道具は pty_open / pty_send / pty_read など6個だけ*
@@ -127,7 +127,7 @@ Claude Codeを再起動して `/mcp` でつながってれば完了。Claudeで�
 
 v0.4.0、MIT、provenance付きでnpm公開済み。
 
-@[card](https://github.com/kitepon-rgb/aiterm-mcp)
+@[card](https://github.com/kitepon/aiterm-mcp)
 
 @[card](https://www.npmjs.com/package/aiterm-mcp)
 

@@ -8,7 +8,7 @@ cover:
   image: "cover.png"
 ---
 
-[aiterm-mcp](https://github.com/kitepon-rgb/aiterm-mcp) は、自宅サーバをいじる手間を消すために作った。Claude Code から一つずつコマンドを打つと、サーバへの接続がそのたびに切れて、つなぎ直すたびに認証をやり直すことになる。つなぎっぱなしの一本を握れれば、それが要らなくなる。[そのための道具だ]({{< relref "aiterm-release" >}})。
+[aiterm-mcp](https://github.com/kitepon/aiterm-mcp) は、自宅サーバをいじる手間を消すために作った。Claude Code から一つずつコマンドを打つと、サーバへの接続がそのたびに切れて、つなぎ直すたびに認証をやり直すことになる。つなぎっぱなしの一本を握れれば、それが要らなくなる。[そのための道具だ]({{< relref "aiterm-release" >}})。
 
 今この道具をいちばん使っているのは、Claude に別の AI——Codex や Grok や Composer——を動かしてもらうときだ。相手が動いているところを Claude が読んで、その場で次を伝える。それを繰り返して、一つの作業を一緒に進めていく。
 
@@ -55,4 +55,4 @@ aiterm-mcp の中身は、Claude が握りっぱなしにする端末が一つ�
 
 俺が毎日この道具でやっているのはこれだ。Claude に、Codex や Grok や Composer と会話をさせて、一緒に仕事を進める。
 
-{{< linkcard url="https://github.com/kitepon-rgb/aiterm-mcp" title="aiterm-mcp" desc="AIが握る1本の永続ターミナル。その中でCodex・Grok・Composerを起動して会話しながら操る、tmuxベースのstdio MCPサーバ。" site="GitHub" >}}
+{{< linkcard url="https://github.com/kitepon/aiterm-mcp" title="aiterm-mcp" desc="AIが握る1本の永続ターミナル。その中でCodex・Grok・Composerを起動して会話しながら操る、tmuxベースのstdio MCPサーバ。" site="GitHub" >}}

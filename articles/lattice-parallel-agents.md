@@ -135,6 +135,6 @@ lattice todo gantt serve --port 0
 
 右半分には、工程の状態の内訳と、区切りごとの監査の進み具合が出る。`locked` が表しているのは監査の順番待ちだ。工程の開始は依存関係だけで決まるので、後ろの区切りに属する工程でも、前提が揃っていれば始まる。複数の区切りが同時に進むこともある。
 
-@[card](https://github.com/kitepon-rgb/Lattice)
+@[card](https://github.com/kitepon/Lattice)
 
 工程管理をAIの手から取り上げる、という形が正しいのかは、もう少し使ってみないと分からない。今のところ、俺の環境では効いている。

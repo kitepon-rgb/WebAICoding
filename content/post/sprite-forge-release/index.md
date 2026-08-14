@@ -107,8 +107,8 @@ CUDAのGPUとComfyUI一式が要る、土台のいるツールだ。二段構え
 
 sprite-forge。テキストから、透過済みのゲーム用キャラを作る。発想を打てば素体が出て、設定資料が組み上がり、そのキャラの学習データまで揃う。人間でもAIエージェントでも、同じ関門を通って同じものが出る。
 
-リポジトリは [github.com/kitepon-rgb/sprite-forge-mcp](https://github.com/kitepon-rgb/sprite-forge-mcp)。MIT。
+リポジトリは [github.com/kitepon/sprite-forge-mcp](https://github.com/kitepon/sprite-forge-mcp)。MIT。
 
-{{< linkcard url="https://github.com/kitepon-rgb/sprite-forge-mcp" title="kitepon-rgb/sprite-forge-mcp" desc="テキストから透過済みのゲーム用キャラスプライトを生成するスタジオ。ComfyUI(GPU)＋WebUI/MCP。設定資料の二段構えとアセット品質の関門を内蔵。MIT。" site="GitHub" >}}
+{{< linkcard url="https://github.com/kitepon/sprite-forge-mcp" title="kitepon/sprite-forge-mcp" desc="テキストから透過済みのゲーム用キャラスプライトを生成するスタジオ。ComfyUI(GPU)＋WebUI/MCP。設定資料の二段構えとアセット品質の関門を内蔵。MIT。" site="GitHub" >}}
 
 一枚絵を直し続けるのをやめて、設定資料から作るようにした。同じキャラが、やっと同じキャラのまま並ぶようになった。

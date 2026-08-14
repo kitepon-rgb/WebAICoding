@@ -20,7 +20,7 @@ cover:
 
 Claudeは最初、数個だけ実装して様子を見る案を勧めてきた。俺はほぼ趣味の個人開発者で、本業の裏でAIを回しているだけだから、開発した結果のリスクを考える必要がない。全部作ることにした。
 
-{{< linkcard url="https://github.com/kitepon-rgb/aishell" title="AIShell" desc="macOSの状態を直接扱い、AI開発に必要な情報と操作を返すSwift製MCPサーバー" site="GitHub" >}}
+{{< linkcard url="https://github.com/kitepon/aishell" title="AIShell" desc="macOSの状態を直接扱い、AI開発に必要な情報と操作を返すSwift製MCPサーバー" site="GitHub" >}}
 
 ## いまのAIShellの機能
 

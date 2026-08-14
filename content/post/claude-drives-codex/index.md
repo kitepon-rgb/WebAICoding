@@ -12,7 +12,7 @@ cover:
 
 対話型が回せるってことは、親のClaudeが中で `codex` を起動して、そのまま喋らせられるってことだ。Claude が Codex CLI を握れる。これが地味に効く。
 
-ちょうど [rpgdev](https://github.com/kitepon-rgb/rpgdev)（AIの作業を画面の隅でRPGに変換するやつ）を作ってて、曲も、勇者とモンスターの絵も、効果音も、背景も、エフェクトも要った。ロジックはClaudeで書きつつ、こういう創作まわりだけCodexに投げたい。Claudeが映像や音に強くないのは昔から知ってる話で、そこは素直に別の手へ回したい。
+ちょうど [rpgdev](https://github.com/kitepon/rpgdev)（AIの作業を画面の隅でRPGに変換するやつ）を作ってて、曲も、勇者とモンスターの絵も、効果音も、背景も、エフェクトも要った。ロジックはClaudeで書きつつ、こういう創作まわりだけCodexに投げたい。Claudeが映像や音に強くないのは昔から知ってる話で、そこは素直に別の手へ回したい。
 
 ![rpgdevの実オーバーレイ。勇者・精霊・モンスター・ダンジョン背景・クエストログ『Build the API』が画面の隅で動く。この絵も曲も効果音も、創作まわりはCodexに投げて出てきた。](overlay.png)
 
@@ -66,4 +66,4 @@ rpgdev の曲も、勇者とモンスターのグラフィックも、効果音�
 
 aiterm は「ターミナルを握らせてトークンを削る」道具のつもりだった。けど対話型がそのまま回せるってことは、その先にいる別のCLIまで握れるってことだった。俺がやったのは、ターミナルを1本握らせただけ。あとは勝手に、親子で回ってた。
 
-{{< linkcard url="https://github.com/kitepon-rgb/rpgdev" title="rpgdev — AIの作業を画面の隅でJRPGに変換するオーバーレイ" desc="親ClaudeとCodexの親子で作った創作アセット（勇者・モンスター・背景・曲）がそのまま動く。Electron製。" site="GitHub" image="rpgdev-og.png" >}}
+{{< linkcard url="https://github.com/kitepon/rpgdev" title="rpgdev — AIの作業を画面の隅でJRPGに変換するオーバーレイ" desc="親ClaudeとCodexの親子で作った創作アセット（勇者・モンスター・背景・曲）がそのまま動く。Electron製。" site="GitHub" image="rpgdev-og.png" >}}
