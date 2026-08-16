@@ -254,11 +254,11 @@
     "canonicalUrl": "https://kitepon.dev/blog/post/throughline-release/"
   },
   "what-is-continuous-integration": {
-    "status": "posting",
-    "sourceKey": "what-is-continuous-integration",
+    "status": "published",
+    "url": "https://dev.to/quolu/what-is-ci-which-i-keep-hearing-about-what-a-beginner-learned-by-trying-it-48a",
+    "id": 4407130,
     "canonicalUrl": "https://kitepon.dev/blog/post/what-is-ci/",
-    "reservationToken": "31917456704:1",
-    "reservedAt": "2026-08-16T00:32:27.816Z"
+    "pending": []
   },
   "wsl2-late-discovery": {
     "url": "https://dev.to/quolu/i-used-claude-code-for-2-months-without-knowing-about-wsl2-2c4c",
