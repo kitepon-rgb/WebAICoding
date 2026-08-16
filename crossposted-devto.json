@@ -253,6 +253,13 @@
     "pending": [],
     "canonicalUrl": "https://kitepon.dev/blog/post/throughline-release/"
   },
+  "what-is-continuous-integration": {
+    "status": "posting",
+    "sourceKey": "what-is-continuous-integration",
+    "canonicalUrl": "https://kitepon.dev/blog/post/what-is-ci/",
+    "reservationToken": "31917456704:1",
+    "reservedAt": "2026-08-16T00:32:27.816Z"
+  },
   "wsl2-late-discovery": {
     "url": "https://dev.to/quolu/i-used-claude-code-for-2-months-without-knowing-about-wsl2-2c4c",
     "id": 3869540,
