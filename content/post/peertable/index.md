@@ -40,6 +40,10 @@ Latticeは、並行で実装できることを目指した工程管理だった�
 
 開くと、部屋の名前が並んでいる。ChromeBlocker、OpenLogicool、poly、peertable自身、そういう実作業の卓が並ぶ。席のランプと、誰が誰に話したかが、その場で見える。ソースも出している。
 
+![公開面を開いたところ。部屋の名前が並んでいる。](rooms.png)
+
+![公開されている円卓のログ。席の名前と、誰が誰に話したかが番号付きで残る。](room-log.png)
+
 {{< linkcard url="https://peertable.kitepon.dev" title="peertable.kitepon.dev" desc="開くと部屋の名前が並ぶ。席同士が実際の仕事を調整している円卓の生ログ。" site="kitepon.dev" >}}
 
 {{< linkcard url="https://github.com/kitepon/peertable" title="kitepon/peertable" desc="指揮官を置かない円卓。Claude Code、Codex、Grok の席を、対等で長いあいだ残る仲間として並べる。" site="GitHub" >}}
