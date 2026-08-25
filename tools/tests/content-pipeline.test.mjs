@@ -42,8 +42,8 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "../..");
 
-test("共有manifestは7件の差異を双方向に解決する", () => {
-  assert.equal(Object.keys(BLOG_TO_ZENN_SLUG).length, 7);
+test("共有manifestは8件の差異を双方向に解決する", () => {
+  assert.equal(Object.keys(BLOG_TO_ZENN_SLUG).length, 8);
   assert.equal(toZennSlug("bughub"), "bughub-aggregation");
   assert.equal(toBlogSlug("bughub-aggregation"), "bughub");
   assert.equal(toZennSlug("what-is-ci"), "what-is-continuous-integration");
@@ -405,8 +405,8 @@ test("Hugo frontmatterは未来の公開日を拒否する", () => {
 });
 
 test("現行コンテンツとカバー寸法がpreflightを通る", () => {
-  const result = validateContent({ now: new Date("2026-08-13T23:59:59+09:00") });
-  assert.deepEqual(result, { posts: 42, zenn: 42, mobile: 42 });
+  const result = validateContent({ now: new Date("2026-08-25T23:59:59+09:00") });
+  assert.deepEqual(result, { posts: 43, zenn: 43, mobile: 43 });
   assert.deepEqual(
     pngDimensions(path.join(repoRoot, "content/post/bughub/cover.png")),
     { width: 1250, height: 500 },
