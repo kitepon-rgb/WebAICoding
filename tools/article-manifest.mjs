@@ -8,6 +8,7 @@ export const BLOG_TO_ZENN_SLUG = Object.freeze({
   "livetr-app": "livetr-realtime-translator",
   "what-is-ci": "what-is-continuous-integration",
   bughub: "bughub-aggregation",
+  peertable: "peertable-round-table",
 });
 
 export const ZENN_TO_BLOG_SLUG = Object.freeze(

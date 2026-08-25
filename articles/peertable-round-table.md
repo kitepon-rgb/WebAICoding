@@ -1,16 +1,18 @@
 ---
 title: "同じような頭なら、円卓でいいんじゃないかと思って作ってみた"
-date: 2026-08-26T00:00:00+09:00
-draft: false
-description: "Latticeの次に、実際の並行を回す連携を作った。指揮官を置かず席同士に任せたら、試作の時点で仕事が回り始めた。そのあと付き合ったのは、入力が来るまで動けないことと、届いた文字を捨てられないことだった。"
-tags: ["Claude Code", "OSS", "マルチエージェント"]
-cover:
-  image: "cover.png"
+emoji: "🪑"
+type: "tech"
+topics: ["claudecode", "ai", "oss", "agents"]
+published: true
 ---
+
+:::message
+この記事は [Claude Code 始めました](https://kitepon.dev/blog/) からの転載です。
+:::
 
 ## Latticeの次に、回す道具が要った
 
-Latticeは、並行で実装できることを目指した工程管理だった。作って、特許も出願した。[前の記事]({{< relref "lattice-parallel-agents" >}})に書いた。工程が組めても、何体も同時に走らせて、途中で話し合いながら出す仕組みは、まだ無かった。次はそこを作ろうと思った。
+Latticeは、並行で実装できることを目指した工程管理だった。作って、特許も出願した。[前の記事](https://kitepon.dev/blog/post/lattice-parallel-agents/)に書いた。工程が組めても、何体も同時に走らせて、途中で話し合いながら出す仕組みは、まだ無かった。次はそこを作ろうと思った。
 
 よくある連携は、木の形をしている。上に指揮官がいて、下のエージェントはその指示を聞いて動く。俺はそこに疑問を持った。どんな役割を与えられようと、中で動いているのは同じようなモデルだ。同じような頭なら、指揮官は要らなくて、円卓でいいんじゃないか。連携し合える環境さえ作れば、あとは好きにやってくれるんじゃないか。そう思って作ってみた。
 
@@ -40,13 +42,15 @@ Latticeは、並行で実装できることを目指した工程管理だった�
 
 開くと、部屋の名前が並んでいる。ChromeBlocker、OpenLogicool、poly、peertable自身、そういう実作業の卓が並ぶ。席のランプと、誰が誰に話したかが、その場で見える。ソースも出している。
 
-![公開面を開いたところ。部屋の名前が並んでいる。](rooms.png)
+![公開面を開いたところ。部屋の名前が並んでいる。](https://kitepon.dev/blog/post/peertable/rooms.png)
+*公開面を開いたところ。部屋の名前が並んでいる。*
 
-![公開されている円卓のログ。席の名前と、誰が誰に話したかが番号付きで残る。](room-log.png)
+![公開されている円卓のログ。席の名前と、誰が誰に話したかが番号付きで残る。](https://kitepon.dev/blog/post/peertable/room-log.png)
+*公開されている円卓のログ。席の名前と、誰が誰に話したかが番号付きで残る。*
 
-{{< linkcard url="https://peertable.kitepon.dev" title="peertable.kitepon.dev" desc="開くと部屋の名前が並ぶ。席同士が実際の仕事を調整している円卓の生ログ。" site="kitepon.dev" >}}
+@[card](https://peertable.kitepon.dev)
 
-{{< linkcard url="https://github.com/kitepon/peertable" title="kitepon/peertable" desc="指揮官を置かない円卓。Claude Code、Codex、Grok の席を、対等で長いあいだ残る仲間として並べる。" site="GitHub" >}}
+@[card](https://github.com/kitepon/peertable)
 
 自分自身の開発にも使っている。試作で見えた「環境さえあれば席同士が進める」は、今も真ん中にある。
 
