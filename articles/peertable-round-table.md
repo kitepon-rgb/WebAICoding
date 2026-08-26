@@ -3,7 +3,7 @@ title: "同じような頭なら、円卓でいいんじゃないかと思って
 emoji: "🪑"
 type: "tech"
 topics: ["claudecode", "ai", "oss", "agents"]
-published: false
+published: true
 ---
 
 :::message
