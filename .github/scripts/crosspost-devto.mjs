@@ -252,12 +252,15 @@ function readHugoMeta(blogSlug) {
 }
 
 export function listLocalCandidates() {
-  const candidates = fs
+  const posts = fs
     .readdirSync(POST_DIR, { withFileTypes: true })
     .filter(
       (entry) =>
         entry.isDirectory() && fs.existsSync(path.join(POST_DIR, entry.name, "index.md")),
-    )
+    );
+  // 下書き記事もZennファイルを持つため、孤児判定には下書きを含む全記事を使う。
+  const knownZennSlugs = new Set(posts.map((entry) => toZennSlug(entry.name)));
+  const candidates = posts
     .map((entry) => {
       const meta = readHugoMeta(entry.name);
       return {
@@ -279,8 +282,7 @@ export function listLocalCandidates() {
     }
     readTopicsAndPublished(item.zennSlug);
   }
-  const candidateSet = new Set(candidates.map((item) => item.zennSlug));
-  const orphan = [...zennSlugs].filter((slug) => !candidateSet.has(slug));
+  const orphan = [...zennSlugs].filter((slug) => !knownZennSlugs.has(slug));
   if (orphan.length) throw new Error(`管理外Zenn記事がある: ${orphan.join(", ")}`);
   return candidates;
 }

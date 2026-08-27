@@ -78,6 +78,8 @@ OLTranslatorが画面のテキストを翻訳するアプリだったので、�
 
 @[card](https://qo-shop.booth.pm/items/8134987)
 
+BOOTHの価格は現在980円です。
+
 ---
 
 ## 関連記事
