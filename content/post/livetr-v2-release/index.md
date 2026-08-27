@@ -1,7 +1,7 @@
 ---
 title: "LiveTR を v2.0.0 にした — 文字起こしを入れ替えて、完成した一文だけを訳す"
 date: 2026-08-27T21:00:00+09:00
-draft: true
+draft: false
 description: "リアルタイム音声翻訳アプリLiveTRのメジャーバージョンアップ。文字起こしを連続処理に入れ替えて、完成した一文だけを翻訳へ回すようにした。BOOTHで980円、既存購入者はそのまま更新できる。"
 cover:
   image: "cover.png"

@@ -3,7 +3,7 @@ title: "LiveTR を v2.0.0 にした — 文字起こしを入れ替えて、完�
 emoji: "🎧"
 type: "tech"
 topics: ["claudecode", "個人開発", "翻訳", "音声認識", "windows"]
-published: false
+published: true
 ---
 
 :::message
