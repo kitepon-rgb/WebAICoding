@@ -73,6 +73,8 @@ OLTranslatorが画面のテキストを翻訳するアプリだったので、�
 
 {{< linkcard url="https://qo-shop.booth.pm/items/8134987" title="LiveTR — リアルタイム音声翻訳アプリ" desc="PCで再生中の英語動画をリアルタイムで日本語字幕＋読み上げ。BOOTHで配布中。" site="BOOTH" image="booth-thumb.png" >}}
 
+BOOTHの価格は現在980円です。
+
 ---
 
 ## 関連記事
